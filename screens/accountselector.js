@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, StatusBar, SafeAreaView, ImageBackground, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import headerart from '../assets/images/headerart.png';
 import TouchableButton from '../components/TouchableButton';
 import bg from '../assets/images/bg.png'
@@ -9,7 +10,8 @@ import Colors from '../constants/Colors';
 import Spacer from '../components/Spacer';
 import Icon from '../constants/Icons';
 
-const accountselector=({ navigation }) => {
+const accountselector=() => {
+    const navigation = useNavigation();
     return (
         <ImageBackground
         source={bg}
@@ -25,7 +27,7 @@ const accountselector=({ navigation }) => {
                     source={manu}
                     style={styles.imageStyle}>
                     </Image>
-                    <Text style={styles.textStyle}>Manufacturer</Text>
+                    <Text style={styles.textStyle} onPress={() => navigation.navigate('Signupm')}>Manufacturer </Text>
                 </View>
                 <Spacer height={10} />
                 <View style={styles.selectorbox}>
@@ -33,7 +35,7 @@ const accountselector=({ navigation }) => {
                     source={buyer}
                     style={styles.imageStyle}>
                     </Image>
-                    <Text style={styles.textStyle}>Buyer</Text>
+                    <Text style={styles.textStyle} onPress={() => navigation.navigate('Dashboard')}>Buyer</Text>
                 </View>
 
                 </View>
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
         display: "flex",
         width: "100%",
         height: "100%",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#FBFCFC",
         resizeMode: "contain",
         margin: 0,
     },
