@@ -6,7 +6,7 @@ import Spacer from '../components/Spacer';
 import DropDownPicker from 'react-native-dropdown-picker';
 import bg from '../assets/images/bg.png'
 
-const Signup = () => {
+const Signupm = () => {
     const [text, onChangeText] = React.useState(null);
     const [number, onChangeNumber] = React.useState(null);
     const [open, setOpen] = useState(false);
@@ -77,7 +77,7 @@ const Signup = () => {
                             {/* <View> */}
                             <TouchableButton title={'Proceed'} textStyle={{ color: 'white', }} onPress={() => navigation.navigate('Dashboard')} />
                             <Spacer height={10} />
-                            
+
                             {/* </View> */}
                         </View>
                     </View>
@@ -86,7 +86,7 @@ const Signup = () => {
         </KeyboardAvoidingView>
     );
 };
-export default Signup;
+export default Signupm;
 
 const styles = StyleSheet.create(
     {

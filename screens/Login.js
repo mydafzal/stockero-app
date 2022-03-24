@@ -1,14 +1,25 @@
-import React from 'react'
-import { View, Text, ImageBackground, StyleSheet, TextInput, SafeAreaView, KeyboardAvoidingView, Dimensions } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, Text, ImageBackground, StyleSheet, TextInput, KeyboardAvoidingView, Dimensions, ActivityIndicator ,Platform} from 'react-native';
 import TouchableButton from '../components/TouchableButton';
 import Spacer from '../components/Spacer';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import bg from '../assets/images/bg.png'
+import axios from 'axios';
 const { height, width } = Dimensions.get("window");
+import { userLogin } from '../api/user.api';
 
 const Login = () => {
     const navigation = useNavigation();
+    const [email,setEmail]=useState("");
+    const [password,setPassword]=useState("");
+
+    const handleSubmit=(e)=>{
+        userLogin(email,password,navigation);
+        
+    }
+      
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -28,6 +39,8 @@ const Login = () => {
                                 <TextInput
                                     style={styles.inputField}
                                     name={'email'}
+                                    value={email}
+                                    onChangeText={e=>setEmail(e)}
                                     placeholder={'Enter your email'}
                                 />
                             </View>
@@ -37,15 +50,19 @@ const Login = () => {
                                 <TextInput
                                     style={styles.inputField}
                                     name={'Paswword'}
+                                    value={password}
+                                    onChangeText={e=>setPassword(e)}
+                                    secureTextEntry={true}
                                     placeholder={'**********'}
                                 />
                             </View>
+                        
                             <Spacer height={10} />
                             <Text style={{ color: '#9A9A9A', fontSize: 12, alignSelf: 'flex-end', marginRight: 45, fontFamily: 'Poppins_400Regular' }} onPress={() => navigation.navigate('ForgetPassword')}>
                                 Forgot your Password?
                             </Text>
                             <Spacer height={30} />
-                            <TouchableButton title={'Login'} textStyle={{ color: 'white' }} onPress={() => navigation.navigate('Dashboard')} />
+                            <TouchableButton title={'Login'} textStyle={{ color: 'white' }} onPress={handleSubmit} />
                             <Spacer height={10} />
                             <Text style={{ color: '#9A9A9A', fontSize: 12, textAlign: 'center', fontFamily: 'Poppins_400Regular' }}>
                                 Don't have and account?
@@ -135,6 +152,7 @@ const styles = StyleSheet.create(
             borderColor: "rgba(216, 216, 216, 255)",
             backgroundColor: "rgba(245, 245, 245, 255)"
         },
+
         img: {
             height: '100%',
             width: '100%'

@@ -19,56 +19,56 @@ const Signup = () => {
                 <View style={styles.outerbody}>
 
                     <View style={styles.body}>
-            <View style={styles.title}>
-                <Text style={styles.loginText}>SIGN UP</Text>
-                <Spacer height={15} />
-                <Spacer height={10} />
-                <View style={styles.inputFieldCard}>
-                    <Ionicons name='person' size={17} color='#9A9A9A' style={{ alignSelf:'center', paddingLeft:15}}/>
-                    <TextInput
-                        style={styles.inputField}
-                        name={'FirstName'}
-                        placeholder={'First Name'}
-                    />
-                </View>
-                <Spacer height={10} />
-                <View style={styles.inputFieldCard}>
-                    <Ionicons name='person' size={17} color='#9A9A9A' style={{ alignSelf:'center', paddingLeft:15}}/>
-                    <TextInput
-                        style={styles.inputField}
-                        name={'LastName'}
-                        placeholder={'Last Name'}
-                    />
-                </View>
-                <Spacer height={10} />
-                <View style={styles.inputFieldCard}>
-                    <Ionicons name='mail' size={17} color='#9A9A9A' style={{ alignSelf:'center', paddingLeft:15}}/>
-                    <TextInput
-                        style={styles.inputField}
-                        name={'email'}
-                        placeholder={'Enter your email'}
-                    />
-                </View>
-                <Spacer height={10} />
-                <View style={styles.inputFieldCard}>
-                    <Ionicons name='lock-closed' size={17} color='#9A9A9A' style={{ alignSelf:'center', paddingLeft:15}}/>
-                <TextInput
-                    style={styles.inputField}
-                    name={'Paswword'}
-                    placeholder={'**********'}
-                />
-                </View>
-                <Spacer height={30} />
-                {/* <View> */}
-                <TouchableButton title={'Proceed'} textStyle={{ color: 'white', }} onPress={() => navigation.navigate('accountselector')}/>
-                <Spacer height={10} />
-                <Text style={{ color: '#9A9A9A', fontSize: 12, textAlign: 'center', fontFamily: 'Poppins_400Regular' }}>
-                    Already have an account?
-                    <Text style={{ color: '#454545', fontFamily: 'Poppins_500Medium' }} onPress={() => navigation.navigate('Login')}> SIGN IN</Text>
-                </Text>
-            {/* </View> */}
-            </View>
-            </View>
+                        <View style={styles.title}>
+                            <Text style={styles.loginText}>SIGN UP</Text>
+                            <Spacer height={15} />
+                            <Spacer height={10} />
+                            <View style={styles.inputFieldCard}>
+                                <Ionicons name='person' size={17} color='#9A9A9A' style={{ alignSelf: 'center', paddingLeft: 15 }} />
+                                <TextInput
+                                    style={styles.inputField}
+                                    name={'FirstName'}
+                                    placeholder={'First Name'}
+                                />
+                            </View>
+                            <Spacer height={10} />
+                            <View style={styles.inputFieldCard}>
+                                <Ionicons name='person' size={17} color='#9A9A9A' style={{ alignSelf: 'center', paddingLeft: 15 }} />
+                                <TextInput
+                                    style={styles.inputField}
+                                    name={'LastName'}
+                                    placeholder={'Last Name'}
+                                />
+                            </View>
+                            <Spacer height={10} />
+                            <View style={styles.inputFieldCard}>
+                                <Ionicons name='mail' size={17} color='#9A9A9A' style={{ alignSelf: 'center', paddingLeft: 15 }} />
+                                <TextInput
+                                    style={styles.inputField}
+                                    name={'email'}
+                                    placeholder={'Enter your email'}
+                                />
+                            </View>
+                            <Spacer height={10} />
+                            <View style={styles.inputFieldCard}>
+                                <Ionicons name='lock-closed' size={17} color='#9A9A9A' style={{ alignSelf: 'center', paddingLeft: 15 }} />
+                                <TextInput
+                                    style={styles.inputField}
+                                    name={'Paswword'}
+                                    placeholder={'**********'}
+                                />
+                            </View>
+                            <Spacer height={30} />
+                            {/* <View> */}
+                            <TouchableButton title={'Proceed'} textStyle={{ color: 'white', }} onPress={() => navigation.navigate('accountselector')} />
+                            <Spacer height={10} />
+                            <Text style={{ color: '#9A9A9A', fontSize: 12, textAlign: 'center', fontFamily: 'Poppins_400Regular' }}>
+                                Already have an account?
+                                <Text style={{ color: '#454545', fontFamily: 'Poppins_500Medium' }} onPress={() => navigation.navigate('Login')}> SIGN IN</Text>
+                            </Text>
+                            {/* </View> */}
+                        </View>
+                    </View>
                 </View>
             </ImageBackground>
         </KeyboardAvoidingView>
@@ -123,19 +123,19 @@ const styles = StyleSheet.create(
             justifyContent: "center",
             alignItems: "center",
             overflow: "hidden",
-          
-          },
+
+        },
         loginText: {
             fontFamily: 'Poppins_600SemiBold',
             fontSize: 40,
             color: '#454545',
         },
 
-        inputFieldCard: 
+        inputFieldCard:
         {
             flexDirection: 'row',
             alignSelf: 'center',
-           // paddingStart: 18.5,
+            // paddingStart: 18.5,
             //paddingTop: 23,
             width: '80%',
             height: 60,
@@ -145,16 +145,16 @@ const styles = StyleSheet.create(
             backgroundColor: "rgba(245, 245, 245, 255)"
         },
 
-        inputField: { 
+        inputField: {
             width: '100%',
-            padding: 10, 
+            padding: 10,
             fontFamily: 'Poppins_400Regular',
             fontSize: 10,
-            
+
         },
         inputFieldName: {
             width: '40%',
-            padding: 20, 
+            padding: 20,
             borderRadius: 10,
             borderWidth: 1,
             borderColor: "rgba(216, 216, 216, 255)",

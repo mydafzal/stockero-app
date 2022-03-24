@@ -21,13 +21,13 @@ import * as Animatable from 'react-native-animatable';
 
 const TabArr = [
   { route: 'Home', label: 'Home', type: Icons.FontAwesome, icon: 'home', component: Home, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
-  { route: 'Inbox', label: 'Inbox', type: Icons.Ionicons, icon: 'chatbox-ellipses', component: Inbox, color: Colors.primaryLite, alphaClr:'#FFFFFF' },
-  { route: 'Orders', label: 'Orders', type: Icons.FontAwesome5, icon: 'clipboard-list', component: Orders, color: Colors.primaryLite, alphaClr: '#FFFFFF'},
+  { route: 'Inbox', label: 'Inbox', type: Icons.Ionicons, icon: 'chatbox-ellipses', component: Inbox, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
+  { route: 'Orders', label: 'Orders', type: Icons.FontAwesome5, icon: 'clipboard-list', component: Orders, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
   { route: 'Notifications', label: 'Notifications', type: Icons.FontAwesome, icon: 'bell', component: Notifications, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
   { route: 'Profile', label: 'Profile', type: Icons.FontAwesome, icon: 'user', component: Profile, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
 ];
 
-const Tab = createBottomTabNavigator ();
+const Tab = createBottomTabNavigator();
 const TabButton = (props) => {
   const { item, onPress, accessibilityState } = props;
   const focused = accessibilityState.selected;
@@ -35,12 +35,12 @@ const TabButton = (props) => {
   const textViewRef = useRef(null);
 
   useEffect(() => {
-    if (focused) { // 0.3: { scale: .7 }, 0.5: { scale: .3 }, 0.8: { scale: .7 },
+    if (focused) {
       viewRef.current.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
-      textViewRef.current.animate({0: {scale: 0}, 1: {scale: 1}});
+      textViewRef.current.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
     } else {
       viewRef.current.animate({ 0: { scale: 1, }, 1: { scale: 0, } });
-      textViewRef.current.animate({0: {scale: 1}, 1: {scale: 0}});
+      textViewRef.current.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
     }
   }, [focused])
 
@@ -48,7 +48,7 @@ const TabButton = (props) => {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={1}
-      style={[styles.container, {flex: focused ? 1 : 0.65}]}>
+      style={[styles.container, { flex: focused ? 1 : 0.65 }]}>
       <View>
         <Animatable.View
           ref={viewRef}

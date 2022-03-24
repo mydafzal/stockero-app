@@ -10,38 +10,38 @@ import Colors from '../constants/Colors';
 import Spacer from '../components/Spacer';
 import Icon from '../constants/Icons';
 
-const accountselector=() => {
+const accountselector = () => {
     const navigation = useNavigation();
     return (
         <ImageBackground
-        source={bg}
-        style={styles.container}
-    >
-        <View style={styles.outerbody}>
+            source={bg}
+            style={styles.container}
+        >
+            <View style={styles.outerbody}>
 
-            <View style={styles.body}>
-            <Text style={styles.title}>Please Select</Text>
-            <Spacer height={10} />
-                <View style={styles.selectorbox}>
-                    <Image 
-                    source={manu}
-                    style={styles.imageStyle}>
-                    </Image>
-                    <Text style={styles.textStyle} onPress={() => navigation.navigate('Signupm')}>Manufacturer </Text>
-                </View>
-                <Spacer height={10} />
-                <View style={styles.selectorbox}>
-                    <Image 
-                    source={buyer}
-                    style={styles.imageStyle}>
-                    </Image>
-                    <Text style={styles.textStyle} onPress={() => navigation.navigate('Dashboard')}>Buyer</Text>
-                </View>
+                <View style={styles.body}>
+                    <Text style={styles.title}>Please Select</Text>
+                    <Spacer height={10} />
+                    <View style={styles.selectorbox}>
+                        <Image
+                            source={manu}
+                            style={styles.imageStyle}>
+                        </Image>
+                        <Text style={styles.textStyle} onPress={() => navigation.navigate('Signupm')}>Manufacturer </Text>
+                    </View>
+                    <Spacer height={10} />
+                    <View style={styles.selectorbox}>
+                        <Image
+                            source={buyer}
+                            style={styles.imageStyle}>
+                        </Image>
+                        <Text style={styles.textStyle} onPress={() => navigation.navigate('Dashboard')}>Buyer</Text>
+                    </View>
 
                 </View>
-                </View>
-            </ImageBackground>
-              
+            </View>
+        </ImageBackground>
+
     );
 }
 export default accountselector;
@@ -71,41 +71,41 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-        title: {
-                // top: '35%',
-                // alignSelf:'center', 
-                fontFamily:'Poppins_600SemiBold', 
-                fontSize:18, 
-                color: Colors.darkGray, 
-        },
-        imageStyle: {
-            marginLeft: 30,
-            alignSelf: 'center',
-            height: '60%',
-            width:  '15%', 
-        },
-       textStyle: {
-        alignSelf:'center', 
-        fontFamily:'Poppins_600SemiBold', 
-        fontSize:18, 
-        color: Colors.darkGray, 
+    title: {
+        // top: '35%',
+        // alignSelf:'center', 
+        fontFamily: 'Poppins_600SemiBold',
+        fontSize: 18,
+        color: Colors.darkGray,
+    },
+    imageStyle: {
+        marginLeft: 30,
+        alignSelf: 'center',
+        height: '60%',
+        width: '15%',
+    },
+    textStyle: {
+        alignSelf: 'center',
+        fontFamily: 'Poppins_600SemiBold',
+        fontSize: 18,
+        color: Colors.darkGray,
         paddingLeft: 30,
-       },
-       
-        selectorbox: {
-            // top: '75%',
-            flexDirection: 'row',
-            alignSelf: 'center',
-            width: '80%',
-            height: '10%',
-            borderRadius: 20,
-            borderWidth: 1,
-            borderColor: "rgba(216, 216, 216, 255)",
-            backgroundColor: "#FFFFFF",
-            shadowColor: "#707070",
-            shadowOffset: {
+    },
+
+    selectorbox: {
+        // top: '75%',
+        flexDirection: 'row',
+        alignSelf: 'center',
+        width: '80%',
+        height: '10%',
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: "rgba(216, 216, 216, 255)",
+        backgroundColor: "#FFFFFF",
+        shadowColor: "#707070",
+        shadowOffset: {
             width: 0,
             height: 10,
-          },
         },
+    },
 })

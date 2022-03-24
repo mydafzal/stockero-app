@@ -5,7 +5,7 @@ import TouchableButton from '../components/TouchableButton';
 import Spacer from '../components/Spacer';
 import { Ionicons } from '@expo/vector-icons';
 import bg from '../assets/images/bg.png'
-const Signup = () => {
+const NewPassword = () => {
     const navigation = useNavigation();
     return (
         <KeyboardAvoidingView
@@ -20,21 +20,30 @@ const Signup = () => {
                     <View style={styles.body}>
                         <View style={styles.title}>
                             <Text style={styles.loginText}>Forgot Password</Text>
-                            <Spacer height={15} />
-                            <Spacer height={10} />
+                            <Spacer height={25} />
                             <View style={styles.inputFieldCard}>
-                                <Ionicons name='person' size={17} color='#9A9A9A' style={{ alignSelf: 'center', paddingLeft: 15 }} />
+                                <Ionicons name='lock-closed' size={17} color='#9A9A9A' style={{ alignSelf: 'center', paddingLeft: 15 }} />
                                 <TextInput
                                     style={styles.inputField}
-                                    name={'Email'}
-                                    placeholder={'Email Address'}
+                                    name={'Password'}
+                                  
+                                    secureTextEntry={true}
+                                    placeholder={'New Password'}
+                                />
+                            </View>
+                            <Spacer height={10} />
+                            <View style={styles.inputFieldCard}>
+                                <Ionicons name='lock-closed' size={17} color='#9A9A9A' style={{ alignSelf: 'center', paddingLeft: 15 }} />
+                                <TextInput
+                                    style={styles.inputField}
+                                    name={'Password'}
+                                    
+                                    secureTextEntry={true}
+                                    placeholder={'Confirm Password'}
                                 />
                             </View>
                             <Spacer height={20} />
-                            <TouchableButton title={'Find'} textStyle={{ color: 'white', }} onPress={() => navigation.navigate('NewPassword')} />
-
-
-
+                            <TouchableButton title={'Confirm'} textStyle={{ color: 'white', }} onPress={() => navigation.navigate('accountselector')} />
                         </View>
                     </View>
                 </View>
@@ -42,7 +51,7 @@ const Signup = () => {
         </KeyboardAvoidingView>
     );
 };
-export default Signup;
+export default NewPassword;
 
 const styles = StyleSheet.create(
     {
