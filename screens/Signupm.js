@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, ImageBackground, StyleSheet, SafeAreaView, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TextInput, ImageBackground, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import TouchableButton from '../components/TouchableButton';
 import Spacer from '../components/Spacer';
@@ -7,10 +7,10 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import bg from '../assets/images/bg.png'
 
 const Signupm = () => {
-    const [text, onChangeText] = React.useState(null);
-    const [number, onChangeNumber] = React.useState(null);
+    const [text, onChangeText] = React.useState();
+    const [number, onChangeNumber] = React.useState();
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
+    const [value, setValue] = useState();
     const [items, setItems] = useState([
         { label: 'Apple', value: 'apple' },
         { label: 'Banana', value: 'banana' }

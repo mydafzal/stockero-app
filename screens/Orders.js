@@ -1,132 +1,77 @@
-import * as React from 'react';
-import { View, Text, ImageBackground, Image, StyleSheet, KeyboardAvoidingView } from 'react-native';
-import bg from '../assets/images/m-bg.png'
-import Spacer from '../components/Spacer';
-import MyProducts from '../assets/icons/myproducts.png'
-import Products from '../assets/icons/myproducts.png'
-import Leftovers from '../assets/icons/leftovers.png'
-import ActiveOrders from '../assets/icons/orders.png'
-import PaymentMethod from '../assets/icons/payment.png'
-import Address from '../assets/icons/addressicon.png'
+import { View, Text, FlatList, StyleSheet, SafeAreaView, StatusBar } from 'react-native'
+import React from 'react'
+import Colors from '../constants/Colors';
 
-const Orders = ({ navigation }) => {
+const Orders = () => {
+    const DATA = [
+        {
+          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+          title: 'Order # 1',
+        },
+        {
+          id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+          title: 'Order # 2',
+        },
+        {
+          id: '58694a0f-3da1-471f-bd96-145571e29d72',
+          title: 'Order # 3',
+        },
+      ]
+      const renderItem = ({item}) => (
+        <View style={styles.notiBox}>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.notiftext}>{item.id}</Text>
+      </View>
+      )
     return (
-        <ImageBackground
-        source={bg}
-        style={styles.container}
-    >
-        <View style={styles.header}>
-                <Text style={styles.Text}>Hi, Momal</Text>
-            </View>
-            <Spacer height={30} />
-        <View style={styles.container}>
-            <View style={styles.box}>
-                <View style={styles.inner}>
-                    <Image
-                        source={Products}
-                        style={styles.iconStyle2}
-                    >
-                    </Image>
-                    <Text>Add Products</Text>
-                </View>
-            </View>
-            <View style={styles.box}>
-                <View style={styles.inner}>
-                    <Image
-                        source={MyProducts}
-                        style={styles.iconStyle2}
-                    >
-                    </Image>
-                    <Text>My Products</Text>
-                </View>
-            </View>
-            <View style={styles.box}>
-                <View style={styles.inner}>
-                    <Image
-                        source={Leftovers}
-                        style={styles.iconStyle2}
-                    >
-                    </Image>
-                    <Text>List Leftovers</Text>
-                </View>
-            </View>
-            <View style={styles.box}>
-                <View style={styles.inner}>
-                    <Image
-                        source={ActiveOrders}
-                        style={styles.iconStyle}
-                    >
-                    </Image>
-                    <Text>Active Orders</Text>
-                </View>
-            </View>
-            <View style={styles.box}>
-                <View style={styles.inner}>
-                    <Image
-                        source={PaymentMethod}
-                        style={styles.iconStyle}
-                    >
-                    </Image>
-                    <Text>Payment Method</Text>
-                </View>
-            </View>
-            <View style={styles.box}>
-                <View style={styles.inner}>
-                    <Image
-                        source={Address}
-                        style={styles.iconStyle}
-                    >
-                    </Image>
-                    <Text>Physical Address</Text>
-                </View>
-            </View>
-        </View>
-        </ImageBackground>
-    );
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.Headtitle}>Orders</Text>
+      <FlatList
+        data={DATA}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+    </SafeAreaView>
+    )
 }
 
-export default Orders;
+export default Orders
 
 const styles = StyleSheet.create({
 
     container: {
-        paddingTop: 5,
-        width: '100%',
-        height: '100%',
-        display: "flex",
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-    },
-    header: {
-        flex: 0.5,
-        paddingLeft: 10,
-    },
-    Text: {
+        flex: 1,
+        marginTop: StatusBar.currentHeight || 5,
+      },
+      notiBox: {
+        backgroundColor: '#ffffff',
+        padding: 15,
+        borderRadius: 20,
+        borderColor: Colors.gray,
+        borderWidth: 1,
+        marginVertical: 5,
+        marginHorizontal: 16,
+      },
+      title: {
+        fontFamily: 'Poppins_600SemiBold',
+        fontSize: 18,
+        color: "black",
+      },
+      Headtitle: {
         fontFamily: 'Poppins_600SemiBold',
         fontSize: 25,
-        color: '#fff'
-    },
-    box: {
-        width: '40%',
-        height: '20%',
-        padding: 5,
-        
-    },
-    inner: {
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: 'white',
-        borderRadius: 20,
-        alignItems: 'center',
-
-    },
-    iconStyle2: {
-        width: "30%", 
-        height: '30%'
-    },
-    iconStyle: {
-        width: "30%", 
-        height: '30%'
-    }
-})
+        color: "black",
+        padding: 22,
+      },
+      notiftext: {
+        fontFamily: 'Poppins_500Medium',
+        fontSize: 13,
+        color: Colors.gray,
+      },
+      time: {
+        fontFamily: 'Poppins_500Medium',
+        fontSize: 10,
+        color: Colors.gray,
+      },
+      
+    });

@@ -1,5 +1,5 @@
-import React, { version } from 'react'
-import { View, Text, TextInput, ImageBackground, StyleSheet, SafeAreaView, KeyboardAvoidingView } from 'react-native';
+import React from 'react'
+import { View, Text, TextInput, ImageBackground, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import TouchableButton from '../components/TouchableButton';
 import Spacer from '../components/Spacer';

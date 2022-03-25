@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, ImageBackground, StyleSheet, TextInput, KeyboardAvoidingView, Dimensions, ActivityIndicator ,Platform} from 'react-native';
+import { View, Text,ViewPropTypes, ImageBackground, StyleSheet, TextInput, KeyboardAvoidingView, Dimensions, ActivityIndicator ,Platform} from 'react-native';
 import TouchableButton from '../components/TouchableButton';
 import Spacer from '../components/Spacer';
 import { useNavigation } from '@react-navigation/native';

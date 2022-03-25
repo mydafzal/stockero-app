@@ -4,6 +4,7 @@ import headerart from '../assets/images/headerart.png';
 import Header from '../screens/Header';
 import Spacer from '../components/Spacer';
 import Colors from '../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 import MyProducts from '../assets/icons/myproducts.png'
 import Products from '../assets/icons/myproducts.png'
 import Leftovers from '../assets/icons/leftovers.png'
@@ -23,13 +24,13 @@ const Home = ({ navigation }) => {
             <Spacer height={50} />
             <View style={styles.innerContainer}>
             <View style={styles.box}>
-                <View style={styles.inner}>
+                <View style={styles.inner} onPress={() => navigation.navigate('Add Products')}>
                     <Image
                         source={Products}
                         style={{ width: "40%", height: '45%' }}
                     >
                     </Image>
-                    <Text style={styles.boxFont}>Add Products</Text>
+                    <Text style={styles.boxFont} onPress={() => navigation.navigate('Add Products')}>Add Products</Text>
                 </View>
             </View>
             <View style={styles.box}>

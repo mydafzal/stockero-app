@@ -7,6 +7,7 @@ import ForgetPassword from '../screens/ForgetPassword';
 import NewPassword from '../screens/NewPassword';
 import Dashboard from '../screens/Dashboard';
 import accountselector from '../screens/accountselector';
+import AddP from '../screens/Buyer/AddProducts';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,9 @@ const SplashNavigator = () => {
             <Stack.Screen options={{ headerShown: false }}
                 name="accountselector"
                 component={accountselector} />
+                <Stack.Screen
+                name="Add Products"
+                component={AddP} />
         </Stack.Navigator>
     )
 }
