@@ -24,7 +24,7 @@ const TabArr = [
   { route: 'Inbox', label: 'Inbox', type: Icons.Ionicons, icon: 'chatbox-ellipses', component: Inbox, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
   { route: 'Orders', label: 'Orders', type: Icons.FontAwesome5, icon: 'clipboard-list', component: Orders, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
   { route: 'Notifications', label: 'Notifications', type: Icons.FontAwesome, icon: 'bell', component: Notifications, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
-  { route: 'Profile', label: 'Profile', type: Icons.FontAwesome, icon: 'user', component: Profile, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
+  { route: 'Profile', label: 'Settings', type: Icons.FontAwesome, icon: 'gear', component: Profile, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
 ];
 
 const Tab = createBottomTabNavigator();
@@ -48,7 +48,7 @@ const TabButton = (props) => {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={1}
-      style={[styles.container, { flex: focused ? 1 : 0.65 }]}>
+      style={[styles.container, { flex: focused ? 1 : 0.60 }]}>
       <View>
         <Animatable.View
           ref={viewRef}

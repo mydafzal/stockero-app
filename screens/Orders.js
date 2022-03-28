@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
       notiBox: {
         backgroundColor: '#ffffff',
         padding: 15,
-        borderRadius: 20,
-        borderColor: Colors.gray,
+        borderRadius: 10,
+        borderColor: '#E7E7E9',
         borderWidth: 1,
         marginVertical: 5,
         marginHorizontal: 16,

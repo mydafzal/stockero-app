@@ -3,6 +3,7 @@ import React from 'react'
 import Colors from '../constants/Colors';
 
 const Notifications = () => {
+  
     const DATA = [
         {
           id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -31,7 +32,9 @@ const Notifications = () => {
       </View>
       )
     return (
+      
         <SafeAreaView style={styles.container}>
+          
             <Text style={styles.Headtitle}>Notifications</Text>
       <FlatList
         data={DATA}
@@ -49,6 +52,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: StatusBar.currentHeight || 5,
+        // backgroundColor: rgb(250, 230, 209, 0.1),
       },
       Headtitle: {
         fontFamily: 'Poppins_600SemiBold',
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
       notiBox: {
         backgroundColor: '#ffffff',
         padding: 20,
-        borderRadius: 20,
+        borderRadius: 15,
         marginVertical: 5,
         marginHorizontal: 16,
       },
