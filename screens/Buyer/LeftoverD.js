@@ -11,11 +11,38 @@ import React, { useState } from "react";
 import SelectBox from "react-native-multi-selectbox";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Colors from "../../constants/Colors";
-import MultiSelect from 'react-native-multiple-select';
+import MultiSelect from "react-native-multiple-select";
 import { launchImageLibrary } from "react-native-image-picker";
 import ButtonN from "../../components/ButtonN";
 import { useNavigation } from "@react-navigation/native";
 import Spacer from "../../components/Spacer";
+import { SafeAreaView } from "react-native-safe-area-context";
+const types = [
+  {
+    item: "Sports",
+    id: "SP",
+  },
+  {
+    item: "Clothing",
+    id: "CL",
+  },
+  {
+    item: "Wood Products",
+    id: "WD",
+  },
+  {
+    item: "Paper Products",
+    id: "PP",
+  },
+  {
+    item: "Electronics",
+    id: "EL",
+  },
+  {
+    item: "Others",
+    id: "OT",
+  },
+];
 const createFormData = (photo, body = {}) => {
   const data = new FormData();
 
@@ -31,8 +58,8 @@ const createFormData = (photo, body = {}) => {
 
   return data;
 };
-const AddProducts = ({ navigation }) => {
-  
+const LeftoverD = ({ navigation }) => {
+  const [selectedTypes, setSelectedTypes] = useState([]);
   const [photo, setPhoto] = React.useState(null);
   const handleChoosePhoto = () => {
     launchImageLibrary({ noData: true }, (response) => {
@@ -58,26 +85,14 @@ const AddProducts = ({ navigation }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={{ alignItems: "center", paddingTop: 20 }}>
-        <Text style={styles.Headtitle}>Provide the following Information</Text>
-      </View>
-      <Text style={styles.Ftitle}>Product Name</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.Ftitle}>Duration</Text>
       <View style={styles.inputFieldCard}>
         <TextInput
           style={styles.inputField}
           name={"ProductName"}
           // onChangeText={(e) => setEmail(e)}
-          placeholder={"Please enter the product name"}
-        />
-      </View>
-      <Text style={styles.Ftitle}>Description</Text>
-      <View style={styles.dFieldCard}>
-        <TextInput
-          style={styles.inputField}
-          name={"Description"}
-          // onChangeText={(e) => setEmail(e)}
-          placeholder={"Please add product description"}
+          placeholder={"Enter Days"}
         />
       </View>
       <Text style={styles.Ftitle}>Upload Images</Text>
@@ -99,17 +114,38 @@ const AddProducts = ({ navigation }) => {
         )}
         <Button title="Choose File" onPress={handleChoosePhoto} />
       </View>
+      <View style={{ padding: 30 }}>
+        <SelectBox
+          label="Select Product Type"
+          options={types}
+          selectedValues={selectedTypes}
+          onMultiSelect={onMultiChange()}
+          onTapClose={onMultiChange()}
+          arrowIconColor="#4F3074"
+          searchIconColor="#4F3074"
+          toggleIconColor="#4F3074"
+          isMulti
+        />
+      </View>
       <Spacer height={30} />
-      <ButtonN title={"Next"} textStyle={{ color: Colors.primary }} onPress={() => navigation.navigate("Add Product Details")}/>
-    </ScrollView>
+      <ButtonN
+        buttonStyle={{backgroundColor:Colors.primary}}
+        title={"Post"}
+        textStyle={{ color: Colors.white }}
+        onPress={() => navigation.navigate("Add Product Details")}
+      />
+    </SafeAreaView>
   );
+  function onMultiChange() {
+    return (types) => setSelectedTypes(xorBy(selectedTypes, [types], "id"));
+  }
 };
 
-export default AddProducts;
+export default LeftoverD;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: StatusBar.currentHeight || 0,
+    paddingTop: 20,
     backgroundColor: "#fff",
   },
   inputField: {
@@ -139,7 +175,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     width: "85%",
-    height: "40%",
+    height: "30%",
     borderRadius: 10,
     backgroundColor: "#f4f4f4",
   },

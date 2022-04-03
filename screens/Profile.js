@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, StatusBar, ScrollView } from "react-native";
 import SettingButton from "../components/SettingButton";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
-const Profile = () => {
+import { useNavigation } from "@react-navigation/native";
+const Profile = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
     <Text style={styles.Headtitle}>Settings</Text>
@@ -95,6 +96,7 @@ const Profile = () => {
           }
           title={"Payment Details"}
           textStyle={{ color: "#373737" }}
+          onPress={() => navigation.navigate("Wallet")}
         />
         
       </View>

@@ -31,16 +31,14 @@ export default ButtonN
 const Styles = StyleSheet.create({
     container: {
         width: '85%',
-        alignSelf: 'center',
+        alignItems: 'center',
         height: 55,
     },
     button: {
-        width: '100%',
-        height: '100%',
-        backgroundColor:  Colors.primaryLite,
-        borderRadius: 10,
-        borderColor: '#4F3074',
-        borderWidth:1,
+        width: '20%',
+        height: '50%',
+        backgroundColor:  Colors.bg,
+        borderRadius: 5,
         justifyContent: 'center',
     },
     buttonInternal: {
@@ -50,9 +48,9 @@ const Styles = StyleSheet.create({
         borderRadius: 10,
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: 12,
         textAlign: 'center',
-        fontFamily: 'Poppins_600SemiBold',
-        color: Colors.primary,
+        fontFamily: 'Poppins_500Medium',
+        color: Colors.gray,
     }
 });

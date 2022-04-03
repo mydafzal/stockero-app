@@ -12,7 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Icon, { Icons } from '../constants/Icons';
 import Colors from '../constants/Colors';
 import Home from '../screens/Home';
-import Inbox from '../screens/Inbox';
+import BuyerRequests from '../screens/BuyerRequests';
 import Orders from '../screens/Orders';
 import Notifications from '../screens/Notifications';
 import Profile from '../screens/Profile';
@@ -20,11 +20,11 @@ import * as Animatable from 'react-native-animatable';
 
 
 const TabArr = [
-  { route: 'Home', label: 'Home', type: Icons.FontAwesome, icon: 'home', component: Home, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
-  { route: 'Inbox', label: 'Inbox', type: Icons.Ionicons, icon: 'chatbox-ellipses', component: Inbox, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
-  { route: 'Orders', label: 'Orders', type: Icons.FontAwesome5, icon: 'clipboard-list', component: Orders, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
-  { route: 'Notifications', label: 'Notifications', type: Icons.FontAwesome, icon: 'bell', component: Notifications, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
-  { route: 'Profile', label: 'Settings', type: Icons.FontAwesome, icon: 'gear', component: Profile, color: Colors.primaryLite, alphaClr: '#FFFFFF' },
+  { route: 'Home', label: 'Home', type: Icons.FontAwesome, icon: 'home', component: Home, color: '#4F3074', alphaClr: '#FFFFFF' },
+  { route: 'Buyer Requests', label: 'Buyer Requests', type: Icons.Ionicons, icon: 'podium', component: BuyerRequests, color: '#4F3074', alphaClr: '#FFFFFF' },
+  { route: 'Orders', label: 'Orders', type: Icons.FontAwesome5, icon: 'clipboard-list', component: Orders, color: '#4F3074', alphaClr: '#FFFFFF' },
+  { route: 'Notifications', label: 'Notifications', type: Icons.FontAwesome, icon: 'bell', component: Notifications, color: '#4F3074', alphaClr: '#FFFFFF' },
+  { route: 'Profile', label: 'Settings', type: Icons.FontAwesome, icon: 'gear', component: Profile, color: '#4F3074', alphaClr: '#FFFFFF' },
 ];
 
 const Tab = createBottomTabNavigator();
@@ -54,11 +54,11 @@ const TabButton = (props) => {
           ref={viewRef}
           style={[StyleSheet.absoluteFillObject, { backgroundColor: item.color, borderRadius: 10 }]} />
         <View style={[styles.btn, { backgroundColor: focused ? null : item.alphaClr }]}>
-          <Icon type={item.type} name={item.icon} color={focused ? Colors.primary : Colors.gray} />
+          <Icon type={item.type} name={item.icon} color={focused ? 'white': Colors.gray} />
           <Animatable.View
             ref={textViewRef}>
             {focused && <Text style={{
-              color: Colors.primary, paddingHorizontal: 8
+              color: 'white', paddingHorizontal: 8
             }}>{item.label}</Text>}
           </Animatable.View>
         </View>
