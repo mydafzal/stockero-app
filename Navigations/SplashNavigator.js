@@ -5,18 +5,19 @@ import Signup from "../screens/Signup";
 import Signupm from "../screens/Signupm";
 import ForgetPassword from "../screens/ForgetPassword";
 import NewPassword from "../screens/NewPassword";
-import Dashboard from "../screens/Dashboard";
+import Dashboard from "../screens/Manufacturer/Dashboard";
+import DashboardB from "../screens/Buyer/Dashboard";
 import accountselector from "../screens/accountselector";
-import AddP from "../screens/Buyer/AddProducts";
-import AllP from "../screens/Buyer/AllProducts";
-import ProductD from "../screens/Buyer/ViewProduct";
-import Leftovers from "../screens/Buyer/Leftovers";
-import LeftoverD from "../screens/Buyer/LeftoverD";
-import ListedLeftovers from "../screens/Buyer/ListedLeftovers";
-import PaymentMethod from "../screens/Buyer/PaymentMethod";
-import Address from "../screens/Buyer/Address";
-import AddPD from "../screens/Buyer/AddProductD";
-import Wallet from "../screens/Buyer/Wallet";
+import AddP from "../screens/Manufacturer/AddProducts";
+import AllP from "../screens/Manufacturer/AllProducts";
+import ProductD from "../screens/Manufacturer/ViewProduct";
+import Leftovers from "../screens/Manufacturer/Leftovers";
+import LeftoverD from "../screens/Manufacturer/LeftoverD";
+import ListedLeftovers from "../screens/Manufacturer/ListedLeftovers";
+import PaymentMethod from "../screens/Manufacturer/PaymentMethod";
+import Address from "../screens/Manufacturer/Address";
+import AddPD from "../screens/Manufacturer/AddProductD";
+import Wallet from "../screens/Manufacturer/Wallet";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -58,6 +59,11 @@ const SplashNavigator = () => {
         options={{ headerShown: false }}
         name="accountselector"
         component={accountselector}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Dashboard Buyer"
+        component={DashboardB}
       />
       <Stack.Screen name="Add Products" component={AddP} />
       <Stack.Screen name="Add Product Details" component={AddPD} />

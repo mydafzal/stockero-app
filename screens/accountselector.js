@@ -35,7 +35,7 @@ const accountselector = () => {
                             source={buyer}
                             style={styles.imageStyle}>
                         </Image>
-                        <Text style={styles.textStyle} onPress={() => navigation.navigate('Dashboard')}>Buyer</Text>
+                        <Text style={styles.textStyle} onPress={() => navigation.navigate('Dashboard Buyer')}>Buyer</Text>
                     </View>
 
                 </View>

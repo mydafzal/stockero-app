@@ -8,8 +8,8 @@ import {
   Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Spacer from "../components/Spacer";
-import Colors from "../constants/Colors";
+import Spacer from "../../components/Spacer";
+import Colors from "../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 const Home = ({ navigation }) => {

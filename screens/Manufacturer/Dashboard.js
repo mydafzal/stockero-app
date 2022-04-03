@@ -9,13 +9,13 @@ import React, { useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs"
 import { Ionicons } from '@expo/vector-icons';
-import Icon, { Icons } from '../constants/Icons';
-import Colors from '../constants/Colors';
-import Home from '../screens/Home';
-import BuyerRequests from '../screens/BuyerRequests';
-import Orders from '../screens/Orders';
-import Notifications from '../screens/Notifications';
-import Profile from '../screens/Profile';
+import Icon, { Icons } from '../../constants/Icons';
+import Colors from '../../constants/Colors';
+import Home from '../Manufacturer/Home';
+import BuyerRequests from '../Manufacturer/BuyerRequests';
+import Orders from '../Manufacturer/Orders';
+import Notifications from '../Manufacturer/Notifications';
+import Profile from '../Manufacturer/Profile';
 import * as Animatable from 'react-native-animatable';
 
 

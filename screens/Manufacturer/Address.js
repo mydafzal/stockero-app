@@ -1,111 +1,108 @@
-import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
+
 import React, { useState } from 'react';
+import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
+import Spacer from "../../components/Spacer";
 import SelectBox from 'react-native-multi-selectbox';
 import { xorBy } from 'lodash';
 import ButtonN from '../../components/ButtonN';
 const K_OPTIONS = [
     {
-      item: 'Al Baraka Bank (Pakistan) Limited',
+      item: 'Azad Kashmir',
       id: '1',
     },
     {
-      item: 'Allied Bank Limited',
+      item: 'Balochistan',
       id: '2',
     },
     {
-      item: 'Askari Bank',
+      item: 'FATA',
       id: '3',
     },
     {
-      item: 'Bank Alfalah Limited',
+      item: 'Gilgit Baltistan',
       id: '4',
     },
     {
-      item: 'Bank Al-Habib Limited',
+      item: 'Islamabad Capital Territory',
       id: '5',
     },
     {
-      item: 'Manchester United FC',
-      id: 'MUN',
+      item: 'Kyber Pakhtunkhwa',
+      id: '6',
     },
     {
-      item: 'Manchester City FC',
-      id: 'MCI',
+      item: 'Punjab',
+      id: '7',
     },
     {
-      item: 'Everton FC',
-      id: 'EVE',
-    },
-    {
-      item: 'Tottenham Hotspur FC',
-      id: 'TOT',
-    },
-    {
-      item: 'Chelsea FC',
-      id: 'CHE',
-    },
-    {
-      item: 'Liverpool FC',
-      id: 'LIV',
-    },
-    {
-      item: 'Arsenal FC',
-      id: 'ARS',
-    },
-  
-    {
-      item: 'Leicester City FC',
-      id: 'LEI',
+      item: 'Sindh',
+      id: '8',
     },
   ]
-const Wallet = () => {
+const Address = () => {
     const [selectedTeam, setSelectedTeam] = useState({})
   return (
     <KeyboardAvoidingView
     behavior={Platform.OS === "ios" ? "padding" : "height"}
 >
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>
-        Stockero will use this Information to clear your Funds. Please fill
-        details carefully.
+        Enter your Address
       </Text>
-      <Text style={styles.Ftitle}>Holder Name</Text>
+      <Text style={styles.Ftitle}>First Name</Text>
       <View style={styles.inputFieldCard}>
         <TextInput
           style={styles.inputField}
-          name={"Name"}
-          placeholder={"Enter full name"}
+          name={"FirstName"}
+          placeholder={"First Name"}
         />
       </View>
-      <Text style={styles.Ftitle}>Enter your Account Number</Text>
+      <Text style={styles.Ftitle}>Last Name</Text>
       <View style={styles.inputFieldCard}>
         <TextInput
           style={styles.inputField}
-          name={"AccountNumber"}
-          placeholder={"Account Number"}
+          name={"LastName"}
+          placeholder={"Last Name"}
         />
       </View>
-      <Text style={styles.Ftitle}>Enter IBAN Number</Text>
+      <Text style={styles.Ftitle}>Country</Text>
       <View style={styles.inputFieldCard}>
         <TextInput
           style={styles.inputField}
-          name={"IBANNumber"}
-          placeholder={"IBAN Number"}
+          value = "Pakistan"
+          editable = {false}
+          name={"Country"}
         />
       </View>
-      <Text style={styles.Ftitle}>Select Bank</Text>
+      <Text style={styles.Ftitle}>Street Address</Text>
       <View style={styles.inputFieldCard}>
         <TextInput
           style={styles.inputField}
-          name={"IBANNumber"}
-          placeholder={"IBAN Number"}
+          name={"Street"}
+          placeholder={"House number and street name"}
+        />
+      </View>
+      <Spacer height={5} />
+      <View style={styles.inputFieldCard}>
+        <TextInput
+          style={styles.inputField}
+          name={"Street2"}
+          placeholder={"Apartment, suite, unit, building, floor, etc."}
+        />
+      </View>
+      <Text style={styles.Ftitle}>City</Text>
+      <View style={styles.inputFieldCard}>
+      <TextInput
+          style={styles.inputField}
+          name={"City"}
+          placeholder={"City Name"}
         />
       </View>
       <View style={{ margin: 30 }}>
       <SelectBox
-        label="Select Bank"
+        label="State"
         options={K_OPTIONS}
         value={selectedTeam}
         onChange={onChange()}
@@ -114,10 +111,18 @@ const Wallet = () => {
         searchIconColor= '#4F3074'
         toggleIconColor= '#4F3074'
       />
-     
     </View>
-    <ButtonN buttonStyle= {{backgroundColor: Colors.primary}}title={'Save Details'} textStyle={{ fontSize: 15, color: Colors.white, }} onPress={() => navigation.navigate('accountselector')} />
-    </View>
+    <Text style={styles.Ftitle}>Postal Code/ZIP</Text>
+      <View style={styles.inputFieldCard}>
+      <TextInput
+          style={styles.inputField}
+          name={"postalcode"}
+          placeholder={"Enter Postal Code"}
+        />
+      </View>
+      <Spacer height={25} />
+    <ButtonN buttonStyle= {{backgroundColor: Colors.primary}}title={'Save Address'} textStyle={{ fontSize: 15, color: Colors.white, }} onPress={() => navigation.navigate('accountselector')} />
+    </ScrollView>
     </KeyboardAvoidingView>
   );
   function onChange() {
@@ -125,7 +130,7 @@ const Wallet = () => {
   }
 };
 
-export default Wallet;
+export default Address;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#ffffff",
@@ -139,14 +144,14 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
     fontSize: 15,
     color: Colors.black,
-    paddingLeft: 16,
-    paddingTop: 15,
+    paddingLeft: 32,
+    paddingTop: 30,
     paddingBottom: 12,
   },
   inputFieldCard: {
     flexDirection: "row",
     alignSelf: "center",
-    width: "90%",
+    width: "85%",
     height: 60,
     borderRadius: 10,
     backgroundColor: "#f4f4f4",
@@ -161,7 +166,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
     fontSize: 12,
     color: Colors.gray,
-    paddingLeft: 20,
+    paddingLeft: 35,
     paddingTop: 12,
     paddingBottom: 12,
   },

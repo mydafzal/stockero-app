@@ -1,6 +1,6 @@
 import { View, Text, FlatList, StyleSheet, SafeAreaView, StatusBar } from 'react-native'
 import React from 'react'
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 
 const Notifications = () => {
   

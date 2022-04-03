@@ -1,8 +1,8 @@
 import { View, Text, FlatList, StyleSheet, SafeAreaView, StatusBar } from 'react-native'
 import React from 'react'
-import Colors from '../constants/Colors';
-import ButtonSmall from '../components/ButtonSmall';
-import Spacer from '../components/Spacer';
+import Colors from '../../constants/Colors';
+import ButtonSmall from '../../components/ButtonSmall';
+import Spacer from '../../components/Spacer';
 
 const BuyerRequests = () => {
     const DATA = [

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { View, Text, StyleSheet, StatusBar, ScrollView } from "react-native";
-import SettingButton from "../components/SettingButton";
+import SettingButton from "../../components/SettingButton";
 import { Ionicons } from "@expo/vector-icons";
-import Colors from "../constants/Colors";
+import Colors from "../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 const Profile = ({ navigation }) => {
   return (
@@ -41,6 +41,7 @@ const Profile = ({ navigation }) => {
           }
           title={"Address"}
           textStyle={{ color: "#373737" }}
+          onPress={() => navigation.navigate("Address")}
         />
          <View
           style={{

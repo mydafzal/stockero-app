@@ -16,6 +16,7 @@ import { launchImageLibrary } from "react-native-image-picker";
 import ButtonN from "../../components/ButtonN";
 import { useNavigation } from "@react-navigation/native";
 import Spacer from "../../components/Spacer";
+import { xorBy } from 'lodash';
 import { SafeAreaView } from "react-native-safe-area-context";
 const types = [
   {
