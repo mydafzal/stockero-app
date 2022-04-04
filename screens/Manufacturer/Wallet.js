@@ -95,14 +95,7 @@ const Wallet = () => {
           placeholder={"IBAN Number"}
         />
       </View>
-      <Text style={styles.Ftitle}>Select Bank</Text>
-      <View style={styles.inputFieldCard}>
-        <TextInput
-          style={styles.inputField}
-          name={"IBANNumber"}
-          placeholder={"IBAN Number"}
-        />
-      </View>
+      
       <View style={{ margin: 30 }}>
       <SelectBox
         label="Select Bank"
@@ -129,6 +122,7 @@ export default Wallet;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#ffffff",
+   
     display: "flex",
             width: "100%",
             height: "100%",

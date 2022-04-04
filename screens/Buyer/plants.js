@@ -6,7 +6,7 @@ const plants = [
       like: true,
       img: require('../../assets/images/plant2.png'),
       about:
-        'Succulent Plantis one of the most popular and beautiful species that will produce clumpms. The storage of water often gives succulent plants a more swollen or fleshy appearance than other plants, a characteristic known as succulence.',
+        'Succulent Plantis one of the most popular and beautiful species that will produce clumpms. The storage of water often gives succulent plants a more swollen or fleshy appearance than other plants, a characteristic known as succulence. Succulent Plantis one of the most popular and beautiful species that will produce clumpms. The storage of water often gives succulent plants a more swollen or fleshy appearance than other plants, a characteristic known as succulence.',
     },
   
     {
@@ -16,7 +16,7 @@ const plants = [
       like: false,
       img: require('../../assets/images/plant2.png'),
       about:
-        'Dragon Plant one of the most popular and beautiful species that will produce clumpms. The storage of water often gives succulent plants a more swollen or fleshy appearance than other plants, a characteristic known as succulence.',
+        'Dragon Plant one of the most popular and beautiful species that will produce clumpms. The storage of water often gives succulent plants a more swollen or fleshy appearance than other plants, a characteristic known as succulence.Dragon Plant one of the most popular and beautiful species that will produce clumpms. The storage of water often gives succulent plants a more swollen or fleshy appearance than other plants, a characteristic known as succulence.',
     },
     {
       id: 3,
@@ -51,7 +51,7 @@ const plants = [
       name: 'Dragon Plant',
       price: '50.99',
       like: false,
-      img: require('../../assets/images/plant2.png'),
+      img: require('../assets/images/plant2.png'),
       about:
         'Potted Plant Ravenea Plant one of the most popular and beautiful species that will produce clumpms. The storage of water often gives succulent plants a more swollen or fleshy appearance than other plants, a characteristic known as succulence.',
     },

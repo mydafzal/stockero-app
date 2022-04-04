@@ -7,15 +7,26 @@ import { Ionicons } from '@expo/vector-icons';
 import bg from '../assets/images/bg.png'
 import axios from 'axios';
 const { height, width } = Dimensions.get("window");
-import { userLogin } from '../api/user.api';
+import { connect } from 'react-redux'; 
+import { signIn } from '../redux/buyer/buyer.action';
 
-const Login = () => {
+
+const Login = ({ token,user,signIn,error }) => {
     const navigation = useNavigation();
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
 
     const handleSubmit=(e)=>{
-        userLogin(email,password,navigation);
+        e.preventDefault();
+        signIn(email.toLowerCase(),password.toLowerCase());
+        //alert(token)
+        if(error===null){
+            navigation.navigate('Dashboard');
+        } else{
+            alert(error);
+        }
+        
+        
         
     }
       
@@ -75,7 +86,19 @@ const Login = () => {
         </KeyboardAvoidingView>
     );
 };
-export default Login;
+
+ const mapStateToProps = (state) => {
+        return {
+            user: state.buyer,token:state.buyer.token,error:state.buyer.error
+        }
+    }
+    const mapDispatchToProps = (dispatch) => {
+        return {
+            signIn:(email,password)=>dispatch(signIn(email,password))
+        }
+    }
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create(
     {

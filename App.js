@@ -4,8 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import SplashNavigator from './Navigations/SplashNavigator';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { store } from './redux/store';
 import thunk from 'redux-thunk';
-import rootReducer from './stores/rootReducer';
 import { RootSiblingParent } from "react-native-root-siblings";
 
 import {
@@ -30,11 +30,8 @@ import {
   Poppins_900Black_Italic,
 } from "@expo-google-fonts/poppins";
 
-const store = createStore(
-  rootReducer,
-  applyMiddleware(thunk)
-)
 const App = () => {
+  
   let [fontsLoaded] = useFonts({
     Poppins_100Thin,
     Poppins_100Thin_Italic,
@@ -74,8 +71,9 @@ const App = () => {
         </SafeAreaView>
         </RootSiblingParent>
       </NavigationContainer>
-      
-    </Provider>
+
+      </Provider>
+
   
   
   );

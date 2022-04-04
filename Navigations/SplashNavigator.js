@@ -18,6 +18,7 @@ import PaymentMethod from "../screens/Manufacturer/PaymentMethod";
 import Address from "../screens/Manufacturer/Address";
 import AddPD from "../screens/Manufacturer/AddProductD";
 import Wallet from "../screens/Manufacturer/Wallet";
+import BidScreen from "../screens/Buyer/BidScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -75,6 +76,7 @@ const SplashNavigator = () => {
       <Stack.Screen name="Address" component={Address} />
       <Stack.Screen name="Listed Leftovers" component={ListedLeftovers} />
       <Stack.Screen name="Wallet" component={Wallet} />
+      <Stack.Screen name="Bid Screen" component={BidScreen} />
     </Stack.Navigator>
   );
 };

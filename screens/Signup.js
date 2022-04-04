@@ -5,8 +5,12 @@ import TouchableButton from '../components/TouchableButton';
 import Spacer from '../components/Spacer';
 import { Ionicons } from '@expo/vector-icons';
 import bg from '../assets/images/bg.png'
+import { connect } from 'react-redux';
+
 
 const Signup = () => {
+    const [email,setEmail] = React.useState('');
+    const [password,setPassword] = React.useState('');
     const navigation = useNavigation();
     return (
         <KeyboardAvoidingView
@@ -29,6 +33,7 @@ const Signup = () => {
                                     style={styles.inputField}
                                     name={'FirstName'}
                                     placeholder={'First Name'}
+                                    onChangeText={(text) => setEmail(text)}
                                 />
                             </View>
                             <Spacer height={10} />
@@ -38,6 +43,7 @@ const Signup = () => {
                                     style={styles.inputField}
                                     name={'LastName'}
                                     placeholder={'Last Name'}
+                                    onChangeText={(text) => setPassword(text)}
                                 />
                             </View>
                             <Spacer height={10} />
@@ -162,3 +168,17 @@ const styles = StyleSheet.create(
         }
 
     })
+
+    // const mapStateToProps = (state) => {
+    //     return {
+    //         user: state.buyer,token:state.buyer.token
+    //     }
+    // }
+    // export mapDispatchToProps = (dispatch) => {
+    //     return {
+    //         signIn:(email,password)=>dispatch(signIn(email,password))
+    //     }
+    // }
+
+    // export default connect(mapStateToProps,mapDispatchToProps)(Signup);
+    
