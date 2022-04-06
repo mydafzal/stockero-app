@@ -41,7 +41,7 @@ const Signup = ({ SignUp, user }) => {
     if (user.user !== null) {
       navigation.reset({
         index: 0,
-        routes: [{ name: "Dashboard Buyer" }],
+        routes: [{ name: "Dashboard" }],
       });
     }
   }, [user.user]);
@@ -68,6 +68,7 @@ const Signup = ({ SignUp, user }) => {
                   style={styles.inputField}
                   name={"FirstName"}
                   placeholder={"First Name"}
+                  value={firstName}
                   onChangeText={(e) => setfirstName(e)}
                 />
               </View>
@@ -82,6 +83,7 @@ const Signup = ({ SignUp, user }) => {
                 <TextInput
                   style={styles.inputField}
                   name={"LastName"}
+                  value={lastName}
                   placeholder={"Last Name"}
                   onChangeText={(e) => setlastName(e)}
                 />
@@ -97,6 +99,7 @@ const Signup = ({ SignUp, user }) => {
                 <TextInput
                   style={styles.inputField}
                   name={"email"}
+                  value={email}
                   placeholder={"Enter your email"}
                   onChangeText={(e) => setEmail(e)}
                 />
