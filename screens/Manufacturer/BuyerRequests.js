@@ -64,6 +64,7 @@ const BuyerRequests = () => {
       )
     return (
         <SafeAreaView style={styles.container}>
+          <Text style={styles.Headtitle}>Buyer Requests</Text>
       <FlatList
         data={DATA}
         renderItem={renderItem}

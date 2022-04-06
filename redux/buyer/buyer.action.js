@@ -1,49 +1,95 @@
 import * as actionTypes from './buyer.constant';
 import { BASE_URL } from '../../api/config';
+import axios from 'axios';
+import { store } from '../store';
 
+export const signInRequest = () => {
+    return {
+        type: actionTypes.SIGN_IN_REQUEST,
+    };
+};
+
+export const SignInSuccess = (data) => {
+    return {
+        type: actionTypes.SIGN_IN_SUCCESS,
+        payload: data,
+    };
+};
+
+export const SignInFail = (error) => {
+    return {
+        type: actionTypes.SIGN_IN_FAIL,
+        payload: error,
+    };
+};
 
 export const signIn=(email,password)=>{
-    try{
-
-        return async dispatch=>{
-            if(email.length>0 && password.length>0){
-
-                axios.post(`${BASE_URL}/buyer/register`,{email,password}).then((res)=>{
-                    if(res.data.status){
-                        alert(res.data.status) //true
-                        dispatch({
-                            type:actionTypes.SIGN_IN,
-                            payload:{
-                                token:res.data.token,
-                                user:res.data.user
-                            }
-                        })
-                    } else{
-                        dispatch({
-                            type:actionTypes.SIGN_IN_FAIL,
-                            payload:'Invalid email or password'
-                        })
-                    }
-                }).catch((err)=>{
-                    dispatch({
-                        type:actionTypes.SIGN_IN_FAIL,
-                        payload:err.response.data.message
-                    })
-                }
-                )
-            } else{
-                dispatch({
-                    type:actionTypes.SIGN_IN_FAIL,
-                    payload:'Complete Data not provided'
-                })
-            }
-        }
-    } catch(err){
-        console.log(err);
+    const role=store.getState().buyer.role;
+    return dispatch=>{
+        dispatch(signInRequest());
+    if(email.length!==0 && password.length!==0){
+        axios.post(`${BASE_URL}/${role}/signin`,{
+            email,
+            password
+            })
+            .then(res=>{
+                dispatch(SignInSuccess(res.data))
+            }).catch((err)=>{
+                dispatch(SignInFail(err.response.data.message))
+                
+            })
+    } else{
+        dispatch(SignInFail("Please enter email and password"))
     }
-       
-        
-    
-    
-    
+}
+}
+
+export const SignUpSuccess=(data)=>{
+    return {
+        type:actionTypes.SIGN_UP_SUCCESS,
+        payload:data
+    }
+}
+
+export const SignUpRequest=()=>{
+    return {
+        type:actionTypes.SIGN_UP_REQUEST
+    }
+}
+
+export const SignUpFail=(error)=>{
+    return {
+    type:actionTypes.SIGN_UP_FAIL,
+    payload:error
+    }
+
+}
+
+export const SignUp=(firstName,lastName,email,password)=>{
+    const role=store.getState().buyer.role;
+    return (dispatch)=>{
+        dispatch(SignUpRequest());
+        if(firstName.length!==0&& lastName.length!==0 && email.length!==0 && password.length!==0){
+            axios.post(`${BASE_URL}/${role}/register`,{
+                firstName:firstName,
+                lastName:lastName,
+                Email:email,
+                Password:password}).then((res)=>{
+                    dispatch(SignUpSuccess(res.data))
+                }).catch((err)=>{
+                    dispatch(SignUpFail(err.response.data.message))
+                })
+        } else{
+            dispatch(SignUpFail("Please enter all fields"))
+        }
+    }
+}
+
+export const setRole=(role)=>{
+    return {
+        type:actionTypes.SET_ROLE,
+        payload:{
+            role:role,
+        }
+    }
 }

@@ -4,8 +4,35 @@ import { useNavigation } from '@react-navigation/native';
 import TouchableButton from '../components/TouchableButton';
 import Spacer from '../components/Spacer';
 import DropDownPicker from 'react-native-dropdown-picker';
-import bg from '../assets/images/bg.png'
-
+import bg from '../assets/images/bg.png';
+import SelectBox from 'react-native-multi-selectbox';
+import { xorBy } from 'lodash';
+const types = [
+    {
+      item: 'Sports',
+      id: 'SP',
+    },
+    {
+      item: 'Clothing',
+      id: 'CL',
+    },
+    {
+      item: 'Wood Products',
+      id: 'WD',
+    },
+    {
+      item: 'Paper Products',
+      id: 'PP',
+    },
+    {
+      item: 'Electronics',
+      id: 'EL',
+    },
+    {
+      item: 'Others',
+      id: 'OT',
+    },
+  ]
 const Signupm = () => {
     const [text, onChangeText] = React.useState();
     const [number, onChangeNumber] = React.useState();
@@ -16,6 +43,7 @@ const Signupm = () => {
         { label: 'Banana', value: 'banana' }
     ]);
     const navigation = useNavigation();
+    const [selectedTypes, setSelectedTypes] = useState([])
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -63,15 +91,20 @@ const Signupm = () => {
                                     placeholder={'Valid NTN Number'}
                                 />
                             </View>
-                            <Spacer height={10} />
-                            <DropDownPicker style={styles.inputFieldCard}
-                                open={open}
-                                value={value}
-                                items={items}
-                                setOpen={setOpen}
-                                setValue={setValue}
-                                setItems={setItems}
-                            />
+                            <Spacer height={25} />
+                            <View style={{width: '80%'}}>
+                            <SelectBox
+        label="Select Product Type"
+        options={types}
+        selectedValues={selectedTypes}
+        onMultiSelect={onMultiChange()}
+        onTapClose={onMultiChange()}
+        arrowIconColor= '#4F3074'
+        searchIconColor= '#4F3074'
+        toggleIconColor= '#4F3074'
+        isMulti
+      />
+      </View>
 
                             <Spacer height={30} />
                             {/* <View> */}
@@ -85,6 +118,9 @@ const Signupm = () => {
             </ImageBackground>
         </KeyboardAvoidingView>
     );
+    function onMultiChange() {
+        return (types) => setSelectedTypes(xorBy(selectedTypes, [types], 'id'))
+      }
 };
 export default Signupm;
 
