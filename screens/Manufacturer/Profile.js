@@ -14,7 +14,7 @@ const Profile = () => {
       <Text style={styles.Headtitle}>Settings</Text>
       <Text style={styles.Stitle}>Factory Settings</Text>
       <View style={styles.Box}>
-        <SettingButton
+        {/* <SettingButton
           icon={
             <Ionicons
               name="create"
@@ -25,15 +25,15 @@ const Profile = () => {
           }
           title={"Factory Details"}
           textStyle={{ color: "#373737" }}
-        />
-        <View
+        /> */}
+        {/* <View
           style={{
             borderBottomColor: "#E7E7E9",
             borderBottomWidth: 1,
             width: "90%",
             alignSelf: "center",
           }}
-        />
+        /> */}
         <SettingButton
           icon={
             <Ionicons
@@ -106,7 +106,7 @@ const Profile = () => {
       </View>
       <Text style={styles.Stitle}>Account Settings</Text>
       <View style={styles.Box}>
-        <SettingButton
+        {/* <SettingButton
           icon={
             <Ionicons
               name="person"
@@ -125,8 +125,8 @@ const Profile = () => {
             width: "90%",
             alignSelf: "center",
           }}
-        />
-        <SettingButton
+        /> */}
+        {/* <SettingButton
           icon={
             <Ionicons
               name="build"
@@ -145,7 +145,7 @@ const Profile = () => {
             width: "90%",
             alignSelf: "center",
           }}
-        />
+        /> */}
         <SettingButton
           onPress={() => {
             dispatch(signOut());

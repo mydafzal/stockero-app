@@ -21,6 +21,7 @@ import AddPD from "../screens/Manufacturer/AddProductD";
 import Wallet from "../screens/Manufacturer/Wallet";
 import BidScreen from "../screens/Buyer/BidScreen";
 import Bid from '../screens/Manufacturer/Bid';
+import mainHome from '../screens/mainHome';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,11 @@ const Stack = createNativeStackNavigator();
 const SplashNavigator = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Main Home"
+        component={mainHome}
+      />
       <Stack.Screen
         options={{ headerShown: false }}
         name="Login"

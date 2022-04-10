@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, SafeAreaView, Image, Text, StyleSheet, TextInput, ScrollView} from 'react-native';
+import {View, SafeAreaView, Image, Text, StyleSheet, TextInput, ScrollView, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
 import TouchableButton from '../../components/TouchableButton';
 import Spacer from "../../components/Spacer";
 const BidScreen = ({navigation, route}) => {
-  const plant = route.params;
+const product = route.params;
 
   return (
     <View
@@ -15,7 +15,7 @@ const BidScreen = ({navigation, route}) => {
       }}>
       
       <View style={style.imageContainer}>
-        <Image source={plant.img} style={{resizeMode: 'contain', flex: 1}} />
+        <Image source={product.img} style={{resizeMode: 'contain', flex: 1}} />
       </View>
       <ScrollView style={style.detailsContainer}>
         <View
@@ -26,16 +26,16 @@ const BidScreen = ({navigation, route}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <Text style={{fontSize: 22, fontWeight: 'bold'}}>{plant.name}</Text>
+          <Text style={{fontSize: 22, fontWeight: 'bold'}}>{product.name}</Text>
           <View style={style.priceTag}>
             <Text
               style={{
                 marginLeft: 15,
                 color: Colors.white,
                 fontWeight: 'bold',
-                fontSize: 16,
+                fontSize: 13,
               }}>
-              ${plant.price}
+              Rs. {product.price}
             </Text>
           </View>
         </View>
@@ -48,26 +48,26 @@ const BidScreen = ({navigation, route}) => {
               lineHeight: 22,
               marginTop: 10,
             }}>
-            {plant.about}
+            {product.about}
           </Text>
           <View>
-          <Text style={style.Ftitle}>Minimum Offer:</Text>
+          <Text style={style.Ftitle}>Minimum Quantity:</Text>
       <View style={style.inputFieldCard}>
         <TextInput
           style={style.inputField}
           name={"Name"}
           editable = {false}
-          value={plant.price}
+          value={"10"}
         />
       </View>
       </View>
       <View>
-          <Text style={style.Ftitle}>Your Offer:</Text>
+          <Text style={style.Ftitle}>Stock:</Text>
       <View style={style.inputFieldCard}>
         <TextInput
           style={style.inputField}
           name={"Name"}
-          placeholder={"Must be greater than Actual Price"}
+          placeholder={"Must be greater than Actual Quantity"}
         />
       </View>
       </View>
@@ -107,7 +107,7 @@ const BidScreen = ({navigation, route}) => {
           </View> */}
         </View>
         <Spacer height={20} />
-        <TouchableButton buttonStyle= {{backgroundColor: Colors.green, borderColor: Colors.green, width: '100%'}}title={'Send Bid Offer'} textStyle={{ fontSize: 15, color: Colors.white, }} onPress={() => navigation.navigate('accountselector')} />
+        <TouchableButton buttonStyle= {{backgroundColor: Colors.green, borderColor: Colors.green, width: '100%'}}title={'Send Bid Offer'} textStyle={{ fontSize: 15, color: Colors.white, }} onPress={() => (Alert:("Request sent Successfully"))} />
       </ScrollView>
     </View>
   );

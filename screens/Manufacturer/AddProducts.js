@@ -78,6 +78,7 @@ const AddProducts = ({ navigation, user ,addProduct}) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [photo, setPhoto] = React.useState("");
   const descriptionRef = useRef(null);
+  const [upload,setupload] = useState("");
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -89,9 +90,20 @@ const AddProducts = ({ navigation, user ,addProduct}) => {
     });
     if (!result.cancelled) {
       setPhoto(result.uri);
-      setBase64(`data:image/jpeg;base64,${result.base64}`);
+      const data={
+        file:`data:image/jpeg;base64,${result.base64}`,
+        upload_preset:'stockero',
+      }
+      axios.post("https://api.cloudinary.com/v1_1/stockero/image/upload",data,{headers:{
+        'Content-Type': 'application/json',
+  
+      }}).then((res)=>{
+        setupload(res.data.url);
+      }).catch((err)=>{
+        console.log(err);
+      })
       //console.log(result);
-      handleUpload(result);
+      //handleUpload(result);
     }
   };
 
@@ -100,18 +112,7 @@ const AddProducts = ({ navigation, user ,addProduct}) => {
     // data.append('file', photo)
     // data.append('upload_preset', 'stockero')
     // data.append('cloud_name', 'stockero')
-    const data={
-      file:base64,
-      upload_preset:'stockero',
-    }
-    axios.post("https://api.cloudinary.com/v1_1/stockero/image/upload",data,{headers:{
-      'Content-Type': 'application/json',
-
-    }}).then((res)=>{
-      setPhoto(res.data.url);
-    }).catch((err)=>{
-      console.log(err);
-    })
+    
   //   fetch('https://api.cloudinary.com/v1_1/Stockero/image/upload', {
   //     method: 'post',
   //     body: data,
@@ -167,7 +168,7 @@ const AddProducts = ({ navigation, user ,addProduct}) => {
         label="Select Product Category"
         options={types}
         value={selectedTypes}
-        onChange={onChange((e) => setproductCategory(e))}
+        onChange={onChange()}
         hideInputFilter={false}
         arrowIconColor={Colors.primary}
         searchIconColor={Colors.primary}
@@ -213,7 +214,7 @@ const AddProducts = ({ navigation, user ,addProduct}) => {
         buttonStyle={{ backgroundColor: Colors.primary }}
         title={"Add Product"}
         textStyle={{ color: Colors.white }}
-        onPress={() => {console.log(user) ;addProduct(productName, productDecsription, photo, productCategory, user.user.id);}}
+        onPress={() => {upload!==""?addProduct(productName, productDecsription, upload, selectedTypes.item, user.user.id):alert("wait for uploading")}}
       />
     </View>
   );
@@ -228,8 +229,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    addProduct: (productName, productDecsription,productImage ,productCategory, m_id) =>
-      dispatch(addProduct(productName, productDecsription,productImage, productCategory, m_id)),
+    addProduct: (productName, productDecsription,productCategory, productImage,  m_id) =>
+      dispatch(addProduct(productName, productDecsription, productCategory, productImage, m_id)),
   };
 };
 

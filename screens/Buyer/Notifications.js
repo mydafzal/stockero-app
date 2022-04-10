@@ -1,26 +1,33 @@
 import { View, Text, FlatList, StyleSheet, SafeAreaView, StatusBar } from 'react-native'
 import React from 'react'
 import Colors from '../../constants/Colors';
+import axios from "axios";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { GetProducts, deleteProduct, GetOrders } from "../../redux/product/product.action";
+import { useEffect } from "react";
 
 const Orders = () => {
-    const DATA = [
-        {
-          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-          title: 'Order # 1',
-        },
-        {
-          id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-          title: 'Order # 2',
-        },
-        {
-          id: '58694a0f-3da1-471f-bd96-145571e29d72',
-          title: 'Order # 3',
-        },
-      ]
+  const orders = useSelector((state) => state.product.product);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GetOrders());
+  }, []);
+
+  useEffect(() => {
+    console.log(orders);
+  }, [orders]);
+  const DATA = orders;
+
       const renderItem = ({item}) => (
         <View style={styles.notiBox}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.notiftext}>{item.id}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textheading}>Quantity: </Text>
+          <Text style={styles.text}>{item.quantity}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textheading}>Status: </Text>
+          <Text style={styles.text}>{item.status}</Text>
+        </View>
       </View>
       )
     return (
@@ -72,6 +79,11 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins_500Medium',
         fontSize: 10,
         color: Colors.gray,
+      },
+      textheading: {
+        fontFamily: "Poppins_600SemiBold",
+        fontSize: 13,
+        color: Colors.black,
       },
       
     });

@@ -13,34 +13,45 @@ import Colors from "../../constants/Colors";
 import ButtonN from "../../components/ButtonSmall";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { GetRequests } from "../../redux/request/request.action";
+
+import { GetRequests, Respond } from "../../redux/request/request.action";
 import Spacer from "../../components/Spacer";
 import axios from "axios";
 import { connect, useDispatch, useSelector } from "react-redux";
-const Offers = () => {
+const Offers = ({ route, user }) => {
+  const data = route.params;
   const navigation = useNavigation();
   const [manufacturer_id, setmanufacturer_id] = useState("");
   const [OfferedPrice, setOfferedPrice] = useState("");
+  const [requestData, setRequestData] = useState({});
   const [duration, setDuration] = useState("");
-  const requests = useSelector((state) => state.request.requests);
+  const requests = useSelector((state) => state.request.data);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(GetRequests());
   }, []);
 
+  const filterData = () => {
+    if (Array.isArray(requests)) {
+      const filteredData = requests.filter((item) => {
+        return item.id === data.id;
+      });
+      setRequestData(filteredData);
+    }
+  };
+
   useEffect(() => {
-    console.log(requests);
+    filterData();
   }, [requests]);
-  const DATA = [
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "Order # 1",
-    },
-  ];
+
+  useEffect(() => {
+    console.log(requestData);
+  }, [requestData]);
+
   const renderItem = ({ item }) => (
     <View style={styles.notiBox}>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.notiftext}>{item.id}</Text>
+      <Text style={styles.title}>{item.name}</Text>
+      <Text style={styles.notiftext}>{item.quantity}</Text>
       <Spacer height={15} />
       <View style={styles.inputFieldCard}>
         <TextInput
@@ -70,19 +81,9 @@ const Offers = () => {
           buttonStyle={{ width: "100%", height: "90%" }}
           title={"Send Offer"}
           textStyle={{ color: Colors.primary }}
-          onPress={() => {
-            console.log(name);
-            dispatch(
-              AddRequest(
-                user.user.id,
-                name,
-                description,
-                quantity,
-                asking_days,
-                asking_price
-              )
-            );
-          }}
+          onPress={() =>
+            dispatch(Respond(item.id, user.user.id, OfferedPrice, duration))
+          }
         />
       </View>
     </View>
@@ -90,7 +91,7 @@ const Offers = () => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={DATA}
+        data={requestData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
@@ -104,24 +105,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    AddRequest: (
-      buyer_id,
-      name,
-      description,
-      quantity,
-      asking_days,
-      asking_price
-    ) =>
-      dispatch(
-        AddRequest(
-          buyer_id,
-          name,
-          description,
-          quantity,
-          asking_days,
-          asking_price
-        )
-      ),
+    Respond: (manufacturer_id, offered_price, duration) =>
+      dispatch(Respond(manufacturer_id, offered_price, duration)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Offers);

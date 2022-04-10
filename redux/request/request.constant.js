@@ -1,3 +1,4 @@
 export const ADD_REQUEST = 'ADD_REQUEST';
 export const REQUEST_FAIL='REQUEST_FAIL';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
+export const ADD_OFFERS = 'ADD_OFFERS';

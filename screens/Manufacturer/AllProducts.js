@@ -3,42 +3,29 @@ import React from 'react'
 import Colors from '../../constants/Colors';
 import ButtonSmall from '../../components/ButtonSmall';
 import Spacer from '../../components/Spacer';
+import axios from "axios";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { GetProducts, deleteProduct } from "../../redux/product/product.action";
+import { useEffect } from "react";
 
 const AllProducts = () => {
-    const DATA = [
-        {
-          id: '1',
-          title: 'Product 1',
-        },
-        {
-          id: '2',
-          title: 'Product 2',
-        },
-        {
-          id: '3',
-          title: 'Product 3',
-        },
-        {
-          id: '4',
-          title: 'Product 4',
-        },
-        {
-          id: '5',
-          title: 'Product 5',
-        },
-        {
-          id: '6',
-          title: 'Product 6',
-        },
-      ]
+  const products = useSelector((state) => state.product.product);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GetProducts());
+  }, []);
+
+  useEffect(() => {
+    console.log(products);
+  }, [products]);
+  const DATA = products;
       const renderItem = ({item}) => (
         <View style={styles.Box}>
           <View style={styles.productNameCard}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.notiftext}>{item.id}</Text>
+        <Text style={styles.title}>{item.name}</Text>
         </View>
         <View style={{width: '100%', alignItems: 'flex-end'}}>
-        <ButtonSmall buttonStyle= {{marginTop: 15}}title="Edit" />
+        <ButtonSmall buttonStyle= {{marginTop: 15}}title="Delete" onPress={()=> dispatch(deleteProduct(item.id))}/>
         </View>
       </View>
       )

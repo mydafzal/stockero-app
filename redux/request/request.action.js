@@ -10,6 +10,13 @@ export const addRequest = (data) => {
   };
 };
 
+export const addOffers = (data) => {
+  return {
+    type: actionTypes.ADD_OFFERS,
+    payload: data,
+  };
+};
+
 export const requestSuccess = (data) => {
   return {
     type: actionTypes.REQUEST_SUCCESS,
@@ -86,3 +93,61 @@ export const GetRequests = () => {
       });
   };
 };
+
+export const Respond = (
+  requestID,
+  manufacturer_id,
+  offered_duration,
+  offered_price
+) => {
+  return (dispatch) => {
+    console.log(1);
+
+    {
+      console.log(1);
+      axios
+        .put(`${BASE_URL}/api/request/respond/${requestID}`, {
+          manufacturer_id: manufacturer_id,
+          offered_duration: offered_duration,
+          offered_price: offered_price,
+        })
+        .then((res) => {
+          console.log(res.data);
+          dispatch(requestSuccess(res.data));
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch(requestFail(err.response.data.message));
+        });
+    }
+  };
+};
+
+export const GetOffers = (id) => {
+  return (dispatch) => {
+    axios
+      .get(`${BASE_URL}/api/request/offers/${id}`)
+      .then((res) => {
+        dispatch(addOffers(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(requestFail(err.response.data.message));
+      });
+  };
+};
+
+export const Approve = (data) => {
+  return (dispatch) => {
+    axios
+      .post(`${BASE_URL}/api/request/create/order`, data)
+      .then((res) => {
+        alert("Success");
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(requestFail(err.response.data.message));
+      });
+  };
+};
+

@@ -15,7 +15,7 @@ export const productReducer=(state=initialState,action)=>{
                 ...state,
                 error:false,
                 errorMessage:"",
-                product:action.payload.data,
+                product:action.payload,
                 isLoading:false,
             }
         case actionTypes.ADD_REQUEST:

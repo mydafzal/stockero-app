@@ -2,6 +2,7 @@ import * as actionTypes from "./request.constant";
 
 const initialState = {
   token: "",
+  offers: [],
   data: {},
   error: false,
   errorMessage: "",
@@ -23,6 +24,11 @@ export const requestReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload,
+      };
+    case actionTypes.ADD_OFFERS:
+      return {
+        ...state,
+        offers: action.payload,
       };
     case actionTypes.REQUEST_FAIL:
       return {

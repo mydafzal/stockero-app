@@ -28,7 +28,6 @@ const PostRequest = ({ navigation, user }) => {
   const [asking_days, setAsking_days] = useState("");
   const [asking_price, setAsking_price] = useState("");
   const [photo, setPhoto] = React.useState(null);
-
   return (
     <ScrollView style={styles.container}>
       <View style={{ alignItems: "center", paddingTop: 20 }}>
@@ -52,14 +51,15 @@ const PostRequest = ({ navigation, user }) => {
           placeholder={"Please Briefly Explain what kind of product you want"}
         />
       </View>
-      <Text style={styles.Ftitle}>In how many days you want it?</Text>
+      <Text style={styles.Ftitle}>Enter the stock amount</Text>
       <View style={styles.inputFieldCard}>
         <TextInput
           style={styles.inputField}
+          
           name={"Item"}
           onChangeText={(e) => setQuantity(e)}
           keyboardType="number-pad"
-          placeholder={"Days"}
+          placeholder={"Must be greater than 10"}
         />
       </View>
       <Text style={styles.Ftitle}>In how many days you want it?</Text>
@@ -85,21 +85,12 @@ const PostRequest = ({ navigation, user }) => {
 
       <Spacer height={30} />
       <ButtonN
+        buttonStyle={{
+          backgroundColor: Colors.primaryLite,
+        }}
         title={"Request"}
         textStyle={{ color: Colors.primary }}
-        onPress={() => {
-          console.log(name);
-          dispatch(
-            AddRequest(
-              user.user.id,
-              name,
-              description,
-              quantity,
-              asking_days,
-              asking_price
-            )
-          );
-        }}
+        onPress={() => { console.log(name);dispatch(AddRequest(user.user.id,name,description,quantity,asking_days,asking_price));}}
       />
     </ScrollView>
   );
@@ -148,7 +139,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     width: "85%",
-    height: 60,
+    height: 50,
     borderRadius: 10,
     backgroundColor: "#f4f4f4",
   },
