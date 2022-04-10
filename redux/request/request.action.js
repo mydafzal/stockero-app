@@ -24,12 +24,6 @@ export const requestFail = (error) => {
   };
 };
 
-
-
-
-
-
-
 // export const AddRequest = ( data) => {
 //   return (dispatch) => {
 //       console.log(data)
@@ -41,46 +35,54 @@ export const requestFail = (error) => {
 //         .catch((err) => {
 //           dispatch(requestFail(err.response.data.message));
 //         });
-//     } 
+//     }
 //   };
 export const AddRequest = (
-    buyer_id,
-    name,
-    description,
-    quantity,
-    asking_days,
-    asking_price
-  ) => {
-    return (dispatch) => {
-      dispatch(addRequest());
-      console.log(1)
+  buyer_id,
+  name,
+  description,
+  quantity,
+  asking_days,
+  asking_price
+) => {
+  return (dispatch) => {
+    console.log(1);
 
-      if (
-        name.length !== 0 &&
-        description.length !== 0
-      ) {
-          console.log(1)
-        axios
-          .post(`${BASE_URL}/api/request/create`, {
-            buyer_id: buyer_id,
-            name: name,
-            description: description,
-            quantity: quantity,
-            asking_days: asking_days,
-            asking_price: asking_price,
-          })
-          .then((res) => {
-              console.log(res.data);
-            dispatch(requestSuccess(res.data));
-          })
-          .catch((err) => {
-              console.log(err)
-            dispatch(requestFail(err.response.data.message));
-          });
-      } else {
-        dispatch(requestFail("Please fill all details"));
-      }
-    };
+    if (name.length !== 0 && description.length !== 0) {
+      console.log(1);
+      axios
+        .post(`${BASE_URL}/api/request/create`, {
+          buyer_id: buyer_id,
+          name: name,
+          description: description,
+          quantity: quantity,
+          asking_days: asking_days,
+          asking_price: asking_price,
+        })
+        .then((res) => {
+          console.log(res.data);
+          dispatch(requestSuccess(res.data));
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch(requestFail(err.response.data.message));
+        });
+    } else {
+      dispatch(requestFail("Please fill all details"));
+    }
   };
+};
 
-
+export const GetRequests = () => {
+  return (dispatch) => {
+    axios
+      .get(`${BASE_URL}/api/request`)
+      .then((res) => {
+        dispatch(addRequest(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(requestFail(err.response.data.message));
+      });
+  };
+};

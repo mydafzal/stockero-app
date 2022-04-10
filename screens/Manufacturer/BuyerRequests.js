@@ -2,61 +2,32 @@ import { View, Text, FlatList, StyleSheet, SafeAreaView, StatusBar } from 'react
 import React from 'react'
 import Colors from '../../constants/Colors';
 import ButtonSmall from '../../components/ButtonSmall';
-import Spacer from '../../components/Spacer';
+import { GetRequests } from "../../redux/request/request.action";
+import Spacer from "../../components/Spacer";
+import axios from "axios";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect } from 'react'
 const BuyerRequests = () => {
   const navigation = useNavigation();
-    const DATA = [
-        {
-          id: '1',
-          title: 'T-Shirt',
-          quantity: 'Quantity: 10 Pieces',
-          price: 'Price: $10',
-          duration: '10 Days',
-        },
-        {
-          id: '2',
-          title: 'Product 2',
-          quantity: '10',
-          price: '$10',
-          duration: '10 Days',
-        },
-        {
-          id: '3',
-          title: 'Product 3',
-          quantity: '10',
-          price: '$10',
-          duration: '10 Days',
-        },
-        {
-          id: '4',
-          title: 'Product 4',
-          quantity: '10',
-          price: '$10',
-          duration: '10 Days',
-        },
-        {
-          id: '5',
-          title: 'Product 5',
-          quantity: '10',
-          price: '$10',
-          duration: '10 Days',
-        },
-        {
-          id: '6',
-          title: 'Product 6',
-          quantity: '10',
-          price: '$10',
-          duration: '10 Days',
-        },
-      ]
+  const requests = useSelector((state) => state.request.data);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GetRequests());
+  }, []);
+
+  useEffect(() => {
+    console.log(requests);
+  }, [requests]);
+    const DATA = requests
       const renderItem = ({item}) => (
         <View style={styles.Box}>
           <View style={styles.productNameCard}>
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.title}>{item.name}</Text>
         <Text style={styles.text}>{item.quantity}</Text>
-        <Text style={styles.text}>{item.price}</Text>
-        <Text style={styles.text}>{item.duration}</Text>
+        <Text style={styles.text}>{item.asking_price}</Text>
+        <Text style={styles.text}>{item.asking_days}</Text>
+        <Text style={styles.text}>{item.description}</Text>
         </View>
         <View style={{width: '100%', alignItems: 'flex-end'}}>
         <ButtonSmall buttonStyle= {{backgroundColor: Colors.green, marginTop: 15}} textStyle={{color:'white'}} title="Bid" onPress={() => navigation.navigate("Bid Manufacturer")} />

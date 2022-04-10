@@ -22,7 +22,7 @@ export const requestReducer = (state = initialState, action) => {
     case actionTypes.ADD_REQUEST:
       return {
         ...state,
-        isLoading: true,
+        data: action.payload,
       };
     case actionTypes.REQUEST_FAIL:
       return {

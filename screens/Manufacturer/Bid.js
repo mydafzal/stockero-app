@@ -6,21 +6,36 @@ import {
   SafeAreaView,
   StatusBar,
   Button,
-  TextInput
+  TextInput,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Colors from "../../constants/Colors";
 import ButtonN from "../../components/ButtonSmall";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { GetRequests } from "../../redux/request/request.action";
 import Spacer from "../../components/Spacer";
+import axios from "axios";
+import { connect, useDispatch, useSelector } from "react-redux";
 const Offers = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
+  const [manufacturer_id, setmanufacturer_id] = useState("");
+  const [OfferedPrice, setOfferedPrice] = useState("");
+  const [duration, setDuration] = useState("");
+  const requests = useSelector((state) => state.request.requests);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GetRequests());
+  }, []);
+
+  useEffect(() => {
+    console.log(requests);
+  }, [requests]);
   const DATA = [
     {
       id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
       title: "Order # 1",
-    }
+    },
   ];
   const renderItem = ({ item }) => (
     <View style={styles.notiBox}>
@@ -28,20 +43,22 @@ const Offers = () => {
       <Text style={styles.notiftext}>{item.id}</Text>
       <Spacer height={15} />
       <View style={styles.inputFieldCard}>
-                <TextInput
-                  style={styles.inputField}
-                  name={"days"}
-                  placeholder={"Minimum Days"}
-                />
-              </View>
-              <Spacer height={15} />
-              <View style={styles.inputFieldCard}>
-                <TextInput
-                  style={styles.inputField}
-                  name={"days"}
-                  placeholder={"Offered Price"}
-                />
-              </View>
+        <TextInput
+          style={styles.inputField}
+          name={"days"}
+          onChangeText={(e) => setDuration(e)}
+          placeholder={"Minimum Days"}
+        />
+      </View>
+      <Spacer height={15} />
+      <View style={styles.inputFieldCard}>
+        <TextInput
+          style={styles.inputField}
+          name={"days"}
+          placeholder={"Offered Price"}
+          onChangeText={(e) => setOfferedPrice(e)}
+        />
+      </View>
       <View
         style={{
           flexDirection: "row",
@@ -53,6 +70,19 @@ const Offers = () => {
           buttonStyle={{ width: "100%", height: "90%" }}
           title={"Send Offer"}
           textStyle={{ color: Colors.primary }}
+          onPress={() => {
+            console.log(name);
+            dispatch(
+              AddRequest(
+                user.user.id,
+                name,
+                description,
+                quantity,
+                asking_days,
+                asking_price
+              )
+            );
+          }}
         />
       </View>
     </View>
@@ -67,8 +97,34 @@ const Offers = () => {
     </SafeAreaView>
   );
 };
-
-export default Offers;
+const mapStateToProps = (state) => {
+  return {
+    user: state.buyer,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    AddRequest: (
+      buyer_id,
+      name,
+      description,
+      quantity,
+      asking_days,
+      asking_price
+    ) =>
+      dispatch(
+        AddRequest(
+          buyer_id,
+          name,
+          description,
+          quantity,
+          asking_days,
+          asking_price
+        )
+      ),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Offers);
 
 const styles = StyleSheet.create({
   container: {
@@ -76,7 +132,7 @@ const styles = StyleSheet.create({
     // marginTop: StatusBar.currentHeight || 5,
   },
   notiBox: {
-      marginTop:20,
+    marginTop: 20,
     backgroundColor: "#ffffff",
     paddingTop: 30,
     padding: 15,
