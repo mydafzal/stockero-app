@@ -3,8 +3,9 @@ import React from 'react'
 import Colors from '../../constants/Colors';
 import ButtonSmall from '../../components/ButtonSmall';
 import Spacer from '../../components/Spacer';
-
+import { useNavigation } from "@react-navigation/native";
 const BuyerRequests = () => {
+  const navigation = useNavigation();
     const DATA = [
         {
           id: '1',
@@ -58,7 +59,7 @@ const BuyerRequests = () => {
         <Text style={styles.text}>{item.duration}</Text>
         </View>
         <View style={{width: '100%', alignItems: 'flex-end'}}>
-        <ButtonSmall buttonStyle= {{backgroundColor: Colors.green, marginTop: 15}} textStyle={{color:'white'}} title="Bid" />
+        <ButtonSmall buttonStyle= {{backgroundColor: Colors.green, marginTop: 15}} textStyle={{color:'white'}} title="Bid" onPress={() => navigation.navigate("Bid Manufacturer")} />
         </View>
       </View>
       )

@@ -1,8 +1,9 @@
 import React from "react";
 import { View, Text } from "react-native";
 import Login from "../screens/Login";
-import Signup from "../screens/Signup";
-import Signupm from "../screens/Signupm";
+import SignupM from "../screens/Signup";
+// import Signupm from "../screens/Signupm";
+import SignupB from "../screens/Buyer/Signup";
 import ForgetPassword from "../screens/ForgetPassword";
 import NewPassword from "../screens/NewPassword";
 import Dashboard from "../screens/Manufacturer/Dashboard";
@@ -19,6 +20,7 @@ import Address from "../screens/Manufacturer/Address";
 import AddPD from "../screens/Manufacturer/AddProductD";
 import Wallet from "../screens/Manufacturer/Wallet";
 import BidScreen from "../screens/Buyer/BidScreen";
+import Bid from '../screens/Manufacturer/Bid';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -33,17 +35,22 @@ const SplashNavigator = () => {
       />
       <Stack.Screen
         options={{ headerShown: false }}
-        name="Signup"
-        component={Signup}
+        name="Signup Manufacturer"
+        component={SignupM}
       />
-      <Stack.Screen
+       <Stack.Screen
+        options={{ headerShown: false }}
+        name="Signup Buyer"
+        component={SignupB}
+      />
+      {/* <Stack.Screen
         options={{ headerShown: false }}
         name="Signupm"
         component={Signupm}
-      />
+      /> */}
       <Stack.Screen
         options={{ headerShown: false }}
-        name="Dashboard"
+        name="Dashboard manufacturer"
         component={Dashboard}
       />
       <Stack.Screen
@@ -63,7 +70,7 @@ const SplashNavigator = () => {
       />
       <Stack.Screen
         options={{ headerShown: false }}
-        name="Dashboard Buyer"
+        name="Dashboard buyer"
         component={DashboardB}
       />
       <Stack.Screen name="Add Products" component={AddP} />
@@ -77,6 +84,7 @@ const SplashNavigator = () => {
       <Stack.Screen name="Listed Leftovers" component={ListedLeftovers} />
       <Stack.Screen name="Wallet" component={Wallet} />
       <Stack.Screen name="Bid Screen" component={BidScreen} />
+      <Stack.Screen name="Bid Manufacturer" component={Bid} />
     </Stack.Navigator>
   );
 };

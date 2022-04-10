@@ -2,63 +2,49 @@ import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
-  ViewPropTypes,
+  TextInput,
   ImageBackground,
   StyleSheet,
-  TextInput,
+  SafeAreaView,
   KeyboardAvoidingView,
-  Dimensions,
-  ActivityIndicator,
   Platform,
 } from "react-native";
-import TouchableButton from "../components/TouchableButton";
-import Spacer from "../components/Spacer";
 import { useNavigation } from "@react-navigation/native";
+import TouchableButton from "../../components/TouchableButton";
+import Spacer from "../../components/Spacer";
 import { Ionicons } from "@expo/vector-icons";
-import bg from "../assets/images/bg.png";
-import Colors from "../constants/Colors";
+import bg from "../../assets/images/bg.png";
+import { connect } from "react-redux";
+import { SignUp } from "../../redux/buyer/buyer.action";
+import { Alert } from "react-native";
 import axios from "axios";
 
-import SwitchSelector from "react-native-switch-selector";
-const { height, width } = Dimensions.get("window");
-import { connect } from "react-redux";
-import { signIn ,setRole} from "../redux/buyer/buyer.action";
-import { Alert } from "react-native";
-
-const Login = ({ signIn, setRole,user}) => {
+const Signup = ({ SignUp, user }) => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [authRole,setAuthRole]=useState("buyer");
+  const [firstName, setfirstName] = React.useState("");
+  const [lastName, setlastName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  useEffect(() => {
+    // if (user.isLoading) {
+    //   alert(email);
+    // }
+  }, [user.isLoading]);
 
-  
-
-  useEffect(()=>{
-      if(user.isLoading){
-          alert("logginIN");
-      }
-  },[user.isLoading])
-
-useEffect(()=>{
-    if(user.error){
-        alert(user.errorMessage);
+  useEffect(() => {
+    if (user.error) {
+      alert(user.errorMessage);
     }
-},[user.error,user.errorMessage]);
+  }, [user.error, user.errorMessage]);
 
-useEffect(()=>{
-  const route=`Dashboard ${user.role}`;
-    if(Object.keys(user.user).length>0){
-      if(user.role==="manufacturer"&&!user.user.isApproved){
-        alert("Your account is not approved yet");
-      } else {
-        navigation.reset({
-          index:0,
-          routes:[{name: route}]
-      })
-      }
+  useEffect(() => {
+    if (Object.keys(user.user).length>0) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Dashboard buyer" }],
+      });
     }
-
-},[user.user])
+  }, [user.user]);
 
   return (
     <KeyboardAvoidingView
@@ -68,27 +54,41 @@ useEffect(()=>{
         <View style={styles.outerbody}>
           <View style={styles.body}>
             <View style={styles.title}>
-              <Text style={styles.loginText}>LOGIN</Text>
+              <Text style={styles.loginText}>SIGN UP</Text>
               <Spacer height={15} />
-              <View style={{width: 200, display: 'flex'}}>
-                <SwitchSelector
-                  initial={0}
-                  onPress={(value) => {setRole(value)}}
-                  textColor={Colors.primary} //'#7a44cf'
-                  selectedColor={Colors.white}
-                  buttonColor={Colors.primary}
-                  borderColor={Colors.primary}
-                  hasPadding
-                  
-                  options={[
-                    { label: "Buyer", value: "buyer" }, //images.feminino = require('./path_to/assets/img/feminino.png')
-                    { label: "Manufacturer", value: "manufacturer" }, //images.masculino = require('./path_to/assets/img/masculino.png')
-                  ]}
-                  testID="gender-switch-selector"
-                  accessibilityLabel="gender-switch-selector"
+              <Spacer height={10} />
+              <View style={styles.inputFieldCard}>
+                <Ionicons
+                  name="person"
+                  size={17}
+                  color="#9A9A9A"
+                  style={{ alignSelf: "center", paddingLeft: 15 }}
+                />
+                <TextInput
+                  style={styles.inputField}
+                  name={"FirstName"}
+                  placeholder={"First Name"}
+                  value={firstName}
+                  onChangeText={(e) => setfirstName(e)}
                 />
               </View>
-              <Spacer height={30} />
+              <Spacer height={10} />
+              <View style={styles.inputFieldCard}>
+                <Ionicons
+                  name="person"
+                  size={17}
+                  color="#9A9A9A"
+                  style={{ alignSelf: "center", paddingLeft: 15 }}
+                />
+                <TextInput
+                  style={styles.inputField}
+                  name={"LastName"}
+                  value={lastName}
+                  placeholder={"Last Name"}
+                  onChangeText={(e) => setlastName(e)}
+                />
+              </View>
+              <Spacer height={10} />
               <View style={styles.inputFieldCard}>
                 <Ionicons
                   name="mail"
@@ -100,8 +100,8 @@ useEffect(()=>{
                   style={styles.inputField}
                   name={"email"}
                   value={email.toLocaleLowerCase()}
-                  onChangeText={(e) => setEmail(e)}
                   placeholder={"Enter your email"}
+                  onChangeText={(e) => setEmail(e)}
                 />
               </View>
               <Spacer height={10} />
@@ -114,32 +114,20 @@ useEffect(()=>{
                 />
                 <TextInput
                   style={styles.inputField}
-                  name={"Paswword"}
+                  name={"Password"}
                   value={password}
+                  placeholder={"**********"}
                   onChangeText={(e) => setPassword(e)}
                   secureTextEntry={true}
-                  placeholder={"**********"}
                 />
               </View>
-
-              <Spacer height={10} />
-              <Text
-                style={{
-                  color: "#9A9A9A",
-                  fontSize: 12,
-                  alignSelf: "flex-end",
-                  marginRight: 45,
-                  fontFamily: "Poppins_400Regular",
-                }}
-                onPress={() => navigation.navigate("ForgetPassword")}
-              >
-                Forgot your Password?
-              </Text>
               <Spacer height={30} />
+              {/* <View> */}
               <TouchableButton
-                title={"Login"}
+                title={"Confirm"}
                 textStyle={{ color: "white" }}
-                onPress={()=>signIn(email,password)}
+                onPress={() => SignUp(lastName, firstName, email, password)}
+                // onPress={() => navigation.navigate("Dashboard Buyer")}
               />
               <Spacer height={10} />
               <Text
@@ -150,15 +138,16 @@ useEffect(()=>{
                   fontFamily: "Poppins_400Regular",
                 }}
               >
-                Don't have and account?
+                Already have an account?
                 <Text
                   style={{ color: "#454545", fontFamily: "Poppins_500Medium" }}
-                  onPress={() => navigation.navigate("accountselector")}
+                  onPress={() => navigation.navigate("Login")}
                 >
                   {" "}
-                  SIGN UP
+                  SIGN IN
                 </Text>
               </Text>
+              {/* </View> */}
             </View>
           </View>
         </View>
@@ -169,18 +158,17 @@ useEffect(()=>{
 
 const mapStateToProps = (state) => {
   return {
-    user:state.buyer,
+    user: state.buyer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    signIn: (email, password) => dispatch(signIn(email, password)),
-    setRole:(role)=>dispatch(setRole(role))
+    SignUp: (firstName, lastName, email, password) =>
+      dispatch(SignUp(firstName, lastName, email, password)),
+    //   setRole:(role)=>dispatch(setRole(role))
   };
 };
-  
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
 
 const styles = StyleSheet.create({
   container: {
@@ -208,6 +196,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  title: {
+    //flex: 0.5,
+    width: "100%",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    // top: '20%',
+  },
   details: {
     borderTopLeftRadius: 20,
     borderBottomRightRadius: 20,
@@ -220,25 +215,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
-
-  title: {
-    width: "100%",
-    // justifyContent: 'flex-start',
-    alignItems: "center",
-    // top: '30%',
-  },
   loginText: {
     fontFamily: "Poppins_600SemiBold",
     fontSize: 40,
     color: "#454545",
   },
-  inputField: {
-    // flexDirection: 'row',
-    padding: 10,
-    width: "100%",
-    fontFamily: "Poppins_400Regular",
-    fontSize: 10,
-  },
+
   inputFieldCard: {
     flexDirection: "row",
     alignSelf: "center",
@@ -252,8 +234,31 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(245, 245, 245, 255)",
   },
 
-  img: {
-    height: "100%",
+  inputField: {
     width: "100%",
+    padding: 10,
+    fontFamily: "Poppins_400Regular",
+    fontSize: 10,
+  },
+  inputFieldName: {
+    width: "40%",
+    padding: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "rgba(216, 216, 216, 255)",
+    backgroundColor: "rgba(245, 245, 245, 255)",
   },
 });
+
+// const mapStateToProps = (state) => {
+//     return {
+//         user: state.buyer,token:state.buyer.token
+//     }
+// }
+// export mapDispatchToProps = (dispatch) => {
+//     return {
+//         signIn:(email,password)=>dispatch(signIn(email,password))
+//     }
+// }
+
+// export default connect(mapStateToProps,mapDispatchToProps)(Signup);

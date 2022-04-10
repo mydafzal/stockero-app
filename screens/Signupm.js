@@ -85,13 +85,13 @@ const Signupm = () => {
                                 <TextInput
                                     style={styles.inputField}
                                     keyboardType='number-pad'
-                                    onChangeText={onChangeNumber}
-                                    value={number}
+                                    // onChangeText={onChangeNumber}
+                                    
                                     name={'NTN'}
                                     placeholder={'Valid NTN Number'}
                                 />
                             </View>
-                            <Spacer height={25} />
+                            {/* <Spacer height={25} />
                             <View style={{width: '80%'}}>
                             <SelectBox
         label="Select Product Type"
@@ -104,11 +104,11 @@ const Signupm = () => {
         toggleIconColor= '#4F3074'
         isMulti
       />
-      </View>
+      </View> */}
 
                             <Spacer height={30} />
                             {/* <View> */}
-                            <TouchableButton title={'Proceed'} textStyle={{ color: 'white', }} onPress={() => navigation.navigate('Dashboard')} />
+                            <TouchableButton title={'Confirm'} textStyle={{ color: 'white', }} onPress={() => navigation.navigate('Dashboard')} />
                             <Spacer height={10} />
 
                             {/* </View> */}

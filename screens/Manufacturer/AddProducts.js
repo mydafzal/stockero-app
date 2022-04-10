@@ -6,16 +6,51 @@ import {
   StatusBar,
   TextInput,
   Button,
+  Image,
+  Alert,
+  Modal
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import SelectBox from "react-native-multi-selectbox";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Colors from "../../constants/Colors";
-import MultiSelect from 'react-native-multiple-select';
-import { launchImageLibrary } from "react-native-image-picker";
+import MultiSelect from "react-native-multiple-select";
+import * as ImagePicker from "expo-image-picker";
 import ButtonN from "../../components/ButtonN";
+import { xorBy } from "lodash";
+import axios from "axios";
+import { LogBox } from "react-native-web";
 import { useNavigation } from "@react-navigation/native";
 import Spacer from "../../components/Spacer";
+import { connect } from "react-redux";
+import { addProduct } from "../../redux/product/product.action";
+import { TouchableOpacity } from "react-native-gesture-handler";
+const types = [
+  {
+    item: "Sports",
+    id: "SP",
+  },
+  {
+    item: "Clothing",
+    id: "CL",
+  },
+  {
+    item: "Wood Products",
+    id: "WD",
+  },
+  {
+    item: "Paper Products",
+    id: "PP",
+  },
+  {
+    item: "Electronics",
+    id: "EL",
+  },
+  {
+    item: "Others",
+    id: "OT",
+  },
+];
 const createFormData = (photo, body = {}) => {
   const data = new FormData();
 
@@ -31,35 +66,75 @@ const createFormData = (photo, body = {}) => {
 
   return data;
 };
-const AddProducts = ({ navigation }) => {
-  
-  const [photo, setPhoto] = React.useState(null);
-  const handleChoosePhoto = () => {
-    launchImageLibrary({ noData: true }, (response) => {
-      // console.log(response);
-      if (response) {
-        setPhoto(response);
-      }
+const AddProducts = ({ navigation, user ,addProduct}) => {
+  const [productName, setproductName] = useState("");
+  const [productDecsription, setproductDecsription] = useState("");
+  const [productImage, setproductImage] = useState("");
+  const [productCategory, setproductCategory] = useState("");
+  const [manufacturerID, setmanufacturerID] = useState();
+  const [base64, setBase64] = useState("");
+  const [modal ,setModal] = useState(false);
+  const [text, onChangeText] = React.useState();
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [photo, setPhoto] = React.useState("");
+  const descriptionRef = useRef(null);
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      base64:true,
     });
+    if (!result.cancelled) {
+      setPhoto(result.uri);
+      setBase64(`data:image/jpeg;base64,${result.base64}`);
+      //console.log(result);
+      handleUpload(result);
+    }
   };
 
-  const handleUploadPhoto = () => {
-    fetch(`${SERVER_URL}/api/upload`, {
-      method: "POST",
-      body: createFormData(photo, { userId: "123" }),
+  const handleUpload = (photo) => {
+    // const data = new FormData();
+    // data.append('file', photo)
+    // data.append('upload_preset', 'stockero')
+    // data.append('cloud_name', 'stockero')
+    const data={
+      file:base64,
+      upload_preset:'stockero',
+    }
+    axios.post("https://api.cloudinary.com/v1_1/stockero/image/upload",data,{headers:{
+      'Content-Type': 'application/json',
+
+    }}).then((res)=>{
+      setPhoto(res.data.url);
+    }).catch((err)=>{
+      console.log(err);
     })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log("response", response);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
+  //   fetch('https://api.cloudinary.com/v1_1/Stockero/image/upload', {
+  //     method: 'post',
+  //     body: data,
+  //     headers:{
+  //       'Accept':'application/json',
+  //       'Content-Type':'multipart/form-data'
+  //   }
+  //   }).then((res) => res.json())
+  //     .then((data) => {
+  //       // setPhoto(data.url)
+  //       setModal(false)
+  //       console.log(data)
+  //   }).catch(err => {
+  //     console.log(err)
+  //     Alert.alert("Error While Uploading")
+  // })
+
+  }
+  
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={{ alignItems: "center", paddingTop: 20 }}>
+    <View style={styles.container}>
+      <View style={{ alignItems: "center", paddingTop: 5 }}>
         <Text style={styles.Headtitle}>Provide the following Information</Text>
       </View>
       <Text style={styles.Ftitle}>Product Name</Text>
@@ -67,45 +142,98 @@ const AddProducts = ({ navigation }) => {
         <TextInput
           style={styles.inputField}
           name={"ProductName"}
-          // onChangeText={(e) => setEmail(e)}
+          onChangeText={(e) => setproductName(e)}
           placeholder={"Please enter the product name"}
         />
       </View>
       <Text style={styles.Ftitle}>Description</Text>
-      <View style={styles.dFieldCard}>
+      <View
+        style={styles.dFieldCard}
+        onPress={() => descriptionRef.current.focus()}
+      >
         <TextInput
-          style={styles.inputField}
+          ref={descriptionRef}
+          style={styles.dField}
+          multiline={true}
+          style={[styles.inputField]}
           name={"Description"}
-          // onChangeText={(e) => setEmail(e)}
+          onChangeText={(e) => setproductDecsription(e)}
           placeholder={"Please add product description"}
         />
       </View>
-      <Text style={styles.Ftitle}>Upload Images</Text>
+      <Spacer height={10} />
+      <View style={{ padding: 30 }}>
+         <SelectBox
+        label="Select Product Category"
+        options={types}
+        value={selectedTypes}
+        onChange={onChange((e) => setproductCategory(e))}
+        hideInputFilter={false}
+        arrowIconColor={Colors.primary}
+        searchIconColor={Colors.primary}
+      />
+      </View>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Text style={styles.Ftitle}>Upload Images</Text>
+        {photo !== "" ? (
+          <TouchableOpacity onPress={() => setPhoto("")}>
+            <Ionicons
+              name="close-circle"
+              size={20}
+              color="#717171"
+              style={{ alignSelf: "center", marginRight: 30 }}
+            />
+          </TouchableOpacity>
+        ) : null}
+      </View>
       <View style={styles.uploadBox}>
-        <Ionicons
-          name="cloud-upload"
-          size={25}
-          color="#717171"
-          style={{ alignSelf: "center" }}
-        />
-        {photo && (
+        {photo === "" ? (
+          <Ionicons
+            name="cloud-upload"
+            size={25}
+            color="#717171"
+            style={{ alignSelf: "center" }}
+          />
+        ) : null}
+        {photo !==""? (
           <>
             <Image
-              source={{ uri: photo.uri }}
-              style={{ width: 300, height: 300 }}
+              source={{ uri: photo }}
+              style={{ width: "100%", height: "100%" }}
+              onPress={()=>pickImage()}
             />
-            <Button title="Upload Photo" onPress={handleUploadPhoto} />
           </>
-        )}
-        <Button title="Choose File" onPress={handleChoosePhoto} />
+        ):<Button title="Choose File" onPress={pickImage} />}
+        {/* {photo === ""? (
+          <Button title="Choose File" onPress={pickImage} />
+        ) : null} */}
       </View>
-      <Spacer height={30} />
-      <ButtonN title={"Next"} textStyle={{ color: Colors.primary }} onPress={() => navigation.navigate("Add Product Details")}/>
-    </ScrollView>
+      <Spacer height={20} />
+      <ButtonN
+        buttonStyle={{ backgroundColor: Colors.primary }}
+        title={"Add Product"}
+        textStyle={{ color: Colors.white }}
+        onPress={() => {console.log(user) ;addProduct(productName, productDecsription, photo, productCategory, user.user.id);}}
+      />
+    </View>
   );
+  function onChange() {
+    return (val) => setSelectedTypes(val)
+  }
+};
+const mapStateToProps = (state) => {
+  return {
+    user: state.buyer,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProduct: (productName, productDecsription,productImage ,productCategory, m_id) =>
+      dispatch(addProduct(productName, productDecsription,productImage, productCategory, m_id)),
+  };
 };
 
-export default AddProducts;
+export default connect(mapStateToProps,mapDispatchToProps)(AddProducts);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -130,7 +258,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     width: "85%",
-    height: "30%",
+    height: "20%",
     borderRadius: 10,
     backgroundColor: "#f4f4f4",
   },
@@ -139,7 +267,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     width: "85%",
-    height: "40%",
+    height: "18%",
     borderRadius: 10,
     backgroundColor: "#f4f4f4",
   },

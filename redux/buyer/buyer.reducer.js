@@ -2,8 +2,8 @@ import * as actionTypes from "./buyer.constant";
 
 
 const initialState={
-    token:null,
-    user:null,
+    token:"",
+    user:{},
     error:false,
     errorMessage:"",
     role:"buyer",
@@ -42,6 +42,16 @@ export const buyerReducer=(state=initialState,action)=>{
                 error:false,
                 errorMessage:"",
                 isLoading:false,
+            }
+        case actionTypes.SIGN_OUT:
+            return {
+                ...state,
+                user:{},
+                token:"",
+                error:false,
+                errorMessage:"",
+                isLoading:false,
+                
             }
         case actionTypes.SIGN_UP_REQUEST:
             return {

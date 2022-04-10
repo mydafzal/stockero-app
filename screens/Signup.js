@@ -15,21 +15,27 @@ import Spacer from "../components/Spacer";
 import { Ionicons } from "@expo/vector-icons";
 import bg from "../assets/images/bg.png";
 import { connect } from "react-redux";
-import { SignUp } from "../redux/buyer/buyer.action";
+import { register } from "../redux/manufacturer/manufacturer.action";
 import { Alert } from "react-native";
+import { signOut } from "../redux/manufacturer/manufacturer.action";
 import axios from "axios";
 
-const Signup = ({ SignUp, user }) => {
+const Signup = ({ register, user}) => {
   const navigation = useNavigation();
-  const [firstName, setfirstName] = React.useState("");
-  const [lastName, setlastName] = React.useState("");
+  const [text, onChangeText] = React.useState();
+  const [number, onChangeNumber] = React.useState();
+  const [fullName, setfullName] = React.useState("");
+  const [factoryName, setfactoryName] = React.useState("");
+  const [cnic, setcnic] = React.useState("");
+  const [ntn, setntn] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   useEffect(() => {
-    if (user.isLoading) {
-      alert("signinIN");
-    }
-  }, [user.isLoading]);
+    // if (user.isLoading) {
+    //   alert(email);
+    // }
+    //console.log(user.user);
+  }, []);
 
   useEffect(() => {
     if (user.error) {
@@ -38,11 +44,22 @@ const Signup = ({ SignUp, user }) => {
   }, [user.error, user.errorMessage]);
 
   useEffect(() => {
-    if (user.user !== null) {
+   
+    if (Object.keys(user.user).length>0) {
       navigation.reset({
         index: 0,
-        routes: [{ name: "Dashboard" }],
+        routes: [{ name: "Dashboard manufacturer" }],
       });
+      // console.log(user.user.isApproved);
+      // if(!user.user.isApproved){
+      //   alert("Your account is not approved yet. Please wait for approval.")
+      //   signOut();        
+      // } else{
+      //   navigation.reset({
+      //     index: 0,
+      //     routes: [{ name: "Dashboard manufacturer" }],
+      //   });
+      // }
     }
   }, [user.user]);
 
@@ -66,26 +83,10 @@ const Signup = ({ SignUp, user }) => {
                 />
                 <TextInput
                   style={styles.inputField}
-                  name={"FirstName"}
-                  placeholder={"First Name"}
-                  value={firstName}
-                  onChangeText={(e) => setfirstName(e)}
-                />
-              </View>
-              <Spacer height={10} />
-              <View style={styles.inputFieldCard}>
-                <Ionicons
-                  name="person"
-                  size={17}
-                  color="#9A9A9A"
-                  style={{ alignSelf: "center", paddingLeft: 15 }}
-                />
-                <TextInput
-                  style={styles.inputField}
-                  name={"LastName"}
-                  value={lastName}
-                  placeholder={"Last Name"}
-                  onChangeText={(e) => setlastName(e)}
+                  name={"FullName"}
+                  placeholder={"Enter your full name"}
+                  value={fullName}
+                  onChangeText={(e) => setfullName(e)}
                 />
               </View>
               <Spacer height={10} />
@@ -99,7 +100,7 @@ const Signup = ({ SignUp, user }) => {
                 <TextInput
                   style={styles.inputField}
                   name={"email"}
-                  value={email}
+                  value={email.toLocaleLowerCase()}
                   placeholder={"Enter your email"}
                   onChangeText={(e) => setEmail(e)}
                 />
@@ -114,19 +115,58 @@ const Signup = ({ SignUp, user }) => {
                 />
                 <TextInput
                   style={styles.inputField}
-                  name={"Paswword"}
+                  name={"Password"}
                   value={password}
                   placeholder={"**********"}
                   onChangeText={(e) => setPassword(e)}
                   secureTextEntry={true}
                 />
               </View>
-              <Spacer height={30} />
-              {/* <View> */}
+              <Spacer height={10} />
+              <View style={styles.inputFieldCard}>
+                <Ionicons
+                  name="business"
+                  size={17}
+                  color="#9A9A9A"
+                  style={{ alignSelf: "center", paddingLeft: 15 }}
+                />
+                <TextInput
+                  style={styles.inputField}
+                  name={"FactoryName"}
+                  value={factoryName}
+                  placeholder={"Enter your factory name"}
+                  onChangeText={(e) => setfactoryName(e)}
+                />
+              </View>
+              <Spacer height={10} />
+              <View style={styles.inputFieldCard}>
+              <TextInput
+                  style={styles.inputField}
+                  keyboardType='number-pad'
+                  onChangeText={(e) => setcnic(e)}
+                  value={cnic}
+                  maxLength={13}
+                  name={'CNIC'}
+                  placeholder={'Provide Your CNIC'}
+              />
+          </View>
+          <Spacer height={10} />
+          <View style={styles.inputFieldCard}>
+              <TextInput
+                  style={styles.inputField}
+                  keyboardType='number-pad'
+                  value={ntn}
+                  onChangeText={(e) => setntn(e)}
+                  maxLength={7}
+                  name={'NTN'}
+                  placeholder={'Valid NTN Number'}
+              />
+          </View>
+          <Spacer height={30} />
               <TouchableButton
-                title={"Proceed"}
+                title={"Confirm"}
                 textStyle={{ color: "white" }}
-                onPress={() => SignUp(lastName, firstName, email, password)}
+                onPress={() => register(fullName,email, password, factoryName, cnic, ntn)}
               />
               <Spacer height={10} />
               <Text
@@ -157,14 +197,13 @@ const Signup = ({ SignUp, user }) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.buyer,
+    user: state.manufacturer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    SignUp: (firstName, lastName, email, password) =>
-      dispatch(SignUp(firstName, lastName, email, password)),
-    //   setRole:(role)=>dispatch(setRole(role))
+    register: (fullName,email, password, factoryName, cnic, ntn) =>
+      dispatch(register(fullName,email, password, factoryName, cnic, ntn)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

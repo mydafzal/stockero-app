@@ -28,20 +28,27 @@ export const signIn=(email,password)=>{
     return dispatch=>{
         dispatch(signInRequest());
     if(email.length!==0 && password.length!==0){
-        axios.post(`${BASE_URL}/${role}/signin`,{
+        axios.post(`${BASE_URL}/api/${role}/signin`,{
             email,
             password
             })
             .then(res=>{
                 dispatch(SignInSuccess(res.data))
             }).catch((err)=>{
-                dispatch(SignInFail(err.response.data.message))
+                console.log(err);
+                dispatch(SignInFail(err.message))
+                
                 
             })
     } else{
         dispatch(SignInFail("Please enter email and password"))
     }
 }
+}
+export const signOut=()=>{
+    return {
+        type:actionTypes.SIGN_OUT
+    }
 }
 
 export const SignUpSuccess=(data)=>{
@@ -70,11 +77,11 @@ export const SignUp=(firstName,lastName,email,password)=>{
     return (dispatch)=>{
         dispatch(SignUpRequest());
         if(firstName.length!==0&& lastName.length!==0 && email.length!==0 && password.length!==0){
-            axios.post(`${BASE_URL}/${role}/register`,{
-                firstName:firstName,
-                lastName:lastName,
-                Email:email,
-                Password:password}).then((res)=>{
+            axios.post(`${BASE_URL}/api/${role}/register`,{
+                firstname:firstName,
+                lastname:lastName,
+                email:email,
+                password:password}).then((res)=>{
                     dispatch(SignUpSuccess(res.data))
                 }).catch((err)=>{
                     dispatch(SignUpFail(err.response.data.message))

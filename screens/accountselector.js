@@ -8,7 +8,7 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import headerart from "../assets/images/headerart.png";
@@ -19,7 +19,7 @@ import buyer from "../assets/images/customer.png";
 import Colors from "../constants/Colors";
 import Spacer from "../components/Spacer";
 import { Ionicons } from "@expo/vector-icons";
-const width = Dimensions.get('window').width / 1 - 100;
+const width = Dimensions.get("window").width / 1 - 100;
 
 const accountselector = () => {
   const navigation = useNavigation();
@@ -31,20 +31,13 @@ const accountselector = () => {
           <Spacer height={10} />
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.navigate("Signupm")}
+            onPress={() => navigation.navigate("Signup Manufacturer")}
           >
             <View style={styles.selectorbox}>
-            <Ionicons
-                name="business"
-                size={30}
-                color="#373737"
-                
-                onPress={() => navigation.navigate("Add Products")}
-              />
-              {/* <Image source={manu} style={styles.imageStyle}></Image>           */}
+              <Ionicons name="business" size={30} color="#373737" />
+
               <Text
                 style={styles.textStyle}
-                onPress={() => navigation.navigate("Signupm")}
               >
                 Manufacturer
               </Text>
@@ -53,24 +46,13 @@ const accountselector = () => {
           <Spacer height={10} />
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.navigate("Dashboard Buyer")} 
+            onPress={() => navigation.navigate("Signup Buyer")}
           >
-          <View style={styles.selectorbox}>
-          <Ionicons
-                name="person"
-                size={30}
-                color="#373737"
-               
-                onPress={() => navigation.navigate("Add Products")}
-              />
-            {/* <Image source={buyer} style={styles.imageStyle}></Image> */}
-            <Text
-              style={styles.textStyle}
-              onPress={() => navigation.navigate("Dashboard Buyer")}
-            >
-              Buyer
-            </Text>
-          </View>
+            <View style={styles.selectorbox}>
+              <Ionicons name="person" size={30} color="#373737" />
+
+              <Text style={styles.textStyle}>Buyer</Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -80,7 +62,6 @@ const accountselector = () => {
 export default accountselector;
 const styles = StyleSheet.create({
   container: {
-      
     paddingTop: 5,
     display: "flex",
     width: "100%",
@@ -117,8 +98,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
     width: "10%",
-    flex: 1, 
-    resizeMode: 'contain',
+    flex: 1,
+    resizeMode: "contain",
   },
   textStyle: {
     alignSelf: "center",
@@ -129,8 +110,8 @@ const styles = StyleSheet.create({
   },
 
   selectorbox: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
+    alignItems: "flex-start",
+    flexDirection: "row",
     height: 70,
     backgroundColor: Colors.primaryLite,
     borderColor: Colors.primary,
@@ -140,6 +121,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     // marginBottom: 20,
     padding: 15,
-    
   },
 });

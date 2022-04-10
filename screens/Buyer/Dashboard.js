@@ -21,9 +21,9 @@ import {
   
   const TabArr = [
     { route: 'Home', label: 'Home', type: Icons.FontAwesome, icon: 'home', component: Home, color: '#4F3074', alphaClr: '#FFFFFF' },
-    { route: 'Post Request', label: 'Post Request', type: Icons.Ionicons, icon: 'podium', component: PostRequest, color: '#4F3074', alphaClr: '#FFFFFF' },
-    { route: 'Offers', label: 'Offers', type: Icons.FontAwesome5, icon: 'clipboard-list', component: Offers, color: '#4F3074', alphaClr: '#FFFFFF' },
-    { route: 'Notifications', label: 'Notifications', type: Icons.FontAwesome, icon: 'bell', component: Notifications, color: '#4F3074', alphaClr: '#FFFFFF' },
+    { route: 'Post Request', label: 'Post Request', type: Icons.Ionicons, icon: 'create', component: PostRequest, color: '#4F3074', alphaClr: '#FFFFFF' },
+    { route: 'Offers', label: 'Offers', type: Icons.Ionicons, icon: 'push', component: Offers, color: '#4F3074', alphaClr: '#FFFFFF' },
+    { route: 'Notifications', label: 'Orders', type: Icons.Ionicons, icon: 'reader', component: Notifications, color: '#4F3074', alphaClr: '#FFFFFF' },
     { route: 'Settings', label: 'Settings', type: Icons.FontAwesome, icon: 'gear', component: Settings, color: '#4F3074', alphaClr: '#FFFFFF' },
   ];
   

@@ -4,10 +4,14 @@ import SettingButton from "../../components/SettingButton";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
-const Profile = ({ navigation }) => {
+import { useDispatch } from "react-redux";
+import { signOut } from "../../redux/manufacturer/manufacturer.action";
+const Profile = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   return (
     <ScrollView style={styles.container}>
-    <Text style={styles.Headtitle}>Settings</Text>
+      <Text style={styles.Headtitle}>Settings</Text>
       <Text style={styles.Stitle}>Factory Settings</Text>
       <View style={styles.Box}>
         <SettingButton
@@ -43,7 +47,7 @@ const Profile = ({ navigation }) => {
           textStyle={{ color: "#373737" }}
           onPress={() => navigation.navigate("Address")}
         />
-         <View
+        <View
           style={{
             borderBottomColor: "#E7E7E9",
             borderBottomWidth: 1,
@@ -99,7 +103,6 @@ const Profile = ({ navigation }) => {
           textStyle={{ color: "#373737" }}
           onPress={() => navigation.navigate("Wallet")}
         />
-        
       </View>
       <Text style={styles.Stitle}>Account Settings</Text>
       <View style={styles.Box}>
@@ -115,7 +118,7 @@ const Profile = ({ navigation }) => {
           title={"Profile"}
           textStyle={{ color: "#373737" }}
         />
-         <View
+        <View
           style={{
             borderBottomColor: "#E7E7E9",
             borderBottomWidth: 1,
@@ -135,7 +138,7 @@ const Profile = ({ navigation }) => {
           title={"Change Password"}
           textStyle={{ color: "#373737" }}
         />
-         <View
+        <View
           style={{
             borderBottomColor: "#E7E7E9",
             borderBottomWidth: 1,
@@ -144,6 +147,13 @@ const Profile = ({ navigation }) => {
           }}
         />
         <SettingButton
+          onPress={() => {
+            dispatch(signOut());
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "Login" }],
+            });
+          }}
           icon={
             <Ionicons
               name="log-out"
@@ -157,8 +167,8 @@ const Profile = ({ navigation }) => {
         />
       </View>
     </ScrollView>
-  )
-}
+  );
+};
 
 export default Profile;
 const styles = StyleSheet.create({
@@ -182,7 +192,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   Headtitle: {
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: "Poppins_600SemiBold",
     fontSize: 25,
     color: "black",
     padding: 22,
