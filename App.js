@@ -64,11 +64,11 @@ const App = () => {
     <Provider store={store}>
       <NavigationContainer>
         <RootSiblingParent>
-        <SafeAreaView style={{
-          flex: 1, paddingTop: Platform.OS === 'android' ? 25 : 0
-        }}>
+        {/* <SafeAreaView style={{
+          flex: 1
+        }}> */}
           <SplashNavigator />
-        </SafeAreaView>
+        {/* </SafeAreaView> */}
         </RootSiblingParent>
       </NavigationContainer>
 

@@ -6,14 +6,13 @@ import Colors from "../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { signOut } from "../../redux/buyer/buyer.action";
+import { SafeAreaView } from "react-native-safe-area-context";
 const Settings = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
     <Text style={styles.Headtitle}>Settings</Text>
-      
-     
       <Text style={styles.Stitle}>Account Settings</Text>
       <View style={styles.Box}>
         <SettingButton
@@ -78,7 +77,7 @@ const Settings = () => {
           textStyle={{ color: "#373737" }}
         />
       </View>
-    </ScrollView>
+    </SafeAreaView>
   )
 }
 
@@ -86,7 +85,6 @@ export default Settings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 5,
   },
   Box: {
     backgroundColor: "#ffffff",

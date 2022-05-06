@@ -48,7 +48,7 @@ const Signup = ({ register, user}) => {
     if (Object.keys(user.user).length>0) {
       navigation.reset({
         index: 0,
-        routes: [{ name: "Dashboard manufacturer" }],
+        routes: [{ name: "Approval Message" }],
       });
       // console.log(user.user.isApproved);
       // if(!user.user.isApproved){
@@ -275,8 +275,8 @@ const styles = StyleSheet.create({
   inputField: {
     width: "100%",
     padding: 10,
-    fontFamily: "Poppins_400Regular",
-    fontSize: 10,
+    fontFamily: "Poppins_500Medium",
+    fontSize: 12,
   },
   inputFieldName: {
     width: "40%",

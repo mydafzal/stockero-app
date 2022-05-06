@@ -237,8 +237,8 @@ const styles = StyleSheet.create({
   inputField: {
     width: "100%",
     padding: 10,
-    fontFamily: "Poppins_400Regular",
-    fontSize: 10,
+    fontFamily: "Poppins_500Medium",
+    fontSize: 12,
   },
   inputFieldName: {
     width: "40%",

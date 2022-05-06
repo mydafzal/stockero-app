@@ -73,12 +73,14 @@ import {
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            height: 60,
-            position: 'absolute',
-            bottom: 16,
-            right: 16,
-            left: 16,
-            borderRadius: 16
+          paddingTop: 10,
+          paddingBottom: 10,
+          height: 60,
+          position: 'absolute',
+          bottom: 16,
+          right: 16,
+          left: 16,
+          borderRadius: 16
           }
         }}
       >

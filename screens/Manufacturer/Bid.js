@@ -52,6 +52,7 @@ const Offers = ({ route, user }) => {
     <View style={styles.notiBox}>
       <Text style={styles.title}>{item.name}</Text>
       <Text style={styles.notiftext}>{item.quantity}</Text>
+      <Text style={styles.notiftext}>{item.description}</Text>
       <Spacer height={15} />
       <View style={styles.inputFieldCard}>
         <TextInput
@@ -114,7 +115,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Offers);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: StatusBar.currentHeight || 5,
   },
   notiBox: {
     marginTop: 20,

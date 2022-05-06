@@ -22,43 +22,40 @@ import axios from "axios";
 import SwitchSelector from "react-native-switch-selector";
 const { height, width } = Dimensions.get("window");
 import { connect } from "react-redux";
-import { signIn ,setRole} from "../redux/buyer/buyer.action";
+import { signIn, setRole } from "../redux/buyer/buyer.action";
 import { Alert } from "react-native";
 
-const Login = ({ signIn, setRole,user}) => {
+const Login = ({ signIn, setRole, user }) => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [authRole,setAuthRole]=useState("buyer");
+  const [authRole, setAuthRole] = useState("buyer");
 
-  
-
-  useEffect(()=>{
-      if(user.isLoading){
-          alert("logginIN");
-      }
-  },[user.isLoading])
-
-useEffect(()=>{
-    if(user.error){
-        alert(user.errorMessage);
+  useEffect(() => {
+    if (user.isLoading) {
+      alert("logginIN");
     }
-},[user.error,user.errorMessage]);
+  }, [user.isLoading]);
 
-useEffect(()=>{
-  const route=`Dashboard ${user.role}`;
-    if(Object.keys(user.user).length>0){
-      if(user.role==="manufacturer"&&!user.user.isApproved){
+  useEffect(() => {
+    if (user.error) {
+      alert(user.errorMessage);
+    }
+  }, [user.error, user.errorMessage]);
+
+  useEffect(() => {
+    const route = `Dashboard ${user.role}`;
+    if (Object.keys(user.user).length > 0) {
+      if (user.role === "manufacturer" && !user.user.isApproved) {
         alert("Your account is not approved yet");
       } else {
         navigation.reset({
-          index:0,
-          routes:[{name: route}]
-      })
+          index: 0,
+          routes: [{ name: route }],
+        });
       }
     }
-
-},[user.user])
+  }, [user.user]);
 
   return (
     <KeyboardAvoidingView
@@ -70,16 +67,17 @@ useEffect(()=>{
             <View style={styles.title}>
               <Text style={styles.loginText}>LOGIN</Text>
               <Spacer height={15} />
-              <View style={{width: 200, display: 'flex'}}>
+              <View style={{ width: 200, display: "flex" }}>
                 <SwitchSelector
                   initial={0}
-                  onPress={(value) => {setRole(value)}}
+                  onPress={(value) => {
+                    setRole(value);
+                  }}
                   textColor={Colors.primary} //'#7a44cf'
                   selectedColor={Colors.white}
                   buttonColor={Colors.primary}
                   borderColor={Colors.primary}
                   hasPadding
-                  
                   options={[
                     { label: "Buyer", value: "buyer" }, //images.feminino = require('./path_to/assets/img/feminino.png')
                     { label: "Manufacturer", value: "manufacturer" }, //images.masculino = require('./path_to/assets/img/masculino.png')
@@ -139,7 +137,7 @@ useEffect(()=>{
               <TouchableButton
                 title={"Login"}
                 textStyle={{ color: "white" }}
-                onPress={()=>signIn(email,password)}
+                onPress={() => signIn(email, password)}
               />
               <Spacer height={10} />
               <Text
@@ -169,16 +167,15 @@ useEffect(()=>{
 
 const mapStateToProps = (state) => {
   return {
-    user:state.buyer,
+    user: state.buyer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     signIn: (email, password) => dispatch(signIn(email, password)),
-    setRole:(role)=>dispatch(setRole(role))
+    setRole: (role) => dispatch(setRole(role)),
   };
 };
-  
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
@@ -236,8 +233,8 @@ const styles = StyleSheet.create({
     // flexDirection: 'row',
     padding: 10,
     width: "100%",
-    fontFamily: "Poppins_400Regular",
-    fontSize: 10,
+    fontFamily: "Poppins_500Medium",
+    fontSize: 12,
   },
   inputFieldCard: {
     flexDirection: "row",

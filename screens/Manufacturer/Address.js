@@ -41,7 +41,7 @@ const K_OPTIONS = [
       id: '8',
     },
   ]
-const Address = () => {
+const Address = ({navigation}) => {
     const [selectedTeam, setSelectedTeam] = useState({})
   return (
     <KeyboardAvoidingView
@@ -121,7 +121,7 @@ const Address = () => {
         />
       </View>
       <Spacer height={25} />
-    <ButtonN buttonStyle= {{backgroundColor: Colors.primary}}title={'Save Address'} textStyle={{ fontSize: 15, color: Colors.white, }} onPress={() => navigation.navigate('accountselector')} />
+    <ButtonN buttonStyle= {{backgroundColor: Colors.primary}}title={'Save Address'} textStyle={{ fontSize: 15, color: Colors.white, }} onPress={() => navigation.navigate('Add Product Details')} />
     </ScrollView>
     </KeyboardAvoidingView>
   );

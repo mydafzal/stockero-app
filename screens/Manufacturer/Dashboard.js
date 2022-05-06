@@ -3,7 +3,8 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  SafeAreaView
 } from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -73,6 +74,8 @@ export default function Dashboard() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
+          paddingTop: 10,
+          paddingBottom: 10,
           height: 60,
           position: 'absolute',
           bottom: 16,

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, StyleSheet, StatusBar, ScrollView } from "react-native";
+import { View, Text, StyleSheet, StatusBar, SafeAreaView } from "react-native";
 import SettingButton from "../../components/SettingButton";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
@@ -10,7 +10,7 @@ const Profile = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.Headtitle}>Settings</Text>
       <Text style={styles.Stitle}>Factory Settings</Text>
       <View style={styles.Box}>
@@ -166,7 +166,7 @@ const Profile = () => {
           textStyle={{ color: "#373737" }}
         />
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -174,7 +174,6 @@ export default Profile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 5,
   },
   Box: {
     backgroundColor: "#ffffff",
@@ -193,7 +192,7 @@ const styles = StyleSheet.create({
   },
   Headtitle: {
     fontFamily: "Poppins_600SemiBold",
-    fontSize: 25,
+    fontSize: 20,
     color: "black",
     padding: 22,
   },

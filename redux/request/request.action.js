@@ -68,6 +68,7 @@ export const AddRequest = (
         })
         .then((res) => {
           console.log(res.data);
+          alert("Request Posted Successfully");
           dispatch(requestSuccess(res.data));
         })
         .catch((err) => {
@@ -113,6 +114,7 @@ export const Respond = (
         })
         .then((res) => {
           console.log(res.data);
+          alert("Bid made successfully");
           dispatch(requestSuccess(res.data));
         })
         .catch((err) => {

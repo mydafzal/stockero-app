@@ -11,10 +11,11 @@ import { Ionicons } from "@expo/vector-icons";
 import Spacer from "../../components/Spacer";
 import Colors from "../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const Home = ({ navigation }) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaProvider style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.Text}>Welcome Back!</Text>
         <Spacer height={5} />
@@ -102,12 +103,12 @@ const Home = ({ navigation }) => {
                 size={35}
                 color="#373737"
                 style={{ alignSelf: "center" }}
-                onPress={() => navigation.navigate("Payment Method")}
+                onPress={() => navigation.navigate("Wallet")}
               />
 
               <Text
                 style={styles.boxFont}
-                onPress={() => navigation.navigate("Payment Method")}
+                onPress={() => navigation.navigate("Wallet")}
               >
                 Payment Method
               </Text>
@@ -133,7 +134,7 @@ const Home = ({ navigation }) => {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
@@ -148,6 +149,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     paddingLeft: 20,
+    paddingTop: 20,
   },
   main: {
     flex: 2,
@@ -165,43 +167,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#fff",
   },
-
-  orderBox: {
-    flexDirection: "row",
-    alignSelf: "center",
-    width: "95%",
-    height: "40%",
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "rgba(216, 216, 216, 255)",
-    backgroundColor: "#FFFFFF",
-    shadowColor: "#707070",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-  },
-  todoBox: {
-    flexDirection: "row",
-    alignSelf: "center",
-    width: "95%",
-    height: "35%",
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "rgba(216, 216, 216, 255)",
-    backgroundColor: "#FFFFFF",
-    shadowColor: "#707070",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-  },
   innerContainer: {
     width: "100%",
     height: "80%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+  
   },
   box: {
     width: "40%",

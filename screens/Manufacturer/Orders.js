@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
       },
       Headtitle: {
         fontFamily: 'Poppins_600SemiBold',
-        fontSize: 25,
+        fontSize: 20,
         color: "black",
         padding: 22,
       },

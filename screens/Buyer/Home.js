@@ -167,7 +167,7 @@ const Home = ({ navigation }) => {
   };
   return (
     <SafeAreaView
-      style={{ flex: 1, paddingHorizontal: 20, backgroundColor: Colors.white }}
+      style={{ flex: 1, backgroundColor: Colors.white }}
     >
       <View style={style.header}>
         <View>
@@ -185,7 +185,7 @@ const Home = ({ navigation }) => {
       </View>
       <CategoryList />
       <FlatList
-        columnWrapperStyle={{ justifyContent: "space-between" }}
+        columnWrapperStyle={{ justifyContent: "center", flex: 1 }}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           marginTop: 10,
@@ -205,9 +205,10 @@ export default Home;
 const style = StyleSheet.create({
   categoryContainer: {
     flexDirection: "row",
-    marginTop: 30,
-    marginBottom: 20,
+    // marginTop: 30,
+    // marginBottom: 20,
     justifyContent: "space-between",
+    margin: 20,
   },
   categoryText: {
     fontSize: 14,
@@ -234,15 +235,19 @@ const style = StyleSheet.create({
     height: 225,
     backgroundColor: Colors.light,
     width,
-    marginHorizontal: 2,
+    // marginHorizontal: 2,
     borderRadius: 10,
     marginBottom: 20,
     padding: 15,
+    marginEnd: 10,
+    marginStart: 10,
   },
   header: {
     marginTop: 30,
     flexDirection: "row",
     justifyContent: "space-between",
+    marginLeft: 20,
+    marginRight: 20,
   },
   searchContainer: {
     height: 50,
@@ -251,6 +256,8 @@ const style = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    marginLeft: 20,
+    marginRight: 20,
   },
   input: {
     fontSize: 18,

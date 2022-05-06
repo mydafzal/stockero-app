@@ -19,7 +19,11 @@ const Offers = ({ user }) => {
   const userID = user.user.id;
   const offers = useSelector((state) => state.request.offers);
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    if (offers.isLoading) {
+      alert("loading");
+    }
+  }, [offers.isLoading]);
   useEffect(() => {
     if (userID) {
       dispatch(GetOffers(userID));
@@ -114,7 +118,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Offers);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: StatusBar.currentHeight || 5,
   },
   notiBox: {
     backgroundColor: "#ffffff",

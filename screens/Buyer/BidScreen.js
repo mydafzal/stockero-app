@@ -1,76 +1,93 @@
-import React from 'react';
-import {View, SafeAreaView, Image, Text, StyleSheet, TextInput, ScrollView, Alert} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Colors from '../../constants/Colors';
-import TouchableButton from '../../components/TouchableButton';
+import React from "react";
+import {
+  View,
+  SafeAreaView,
+  Image,
+  Text,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  Alert,
+} from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import Colors from "../../constants/Colors";
+import TouchableButton from "../../components/TouchableButton";
 import Spacer from "../../components/Spacer";
-const BidScreen = ({navigation, route}) => {
-const product = route.params;
+const BidScreen = ({ navigation, route }) => {
+  const product = route.params;
 
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: Colors.white,
-      }}>
-      
+      }}
+    >
       <View style={style.imageContainer}>
-        <Image source={product.img} style={{resizeMode: 'contain', flex: 1}} />
+        <Image
+          source={product.img}
+          style={{ resizeMode: "contain", flex: 1 }}
+        />
       </View>
       <ScrollView style={style.detailsContainer}>
         <View
           style={{
             marginLeft: 20,
             // marginTop: 10,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <Text style={{fontSize: 22, fontWeight: 'bold'}}>{product.name}</Text>
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ fontSize: 22, fontWeight: "bold" }}>
+            {product.name}
+          </Text>
           <View style={style.priceTag}>
             <Text
               style={{
                 marginLeft: 15,
                 color: Colors.white,
-                fontWeight: 'bold',
+                fontWeight: "bold",
                 fontSize: 13,
-              }}>
+              }}
+            >
               Rs. {product.price}
             </Text>
           </View>
         </View>
-        <View style={{paddingHorizontal: 20, marginTop: 10}}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>About</Text>
+        <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>About</Text>
           <Text
             style={{
-              color: 'grey',
+              color: "grey",
               fontSize: 16,
               lineHeight: 22,
               marginTop: 10,
-            }}>
+            }}
+          >
             {product.about}
           </Text>
           <View>
-          <Text style={style.Ftitle}>Minimum Quantity:</Text>
-      <View style={style.inputFieldCard}>
-        <TextInput
-          style={style.inputField}
-          name={"Name"}
-          editable = {false}
-          value={"10"}
-        />
-      </View>
-      </View>
-      <View>
-          <Text style={style.Ftitle}>Stock:</Text>
-      <View style={style.inputFieldCard}>
-        <TextInput
-          style={style.inputField}
-          name={"Name"}
-          placeholder={"Must be greater than Actual Quantity"}
-        />
-      </View>
-      </View>
+            <Text style={style.Ftitle}>Minimum Quantity:</Text>
+            <View style={style.inputFieldCard}>
+              <TextInput
+                style={style.inputField}
+                name={"Name"}
+                editable={false}
+                value={"10"}
+              />
+            </View>
+          </View>
+          <View>
+            <Text style={style.Ftitle}>Stock:</Text>
+            <View style={style.inputFieldCard}>
+              <TextInput
+                style={style.inputField}
+                name={"Name"}
+                placeholder={"Must be greater than Actual Quantity"}
+              />
+            </View>
+          </View>
           {/* <View
             style={{
               marginTop: 20,
@@ -107,7 +124,16 @@ const product = route.params;
           </View> */}
         </View>
         <Spacer height={20} />
-        <TouchableButton buttonStyle= {{backgroundColor: Colors.green, borderColor: Colors.green, width: '100%'}}title={'Send Bid Offer'} textStyle={{ fontSize: 15, color: Colors.white, }} onPress={() => (Alert:("Request sent Successfully"))} />
+        <TouchableButton
+          buttonStyle={{
+            backgroundColor: Colors.green,
+            borderColor: Colors.green,
+            width: "100%",
+          }}
+          title={"Send Bid Offer"}
+          textStyle={{ fontSize: 15, color: Colors.white }}
+          onPress={() => (Alert: "Request sent Successfully")}
+        />
       </ScrollView>
     </View>
   );
@@ -117,15 +143,15 @@ const style = StyleSheet.create({
   header: {
     paddingHorizontal: 20,
     marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   imageContainer: {
     flex: 0.4,
     marginTop: 20,
 
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   detailsContainer: {
     flex: 0.55,
@@ -167,28 +193,28 @@ const style = StyleSheet.create({
     marginRight: 3,
   },
   borderBtn: {
-    borderColor: 'grey',
+    borderColor: "grey",
     borderWidth: 1,
     borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     width: 60,
     height: 40,
   },
-  borderBtnText: {fontWeight: 'bold', fontSize: 28},
+  borderBtnText: { fontWeight: "bold", fontSize: 28 },
   buyBtn: {
     width: 130,
     height: 50,
     backgroundColor: Colors.green,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 30,
   },
   priceTag: {
     backgroundColor: Colors.green,
     width: 80,
     height: 40,
-    justifyContent: 'center',
+    justifyContent: "center",
     borderTopLeftRadius: 25,
     borderBottomLeftRadius: 25,
   },

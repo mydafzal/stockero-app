@@ -22,6 +22,11 @@ const BuyerRequests = () => {
   useEffect(() => {
     dispatch(GetRequests());
   }, []);
+  useEffect(() => {
+    if (requests.isLoading) {
+      alert("loading");
+    }
+  }, [requests.isLoading]);
 
   useEffect(() => {
     // console.log(requests);
@@ -51,8 +56,8 @@ const BuyerRequests = () => {
       </View>
       <View style={{ width: "100%", alignItems: "flex-end" }}>
         <ButtonSmall
-          buttonStyle={{ marginTop: 15, marginRight: 20 }}
-          textStyle={{ color: Colors.primary }}
+          buttonStyle={{ marginTop: 15, marginRight: 20, backgroundColor: Colors.greenLite }}
+          textStyle={{ color: Colors.green2}}
           title="Bid"
           onPress={() => {
             const body = { id: item.id };
@@ -64,6 +69,7 @@ const BuyerRequests = () => {
   );
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" />
       <Text style={styles.Headtitle}>Buyer Requests</Text>
       <FlatList
         data={DATA}

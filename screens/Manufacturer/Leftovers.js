@@ -6,6 +6,7 @@ import {
   StatusBar,
   TextInput,
   Button,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import SelectBox from "react-native-multi-selectbox";
@@ -14,15 +15,31 @@ import Colors from "../../constants/Colors";
 import MultiSelect from 'react-native-multiple-select';
 import { launchImageLibrary } from "react-native-image-picker";
 import ButtonN from "../../components/ButtonN";
+import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import Spacer from "../../components/Spacer";
+import {
+  SafeAreaView,
+  SafeAreaProvider,
+} from "react-native-safe-area-context";
 const Leftovers = ({ navigation }) => {
   
   return (
-    <ScrollView style={styles.container}>
-      <View style={{ alignItems: "center", paddingTop: 20 }}>
-        <Text style={styles.Headtitle}>Provide the following Information</Text>
+    <SafeAreaProvider style={styles.container}>
+    <View style={styles.header}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="chevron-back-outline" size={20} color="white" />
+        </TouchableOpacity>
+
+        <Text style={styles.header_label}>List Leftover</Text>
       </View>
+    </View>
+    <Animatable.View style={styles.footer} animation="fadeInUpBig">
+      <ScrollView>
       <Text style={styles.Ftitle}>Leftover Name</Text>
       <View style={styles.inputFieldCard}>
         <TextInput
@@ -59,9 +76,31 @@ const Leftovers = ({ navigation }) => {
           placeholder={"Enter Price"}
         />
       </View>
+      <Text style={styles.Ftitle}>Price</Text>
+      <View style={styles.inputFieldCard}>
+        <TextInput
+          style={styles.inputField}
+          name={"ProductName"}
+          // onChangeText={(e) => setEmail(e)}
+          placeholder={"Enter Price"}
+        />
+      </View>
+      <Text style={styles.Ftitle}>Price</Text>
+      <View style={styles.inputFieldCard}>
+        <TextInput
+          style={styles.inputField}
+          name={"ProductName"}
+          // onChangeText={(e) => setEmail(e)}
+          placeholder={"Enter Price"}
+        />
+      </View>
       <Spacer height={30} />
-      <ButtonN title={"Next"} textStyle={{ color: Colors.primary }} onPress={() => navigation.navigate("Leftover Details")}/>
-    </ScrollView>
+      
+      <ButtonN  title={"Next"} textStyle={{ color: Colors.primary }} onPress={() => navigation.navigate("Leftover Details")}/>
+      <Spacer height={300} />
+      </ScrollView>
+      </Animatable.View>
+    </SafeAreaProvider>
   );
 };
 
@@ -69,8 +108,28 @@ export default Leftovers;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: StatusBar.currentHeight || 0,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.primary,
+  },
+  footer: {
+    flex: 3,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+  },
+  header_label: {
+    fontSize: 18,
+    fontFamily: "Poppins_600SemiBold",
+    color: "white",
+    marginLeft: '23%',
+  },
+  header: {
+    flex: 0.5,
+    backgroundColor: Colors.primary,
+    paddingHorizontal: 20,
+    paddingBottom: 30,
+    justifyContent: "flex-end",
   },
   inputField: {
     padding: 15,
@@ -116,5 +175,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "black",
     padding: 22,
+  },
+  backButton: {
+    backgroundColor: Colors.primaryLite,
+    borderRadius: 10,
+    width: 45,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
