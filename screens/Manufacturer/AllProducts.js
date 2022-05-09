@@ -7,7 +7,7 @@ import {
   StatusBar,
   ActivityIndicator,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Colors from "../../constants/Colors";
 import ButtonSmall from "../../components/ButtonSmall";
 import Spacer from "../../components/Spacer";
@@ -16,20 +16,21 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { GetProducts, deleteProduct } from "../../redux/product/product.action";
 import { useEffect } from "react";
 const AllProducts = () => {
-  const products = useSelector((state) => state.product.product);
+  const products = useSelector((state) => state.product);
   const dispatch = useDispatch();
+  const[loading,setLoading]=useState(true);
   useEffect(() => {
     dispatch(GetProducts());
   }, []);
   useEffect(() => {
-    if (products.isLoading) {
-      alert("loading");
-    }
+    setTimeout(()=>{
+      setLoading(false);
+    },1000);
   }, [products.isLoading]);
-  useEffect(() => {
-    console.log(products);
-  }, [products]);
-  const DATA = products;
+  // useEffect(() => {
+  //   console.log(products);
+  // }, [products]);
+  const DATA = products.product;
   const renderItem = ({ item }) => (
     <View style={styles.Box}>
       <View style={styles.productNameCard}>
@@ -57,20 +58,13 @@ const AllProducts = () => {
   );
   return (
     <SafeAreaView style={styles.container}>
-      {/* {isLoading ? (
-        <View>
-          <ActivityIndicator />
-        </View>
-      ) : ( */}
-        {/* <View> */}
+      {loading?(<ActivityIndicator size="large" color={Colors.red} />):(
           <FlatList
             data={DATA}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
           />
-        {/* </View>
-      )} */}
-      {/* {isLoading && <ActivityIndicator size="large" color="#0000ff" />} */}
+      )}
     </SafeAreaView>
   );
 };

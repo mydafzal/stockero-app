@@ -19,6 +19,7 @@ export const productReducer=(state=initialState,action)=>{
                 isLoading:false,
             }
         case actionTypes.ADD_REQUEST:
+            console.log("ADD_REQUEST");
             return {
                 ...state,
                 isLoading:true,
