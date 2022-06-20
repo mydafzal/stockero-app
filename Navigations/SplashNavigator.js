@@ -25,6 +25,7 @@ import mainHome from '../screens/mainHome';
 import approval from '../screens/approval';
 import OrderDetails from "../screens/Buyer/OrderDetails"
 import OrderDetail from "../screens/Manufacturer/OrderDetails"
+import Recipt from "../screens/Buyer/Recipt";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -102,6 +103,7 @@ const SplashNavigator = () => {
       <Stack.Screen options={{ headerShown: false }} name="Bid Manufacturer" component={Bid} />
       <Stack.Screen options={{ headerShown: false }} name="OrderDetails" component={OrderDetails}/>
       <Stack.Screen options={{ headerShown: false }} name="OrderDetail" component={OrderDetail}/>
+      <Stack.Screen options={{ headerShown: false }} name="Recipt" component={Recipt}/>
     </Stack.Navigator>
   );
 };

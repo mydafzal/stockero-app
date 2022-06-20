@@ -2,6 +2,7 @@ export default {
     primary: '#4F3074',
     primaryAlpha: '#BC5A76',
     primaryLite: 'rgba(130, 126, 247, 0.1)',
+    borderColor: 'rgba(130, 126, 247, 0.155)',
     redLite: 'rgba(255, 0, 0, 0.1)',
     greenLite: 'rgba(48, 197, 90, 0.1)',
     bg: '#EAECF1',
