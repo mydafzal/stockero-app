@@ -34,20 +34,22 @@ const Offers = ({ user }) => {
     manufacturer_id,
     offered_price,
     offered_duration,
+    asking_price,
     name,
     description,
-    quantity
+    quantity   
   ) => {
     const body = {
       buyer_id: userID,
       manufacturer_id,
       offered_price,
       offered_duration,
+      asking_price,
       name,
       details: description,
       quantity,
     };
-
+console.log(body);
     dispatch(Approve(body));
   };
 
@@ -60,7 +62,8 @@ const Offers = ({ user }) => {
   const renderItem = ({ item }) => (
     <View style={styles.notiBox}>
       <Text style={styles.title}>{item.name}</Text>
-      <Text style={styles.notiftext}>{item.id}</Text>
+      <Text style={styles.notiftext}>{item.quantity}</Text>
+      <Text style={styles.notiftext}>{item.description}</Text>
       <View
         style={{
           flexDirection: "row",
@@ -77,9 +80,12 @@ const Offers = ({ user }) => {
               item.manufacturer_id,
               item.offered_price,
               item.offered_duration,
+              item.asking_price,
               item.name,
               item.description,
               item.quantity
+             
+              
             );
           }}
         />

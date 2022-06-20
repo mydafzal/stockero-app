@@ -4,6 +4,7 @@ import { buyerReducer } from './buyer/buyer.reducer';
 import { productReducer } from './product/product.reducer';
 import { manufacturerReducer } from './manufacturer/manufacturer.reducer';
 import { requestReducer } from './request/request.reducer';
+import { orderReducer } from './order/order.reducer';
 
 export const store=createStore(
     combineReducers({
@@ -11,6 +12,7 @@ export const store=createStore(
         product:productReducer,
         manufacturer:manufacturerReducer,
         request:requestReducer,
+        order:orderReducer
     }),
     applyMiddleware(thunk)
 );

@@ -23,6 +23,8 @@ import BidScreen from "../screens/Buyer/BidScreen";
 import Bid from '../screens/Manufacturer/Bid';
 import mainHome from '../screens/mainHome';
 import approval from '../screens/approval';
+import OrderDetails from "../screens/Buyer/OrderDetails"
+import OrderDetail from "../screens/Manufacturer/OrderDetails"
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -97,7 +99,9 @@ const SplashNavigator = () => {
       <Stack.Screen name="Listed Leftovers" component={ListedLeftovers} />
       <Stack.Screen  options={{ headerShown: false }} name="Wallet" component={Wallet} />
       <Stack.Screen name="Bid Screen" component={BidScreen} />
-      <Stack.Screen name="Bid Manufacturer" component={Bid} />
+      <Stack.Screen options={{ headerShown: false }} name="Bid Manufacturer" component={Bid} />
+      <Stack.Screen options={{ headerShown: false }} name="OrderDetails" component={OrderDetails}/>
+      <Stack.Screen options={{ headerShown: false }} name="OrderDetail" component={OrderDetail}/>
     </Stack.Navigator>
   );
 };

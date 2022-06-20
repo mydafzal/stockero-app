@@ -66,8 +66,10 @@ const Signup = ({ SignUp, user }) => {
                 />
                 <TextInput
                   style={styles.inputField}
+                  placeholder="First Name"
+                  placeholderTextColor="#9A9A9A"
                   name={"FirstName"}
-                  placeholder={"First Name"}
+                  
                   value={firstName}
                   onChangeText={(e) => setfirstName(e)}
                 />
@@ -82,9 +84,11 @@ const Signup = ({ SignUp, user }) => {
                 />
                 <TextInput
                   style={styles.inputField}
+                  placeholder="Last Name"
+                  placeholderTextColor="#9A9A9A"
                   name={"LastName"}
                   value={lastName}
-                  placeholder={"Last Name"}
+                  
                   onChangeText={(e) => setlastName(e)}
                 />
               </View>
@@ -98,9 +102,11 @@ const Signup = ({ SignUp, user }) => {
                 />
                 <TextInput
                   style={styles.inputField}
+                  placeholder="Enter your Email"
+                  placeholderTextColor="#9A9A9A"
                   name={"email"}
                   value={email.toLocaleLowerCase()}
-                  placeholder={"Enter your email"}
+                  
                   onChangeText={(e) => setEmail(e)}
                 />
               </View>
@@ -114,9 +120,11 @@ const Signup = ({ SignUp, user }) => {
                 />
                 <TextInput
                   style={styles.inputField}
+                  placeholder="******"
+                  placeholderTextColor="#9A9A9A"
                   name={"Password"}
                   value={password}
-                  placeholder={"**********"}
+                  
                   onChangeText={(e) => setPassword(e)}
                   secureTextEntry={true}
                 />

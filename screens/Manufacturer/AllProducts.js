@@ -27,18 +27,12 @@ const AllProducts = () => {
       setLoading(false);
     },1000);
   }, [products.isLoading]);
-  // useEffect(() => {
-  //   console.log(products);
-  // }, [products]);
   const DATA = products.product;
   const renderItem = ({ item }) => (
     <View style={styles.Box}>
       <View style={styles.productNameCard}>
         <Text style={styles.title}>{item.name}</Text>
         <Text numberOfLines={3} style={styles.description}>
-              {/* {item.description.length < 50
-                ? `${item.description}`
-                : `${item.description.substring(0, 50)}...`} */}
                 { item.description ? (item.description.length > 100 ? item.description.slice(0, 100) + "..." : item.description):true}
             </Text>
       </View>

@@ -5,8 +5,9 @@ import axios from "axios";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { GetProducts, deleteProduct, GetOrders } from "../../redux/product/product.action";
 import { useEffect } from "react";
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const Orders = () => {
+const Orders = ({ navigation }) => {
   const orders = useSelector((state) => state.product.product);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -19,7 +20,7 @@ const Orders = () => {
   const DATA = orders;
 
       const renderItem = ({item}) => (
-        <View style={styles.notiBox}>
+        <TouchableOpacity style={styles.notiBox} onPress={()=>navigation.navigate("OrderDetails",{item:item})}>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.textheading}>Quantity: </Text>
           <Text style={styles.text}>{item.quantity}</Text>
@@ -28,7 +29,7 @@ const Orders = () => {
           <Text style={styles.textheading}>Status: </Text>
           <Text style={styles.text}>{item.status}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
       )
     return (
         <SafeAreaView style={styles.container}>

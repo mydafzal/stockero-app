@@ -7,6 +7,7 @@ import {
   TextInput,
   Button,
   SafeAreaView,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useState } from "react";
 import SelectBox from "react-native-multi-selectbox";
@@ -37,8 +38,11 @@ const PostRequest = ({ navigation, user }) => {
       <View style={styles.header}>
         <Text style={styles.header_label}>Post Request</Text>
       </View>
+      <KeyboardAvoidingView style={{flex:3}} behavior="padding" enabled>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
+      
         <ScrollView>
+          
           <Text style={styles.Ftitle}>Item</Text>
           <View style={styles.inputFieldCard}>
             <TextInput
@@ -113,7 +117,10 @@ const PostRequest = ({ navigation, user }) => {
           />
            <Spacer height={200} />
         </ScrollView>
+       
       </Animatable.View>
+      </KeyboardAvoidingView>
+      
     </SafeAreaView>
   );
 };
@@ -233,6 +240,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingHorizontal: 20,
     paddingVertical: 30,
+    
   },
   header_label: {
     fontSize: 25,

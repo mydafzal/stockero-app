@@ -96,10 +96,11 @@ const Login = ({ signIn, setRole, user }) => {
                 />
                 <TextInput
                   style={styles.inputField}
+                  placeholder="Enter your Email"
+                  placeholderTextColor="#9A9A9A"
                   name={"email"}
                   value={email.toLocaleLowerCase()}
                   onChangeText={(e) => setEmail(e)}
-                  placeholder={"Enter your email"}
                 />
               </View>
               <Spacer height={10} />
@@ -112,11 +113,12 @@ const Login = ({ signIn, setRole, user }) => {
                 />
                 <TextInput
                   style={styles.inputField}
+                  placeholder="******"
+                  placeholderTextColor="#9A9A9A"
                   name={"Paswword"}
                   value={password}
                   onChangeText={(e) => setPassword(e)}
                   secureTextEntry={true}
-                  placeholder={"**********"}
                 />
               </View>
 
@@ -220,9 +222,7 @@ const styles = StyleSheet.create({
 
   title: {
     width: "100%",
-    // justifyContent: 'flex-start',
     alignItems: "center",
-    // top: '30%',
   },
   loginText: {
     fontFamily: "Poppins_600SemiBold",
@@ -230,7 +230,6 @@ const styles = StyleSheet.create({
     color: "#454545",
   },
   inputField: {
-    // flexDirection: 'row',
     padding: 10,
     width: "100%",
     fontFamily: "Poppins_500Medium",
@@ -239,8 +238,6 @@ const styles = StyleSheet.create({
   inputFieldCard: {
     flexDirection: "row",
     alignSelf: "center",
-    // paddingStart: 18.5,
-    //paddingTop: 23,
     width: "80%",
     height: 60,
     borderRadius: 10,

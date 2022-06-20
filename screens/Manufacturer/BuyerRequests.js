@@ -49,7 +49,7 @@ const BuyerRequests = () => {
           <Text style={styles.text}> days</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textheading}>Offered Price: </Text>
+          <Text style={styles.textheading}>Asking Price: </Text>
           <Text style={styles.text}>{item.asking_price}</Text>
           <Text style={styles.text}>-/PKR</Text>
         </View>

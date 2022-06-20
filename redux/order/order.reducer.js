@@ -1,21 +1,24 @@
-import * as actionTypes from "./product.constant";
+import * as actionTypes from "./order.constant";
 
 const initialState = {
-  product: {},
+  order: {},
   error: false,
   errorMessage: "",
   isLoading: false,
+  isSuccess:false,
+  successMessage:"",
 };
 
-export const productReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_SUCCESS:
       return {
         ...state,
         error: false,
         errorMessage: "",
-        product: action.payload,
+        successMessage:action.payload,
         isLoading: false,
+        isSuccess:true,
       };
     case actionTypes.ADD_REQUEST:
       console.log("ADD_REQUEST");

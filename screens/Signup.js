@@ -84,7 +84,8 @@ const Signup = ({ register, user}) => {
                 <TextInput
                   style={styles.inputField}
                   name={"FullName"}
-                  placeholder={"Enter your full name"}
+                  placeholder="Enter your full name"
+                  placeholderTextColor="#9A9A9A"
                   value={fullName}
                   onChangeText={(e) => setfullName(e)}
                 />
@@ -99,9 +100,10 @@ const Signup = ({ register, user}) => {
                 />
                 <TextInput
                   style={styles.inputField}
+                  placeholder="Enter your Email"
+                  placeholderTextColor="#9A9A9A"
                   name={"email"}
                   value={email.toLocaleLowerCase()}
-                  placeholder={"Enter your email"}
                   onChangeText={(e) => setEmail(e)}
                 />
               </View>
@@ -115,9 +117,11 @@ const Signup = ({ register, user}) => {
                 />
                 <TextInput
                   style={styles.inputField}
+                  placeholder="******"
+                  placeholderTextColor="#9A9A9A"
                   name={"Password"}
                   value={password}
-                  placeholder={"**********"}
+                  
                   onChangeText={(e) => setPassword(e)}
                   secureTextEntry={true}
                 />
@@ -132,9 +136,11 @@ const Signup = ({ register, user}) => {
                 />
                 <TextInput
                   style={styles.inputField}
+                  placeholder="Enter your Factory name"
+                  placeholderTextColor="#9A9A9A"
                   name={"FactoryName"}
                   value={factoryName}
-                  placeholder={"Enter your factory name"}
+                  
                   onChangeText={(e) => setfactoryName(e)}
                 />
               </View>
@@ -142,24 +148,28 @@ const Signup = ({ register, user}) => {
               <View style={styles.inputFieldCard}>
               <TextInput
                   style={styles.inputField}
+                  placeholder="Provide your CNIC"
+                  placeholderTextColor="#9A9A9A"
                   keyboardType='number-pad'
                   onChangeText={(e) => setcnic(e)}
                   value={cnic}
                   maxLength={13}
                   name={'CNIC'}
-                  placeholder={'Provide Your CNIC'}
+                  
               />
           </View>
           <Spacer height={10} />
           <View style={styles.inputFieldCard}>
               <TextInput
                   style={styles.inputField}
+                  placeholder="Valid NTN Number"
+                  placeholderTextColor="#9A9A9A"
                   keyboardType='number-pad'
                   value={ntn}
                   onChangeText={(e) => setntn(e)}
                   maxLength={7}
                   name={'NTN'}
-                  placeholder={'Valid NTN Number'}
+                  
               />
           </View>
           <Spacer height={30} />
@@ -277,6 +287,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontFamily: "Poppins_500Medium",
     fontSize: 12,
+    color: 'black'
   },
   inputFieldName: {
     width: "40%",

@@ -7,13 +7,14 @@ import {
   StatusBar,
   Button,
   TextInput,
+  TouchableOpacity
 } from "react-native";
+
 import React, { useEffect, useState } from "react";
 import Colors from "../../constants/Colors";
 import ButtonN from "../../components/ButtonSmall";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-
 import { GetRequests, Respond } from "../../redux/request/request.action";
 import Spacer from "../../components/Spacer";
 import axios from "axios";
@@ -49,17 +50,46 @@ const Offers = ({ route, user }) => {
   }, [requestData]);
 
   const renderItem = ({ item }) => (
-    <View style={styles.notiBox}>
-      <Text style={styles.title}>{item.name}</Text>
-      <Text style={styles.notiftext}>{item.quantity}</Text>
-      <Text style={styles.notiftext}>{item.description}</Text>
+   
+    <SafeAreaView style={styles.container}>
+       <View style={styles.header}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons name="chevron-back-outline" size={25} color="black" />
+          </TouchableOpacity>
+
+          <Text style={styles.header_label}>Make Bid</Text>
+        </View>
+        <View>
+        <Text style={styles.heading}>Order Details</Text>
+      </View>
+      </View>
+      <View style={styles.box}>
+      <View style={{paddingLeft:20}}>
+      <Text style={styles.text}>{`Product Name: ${item.name}`}</Text>
+      <Text style={styles.text}>{`Quantity: ${item.quantity}`}</Text>
+      <Text style={styles.text}>{`Asking Price: ${item.asking_price} -/PKR`}</Text>
+      <Text style={styles.text}>{`Duration: ${item.asking_days} days`}</Text>
+      <Text style={styles.text}>{`Description: ${item.description}`}</Text>
+      </View>
+      </View>
+      <View style={{paddingHorizontal: 30, paddingBottom:20}}>
+        <Text style={styles.heading}>Make Offer</Text>
+      </View>
+      <View style={styles.box}>
+    
       <Spacer height={15} />
       <View style={styles.inputFieldCard}>
         <TextInput
           style={styles.inputField}
           name={"days"}
           onChangeText={(e) => setDuration(e)}
+          keyboardType='number-pad'
           placeholder={"Minimum Days"}
+          placeholderTextColor="#9A9A9A"
         />
       </View>
       <Spacer height={15} />
@@ -68,8 +98,11 @@ const Offers = ({ route, user }) => {
           style={styles.inputField}
           name={"days"}
           placeholder={"Offered Price"}
+          placeholderTextColor="#9A9A9A"
+          keyboardType='number-pad'
           onChangeText={(e) => setOfferedPrice(e)}
         />
+      </View>
       </View>
       <View
         style={{
@@ -79,15 +112,16 @@ const Offers = ({ route, user }) => {
         }}
       >
         <ButtonN
-          buttonStyle={{ width: "100%", height: "90%" }}
+          buttonStyle={{ width: "100%", height: "90%", backgroundColor: Colors.primary }}
           title={"Send Offer"}
-          textStyle={{ color: Colors.primary }}
+          textStyle={{ color: "white", fontSize: 16 }}
           onPress={() =>
-            dispatch(Respond(item.id, user.user.id, OfferedPrice, duration))
+            dispatch(Respond(item.id, user.user.id, duration, OfferedPrice))
           }
         />
       </View>
-    </View>
+
+    </SafeAreaView>
   );
   return (
     <SafeAreaView style={styles.container}>
@@ -116,6 +150,52 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  header_label: {
+    fontSize: 18,
+    fontFamily: "Poppins_600SemiBold",
+    color: Colors.darkGray,
+    marginLeft: "25%",
+  },
+  header: {
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingHorizontal: 30,
+    justifyContent: "flex-end",
+  },
+  heading: {
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 22,
+    color: Colors.darkGray,
+    paddingTop: 20,
+    
+  },
+  text:{
+    fontFamily: "Poppins_600SemiBold",
+    color: Colors.darkGray,
+    fontSize: 13,
+    padding: 7,
+  },
+  backButton: {
+    backgroundColor: "white",
+    borderRadius: 40,
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    backgroundColor: "white",
+    width: "90%",
+    height: "30%",
+    borderRadius: 10,
+    shadowColor: Colors.darkGray,
+    shadowRadius: 5,
+    shadowOpacity: 0.1,
+    alignSelf: "center",
+    justifyContent: "center",
+  },
+ 
+  
   notiBox: {
     marginTop: 20,
     backgroundColor: "#ffffff",
@@ -149,7 +229,6 @@ const styles = StyleSheet.create({
     color: Colors.gray,
   },
   inputField: {
-    // flexDirection: 'row',
     padding: 10,
     width: "100%",
     fontFamily: "Poppins_400Regular",
@@ -158,9 +237,7 @@ const styles = StyleSheet.create({
   inputFieldCard: {
     flexDirection: "row",
     alignSelf: "center",
-    // paddingStart: 18.5,
-    //paddingTop: 23,
-    width: "100%",
+    width: "90%",
     height: 50,
     borderRadius: 5,
     borderWidth: 1,

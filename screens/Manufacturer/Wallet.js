@@ -5,7 +5,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,66 +17,141 @@ import * as Animatable from "react-native-animatable";
 import ButtonN from "../../components/ButtonN";
 const K_OPTIONS = [
   {
-    item: "Al Baraka Bank (Pakistan) Limited",
-    id: "1",
+    item: 'Al Baraka Bank (Pakistan) Limited',
+    id: '1',
   },
   {
-    item: "Allied Bank Limited",
-    id: "2",
+    item: 'Allied Bank Limited',
+    id: '2',
   },
   {
-    item: "Askari Bank",
-    id: "3",
+    item: 'Askari Bank',
+    id: '3',
   },
   {
-    item: "Bank Alfalah Limited",
-    id: "4",
+    item: 'Bank Alfalah Limited',
+    id: '4',
   },
   {
-    item: "Bank Al-Habib Limited",
-    id: "5",
+    item: 'Bank Al-Habib Limited',
+    id: '5',
   },
   {
-    item: "BankIslami Pakistan Limited",
-    id: "6",
+    item: 'Bank Islami Pakistan Limited',
+    id: '6',
   },
   {
-    item: "Citi Bank",
-    id: "7",
+    item: 'Burj Bank Limited',
+    id: '7',
   },
   {
-    item: "Everton FC",
-    id: "EVE",
+    item: 'Deutsche Bank',
+    id: '8',
   },
   {
-    item: "Tottenham Hotspur FC",
-    id: "TOT",
+    item: 'Dubai Islamic Bank Pakistan Limited',
+    id: '9',
   },
   {
-    item: "Chelsea FC",
-    id: "CHE",
+    item: 'Faysal Bank Limited',
+    id: '10',
   },
   {
-    item: "Liverpool FC",
-    id: "LIV",
+    item: 'First Women Bank Limited',
+    id: '11',
   },
   {
-    item: "Arsenal FC",
-    id: "ARS",
+    item: 'Habib Bank Limited',
+    id: '12',
   },
-
   {
-    item: "Leicester City FC",
-    id: "LEI",
+    item: 'Habib Metropolitan Bank Limited',
+    id: '13',
+  },
+  {
+    item: 'Industrial And Commercial Bank Of Chaina',
+    id: '14',
+  },
+  {
+    item: 'JS Bank Limited',
+    id: '15',
+  },
+  {
+    item: 'MCB Bank Limited',
+    id: '16',
+  },
+  {
+    item: 'MCB Islamic Bank Limited',
+    id: '17',
+  },
+  {
+    item: 'Meezan Bank Limited',
+    id: '18',
+  },
+  {
+    item: 'National Bank Of Pakistan',
+    id: '19',
+  },
+  {
+    item: 'NIB Bank Limited',
+    id: '20',
+  },
+  {
+    item: 'S.M.E. Bank Limited',
+    id: '21',
+  },
+  {
+    item: 'Samba Bank Limited',
+    id: '22',
+  },
+  {
+    item: 'Silk Bank Limited',
+    id: '23',
+  },
+  {
+    item: 'Sindh Bank Limited',
+    id: '24',
+  },
+  {
+    item: 'Soneri Bank Limited',
+    id: '25',
+  },
+  {
+    item: 'Standard Chartered Bank Pakistan Limited',
+    id: '26',
+  },
+  {
+    item: 'Summit Bank Limited',
+    id: '27',
+  },
+  {
+    item: 'The Bank Of Khyber',
+    id: '28',
+  },
+  {
+    item: 'The Bank Of Punjab',
+    id: '29',
+  },
+  {
+    item: 'The Punjab Provincial Cooperative Bank Limited',
+    id: '30',
+  },
+  {
+    item: 'Ubl Bank Limited',
+    id: '31',
+  },
+  {
+    item: 'Zarai Taraqiati Bank Limited',
+    id: '32',
   },
 ];
-const Wallet = ({navigation}) => {
+const Wallet = ({ navigation }) => {
   const [selectedTeam, setSelectedTeam] = useState({});
   return (
     // <KeyboardAvoidingView
     //   behavior={Platform.OS === "ios" ? "padding" : "height"}
     // >
-      <View style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
@@ -91,55 +166,55 @@ const Wallet = ({navigation}) => {
       </View>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <View>
-        <Spacer height={20} />
-        <Text style={styles.Ftitle}>Holder Name</Text>
-        <View style={styles.inputFieldCard}>
-          <TextInput
-            style={styles.inputField}
-            name={"Name"}
-            placeholder={"Enter full name"}
-          />
-        </View>
-        <Spacer height={20} />
-        <Text style={styles.Ftitle}>Enter your Account Number</Text>
-        <View style={styles.inputFieldCard}>
-          <TextInput
-            style={styles.inputField}
-            name={"AccountNumber"}
-            placeholder={"Account Number"}
-          />
-        </View>
-        <Spacer height={20} />
-        <Text style={styles.Ftitle}>Enter IBAN Number</Text>
-        <View style={styles.inputFieldCard}>
-          <TextInput
-            style={styles.inputField}
-            name={"IBANNumber"}
-            placeholder={"IBAN Number"}
-          />
-        </View>
+          <Spacer height={20} />
+          <Text style={styles.Ftitle}>Holder Name</Text>
+          <View style={styles.inputFieldCard}>
+            <TextInput
+              style={styles.inputField}
+              name={"Name"}
+              placeholder={"Enter full name"}
+            />
+          </View>
+          <Spacer height={20} />
+          <Text style={styles.Ftitle}>Enter your Account Number</Text>
+          <View style={styles.inputFieldCard}>
+            <TextInput
+              style={styles.inputField}
+              name={"AccountNumber"}
+              placeholder={"Account Number"}
+            />
+          </View>
+          <Spacer height={20} />
+          <Text style={styles.Ftitle}>Enter IBAN Number</Text>
+          <View style={styles.inputFieldCard}>
+            <TextInput
+              style={styles.inputField}
+              name={"IBANNumber"}
+              placeholder={"IBAN Number"}
+            />
+          </View>
 
-        <View style={{ margin: 30 }}>
-          <SelectBox
-            label="Select Bank"
-            options={K_OPTIONS}
-            value={selectedTeam}
-            onChange={onChange()}
-            hideInputFilter={false}
-            arrowIconColor="#4F3074"
-            searchIconColor="#4F3074"
-            toggleIconColor="#4F3074"
+          <View style={{ margin: 30 }}>
+            <SelectBox
+              label="Select Bank"
+              options={K_OPTIONS}
+              value={selectedTeam}
+              onChange={onChange()}
+              hideInputFilter={false}
+              arrowIconColor="#4F3074"
+              searchIconColor="#4F3074"
+              toggleIconColor="#4F3074"
+            />
+          </View>
+          <ButtonN
+            buttonStyle={{ backgroundColor: Colors.primaryLite }}
+            title={"Save Details"}
+            textStyle={{ fontSize: 15, color: Colors.primary }}
+            onPress={() => navigation.navigate("accountselector")}
           />
         </View>
-        <ButtonN
-          buttonStyle={{ backgroundColor: Colors.primaryLite }}
-          title={"Save Details"}
-          textStyle={{ fontSize: 15, color: Colors.primary }}
-          onPress={() => navigation.navigate("accountselector")}
-        />
-      </View>
       </Animatable.View>
-      </View>
+    </View>
     // </KeyboardAvoidingView>
   );
   function onChange() {

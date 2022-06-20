@@ -164,7 +164,8 @@ const Home = ({navigation}) => {
       </View>
       <CategoryList />
       <FlatList
-        columnWrapperStyle={{justifyContent: 'space-between'}}
+
+        columnWrapperStyle={{ justifyContent: "center", flex: 1}}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           marginTop: 10,
@@ -183,11 +184,11 @@ const Home = ({navigation}) => {
 export default Home;
 const style = StyleSheet.create({
   categoryContainer: {
-    flexDirection: 'row',
-    paddingLeft: 25,
-    marginTop: 10,
-    marginBottom: 10,
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    // marginTop: 30,
+    // marginBottom: 20,
+    justifyContent: "space-between",
+    margin: 20,
   },
   categoryText: {fontSize: 14, color: 'grey', fontFamily: "Poppins_500Medium",},
   categoryTextSelected: {
@@ -209,12 +210,13 @@ const style = StyleSheet.create({
   card: {
     height: 225,
     backgroundColor: Colors.light,
-    
     width,
-    marginHorizontal: 2,
+    // marginHorizontal: 2,
     borderRadius: 10,
     marginBottom: 20,
     padding: 15,
+    marginEnd: 10,
+    marginStart: 10,
   },
   header: {
     marginTop: 30,
