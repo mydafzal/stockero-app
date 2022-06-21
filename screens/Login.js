@@ -1,61 +1,61 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
-  ViewPropTypes,
   ImageBackground,
   StyleSheet,
   TextInput,
   KeyboardAvoidingView,
-  Dimensions,
-  ActivityIndicator,
   Platform,
 } from "react-native";
 import TouchableButton from "../components/TouchableButton";
 import Spacer from "../components/Spacer";
-import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import bg from "../assets/images/bg.png";
 import Colors from "../constants/Colors";
-import axios from "axios";
-
 import SwitchSelector from "react-native-switch-selector";
-const { height, width } = Dimensions.get("window");
-import { connect } from "react-redux";
-import { signIn, setRole } from "../redux/buyer/buyer.action";
-import { Alert } from "react-native";
+import { setAuthUser } from "../store/slice/authSlice";
+import { useDispatch } from "react-redux";
+import { useSignInMutation } from "../store/api";
+import Loader from "../components/Loader";
+import { pathOr } from "ramda";
+import { addToast } from "../utils";
 
-const Login = ({ signIn, setRole, user }) => {
-  const navigation = useNavigation();
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authRole, setAuthRole] = useState("buyer");
+  const [signIn, { isLoading }] = useSignInMutation();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (user.isLoading) {
-      alert("logginIN");
-    }
-  }, [user.isLoading]);
-
-  useEffect(() => {
-    if (user.error) {
-      alert(user.errorMessage);
-    }
-  }, [user.error, user.errorMessage]);
-
-  useEffect(() => {
-    const route = `Dashboard ${user.role}`;
-    if (Object.keys(user.user).length > 0) {
-      if (user.role === "manufacturer" && !user.user.isApproved) {
-        alert("Your account is not approved yet");
-      } else {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: route }],
-        });
+  const handleSignin = async () => {
+    try {
+      const { data, error } = await signIn({
+        email,
+        password,
+        authRole,
+      });
+      if (error) {
+        throw new Error(error);
       }
+      const { token, user } = data;
+      dispatch(setAuthUser({ isLoggedIn: true, userMeta: user, token }));
+      addToast("Login Successful", false);
+      const route = `Dashboard ${authRole}`;
+      if (user.role === "manufacturer" && !user.isApproved) {
+        alert("Your account is not approved yet");
+      }
+      navigation.reset({
+        index: 0,
+        routes: [{ name: route }],
+      });
+    } catch (err) {
+      addToast(
+        pathOr("Error Occured While Loggin in", ["data", "message"], err),
+        true
+      );
     }
-  }, [user.user]);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -71,7 +71,7 @@ const Login = ({ signIn, setRole, user }) => {
                 <SwitchSelector
                   initial={0}
                   onPress={(value) => {
-                    setRole(value);
+                    setAuthRole(value);
                   }}
                   textColor={Colors.primary} //'#7a44cf'
                   selectedColor={Colors.white}
@@ -139,7 +139,7 @@ const Login = ({ signIn, setRole, user }) => {
               <TouchableButton
                 title={"Login"}
                 textStyle={{ color: "white" }}
-                onPress={() => signIn(email, password)}
+                onPress={() => handleSignin()}
               />
               <Spacer height={10} />
               <Text
@@ -155,31 +155,19 @@ const Login = ({ signIn, setRole, user }) => {
                   style={{ color: "#454545", fontFamily: "Poppins_500Medium" }}
                   onPress={() => navigation.navigate("accountselector")}
                 >
-                  {" "}
                   SIGN UP
                 </Text>
               </Text>
             </View>
           </View>
+          <Loader isLoading={isLoading} />
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.buyer,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    signIn: (email, password) => dispatch(signIn(email, password)),
-    setRole: (role) => dispatch(setRole(role)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
 
 const styles = StyleSheet.create({
   container: {

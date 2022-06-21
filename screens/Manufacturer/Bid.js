@@ -1,58 +1,63 @@
 import {
   View,
   Text,
-  FlatList,
   StyleSheet,
   SafeAreaView,
-  StatusBar,
-  Button,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView,
 } from "react-native";
+import Loader from "../../components/Loader";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Colors from "../../constants/Colors";
 import ButtonN from "../../components/ButtonSmall";
-import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { GetRequests, Respond } from "../../redux/request/request.action";
 import Spacer from "../../components/Spacer";
-import axios from "axios";
 import { connect, useDispatch, useSelector } from "react-redux";
-const Offers = ({ route, user }) => {
-  const data = route.params;
-  const navigation = useNavigation();
+import { useGetRequestQuery } from "../../store/api";
+import { addToast } from "../../utils";
+import { useRespondToRequestMutation } from "../../store/api";
+import { authSliceSelector } from "../../store/slice/authSlice";
+import { pathOr } from "ramda";
+
+const Offers = ({ route, navigation }) => {
+  const { item } = route.params;
   const [manufacturer_id, setmanufacturer_id] = useState("");
   const [OfferedPrice, setOfferedPrice] = useState("");
   const [requestData, setRequestData] = useState({});
   const [duration, setDuration] = useState("");
-  const requests = useSelector((state) => state.request.data);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(GetRequests());
-  }, []);
+  const [respondToRequest, { isLoading }] = useRespondToRequestMutation();
+  const { userMeta } = useSelector(authSliceSelector);
 
-  const filterData = () => {
-    if (Array.isArray(requests)) {
-      const filteredData = requests.filter((item) => {
-        return item.id === data.id;
+  const handleRespond = async () => {
+    if (!OfferedPrice.length > 0 || !duration.length > 0) {
+      addToast("Please fill all the fields", true);
+      return;
+    }
+    try {
+      const { data, error } = await respondToRequest({
+        id: item.id,
+        manufacturer_id: userMeta?.id,
+        offered_price: OfferedPrice,
+        duration: duration,
       });
-      setRequestData(filteredData);
+      if (error) {
+        console.log(error);
+        throw new Error(error);
+      }
+      navigation.goBack();
+    } catch (error) {
+      addToast(
+        pathOr("Something went wrong", ["error", "message"], error),
+        true
+      );
     }
   };
 
-  useEffect(() => {
-    filterData();
-  }, [requests]);
-
-  useEffect(() => {
-    console.log(requestData);
-  }, [requestData]);
-
-  const renderItem = ({ item }) => (
-   
+  return (
     <SafeAreaView style={styles.container}>
-       <View style={styles.header}>
+      <View style={styles.header}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
             style={styles.backButton}
@@ -64,87 +69,74 @@ const Offers = ({ route, user }) => {
           <Text style={styles.header_label}>Make Bid</Text>
         </View>
         <View>
-        <Text style={styles.heading}>Order Details</Text>
-      </View>
+          <Text style={styles.heading}>Order Details</Text>
+        </View>
       </View>
       <View style={styles.box}>
-      <View style={{paddingLeft:20}}>
-      <Text style={styles.text}>{`Product Name: ${item.name}`}</Text>
-      <Text style={styles.text}>{`Quantity: ${item.quantity}`}</Text>
-      <Text style={styles.text}>{`Asking Price: ${item.asking_price} -/PKR`}</Text>
-      <Text style={styles.text}>{`Duration: ${item.asking_days} days`}</Text>
-      <Text style={styles.text}>{`Description: ${item.description}`}</Text>
+        <View style={{ paddingLeft: 20 }}>
+          <Text style={styles.text}>{`Product Name: ${item.name}`}</Text>
+          <Text style={styles.text}>{`Quantity: ${item.quantity}`}</Text>
+          <Text
+            style={styles.text}
+          >{`Asking Price: ${item.asking_price} -/PKR`}</Text>
+          <Text
+            style={styles.text}
+          >{`Duration: ${item.asking_days} days`}</Text>
+          <Text style={styles.text}>{`Description: ${item.description}`}</Text>
+        </View>
       </View>
-      </View>
-      <View style={{paddingHorizontal: 30, paddingBottom:20}}>
+      <View style={{ paddingHorizontal: 30, paddingBottom: 20 }}>
         <Text style={styles.heading}>Make Offer</Text>
       </View>
       <View style={styles.box}>
-    
-      <Spacer height={15} />
-      <View style={styles.inputFieldCard}>
-        <TextInput
-          style={styles.inputField}
-          name={"days"}
-          onChangeText={(e) => setDuration(e)}
-          keyboardType='number-pad'
-          placeholder={"Minimum Days"}
-          placeholderTextColor="#9A9A9A"
-        />
-      </View>
-      <Spacer height={15} />
-      <View style={styles.inputFieldCard}>
-        <TextInput
-          style={styles.inputField}
-          name={"days"}
-          placeholder={"Offered Price"}
-          placeholderTextColor="#9A9A9A"
-          keyboardType='number-pad'
-          onChangeText={(e) => setOfferedPrice(e)}
-        />
-      </View>
+        <Spacer height={15} />
+        <View style={styles.inputFieldCard}>
+          <TextInput
+            style={styles.inputField}
+            name={"days"}
+            onChangeText={(e) => setDuration(e)}
+            keyboardType="number-pad"
+            value={duration}
+            placeholder={"Minimum Days"}
+            placeholderTextColor="#9A9A9A"
+          />
+        </View>
+        <Spacer height={15} />
+        <View style={styles.inputFieldCard}>
+          <TextInput
+            style={styles.inputField}
+            name={"days"}
+            placeholder={"Offered Price"}
+            placeholderTextColor="#9A9A9A"
+            value={OfferedPrice}
+            keyboardType="number-pad"
+            onChangeText={(e) => setOfferedPrice(e)}
+          />
+        </View>
       </View>
       <View
         style={{
           flexDirection: "row",
           justifyContent: "space-around",
-          paddingTop: 30,
         }}
       >
         <ButtonN
-          buttonStyle={{ width: "100%", height: "90%", backgroundColor: Colors.primary }}
+          buttonStyle={{
+            width: "100%",
+            height: "90%",
+            backgroundColor: Colors.primary,
+          }}
           title={"Send Offer"}
           textStyle={{ color: "white", fontSize: 16 }}
-          onPress={() =>
-            dispatch(Respond(item.id, user.user.id, duration, OfferedPrice))
-          }
+          onPress={handleRespond}
         />
       </View>
+      <Loader isLoading={isLoading} />
+    </SafeAreaView>
+  );
+};
 
-    </SafeAreaView>
-  );
-  return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={requestData}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
-    </SafeAreaView>
-  );
-};
-const mapStateToProps = (state) => {
-  return {
-    user: state.buyer,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    Respond: (manufacturer_id, offered_price, duration) =>
-      dispatch(Respond(manufacturer_id, offered_price, duration)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Offers);
+export default Offers;
 
 const styles = StyleSheet.create({
   container: {
@@ -167,9 +159,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: Colors.darkGray,
     paddingTop: 20,
-    
   },
-  text:{
+  text: {
     fontFamily: "Poppins_600SemiBold",
     color: Colors.darkGray,
     fontSize: 13,
@@ -194,8 +185,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
   },
- 
-  
+
   notiBox: {
     marginTop: 20,
     backgroundColor: "#ffffff",

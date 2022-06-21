@@ -21,7 +21,7 @@ import Spacer from "../components/Spacer";
 import { Ionicons } from "@expo/vector-icons";
 const width = Dimensions.get("window").width / 1 - 100;
 
-const accountselector = () => {
+const AccountSelector = () => {
   const navigation = useNavigation();
   return (
     <ImageBackground source={bg} style={styles.container}>
@@ -36,11 +36,7 @@ const accountselector = () => {
             <View style={styles.selectorbox}>
               <Ionicons name="business" size={30} color="#373737" />
 
-              <Text
-                style={styles.textStyle}
-              >
-                Manufacturer
-              </Text>
+              <Text style={styles.textStyle}>Manufacturer</Text>
             </View>
           </TouchableOpacity>
           <Spacer height={10} />
@@ -59,7 +55,7 @@ const accountselector = () => {
     </ImageBackground>
   );
 };
-export default accountselector;
+export default AccountSelector;
 const styles = StyleSheet.create({
   container: {
     paddingTop: 5,

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   SafeAreaView,
   StatusBar,
+  RefreshControl,
 } from "react-native";
 import React from "react";
 import Colors from "../../constants/Colors";
@@ -15,23 +16,10 @@ import axios from "axios";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
-const BuyerRequests = () => {
-  const navigation = useNavigation();
-  const requests = useSelector((state) => state.request.data);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(GetRequests());
-  }, []);
-  useEffect(() => {
-    if (requests.isLoading) {
-      alert("loading");
-    }
-  }, [requests.isLoading]);
-
-  useEffect(() => {
-    // console.log(requests);
-  }, [requests]);
-  const DATA = requests;
+import { useGetRequestQuery } from "../../store/api";
+import { pathOr } from "ramda";
+const BuyerRequests = ({ navigation }) => {
+  const { data, isLoading, isError, refetch } = useGetRequestQuery();
   const renderItem = ({ item }) => (
     <View style={styles.Box}>
       <View style={styles.productNameCard}>
@@ -56,12 +44,15 @@ const BuyerRequests = () => {
       </View>
       <View style={{ width: "100%", alignItems: "flex-end" }}>
         <ButtonSmall
-          buttonStyle={{ marginTop: 15, marginRight: 20, backgroundColor: Colors.greenLite }}
-          textStyle={{ color: Colors.green2}}
+          buttonStyle={{
+            marginTop: 15,
+            marginRight: 20,
+            backgroundColor: Colors.greenLite,
+          }}
+          textStyle={{ color: Colors.green2 }}
           title="Bid"
           onPress={() => {
-            const body = { id: item.id };
-            navigation.navigate("Bid Manufacturer", body);
+            navigation.navigate("Bid Manufacturer", { item: item });
           }}
         />
       </View>
@@ -72,9 +63,12 @@ const BuyerRequests = () => {
       <StatusBar barStyle="dark-content" />
       <Text style={styles.Headtitle}>Buyer Requests</Text>
       <FlatList
-        data={DATA}
+        data={pathOr([], ["data"], data)}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+        }
       />
     </SafeAreaView>
   );

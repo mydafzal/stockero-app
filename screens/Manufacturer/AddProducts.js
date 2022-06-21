@@ -24,10 +24,12 @@ import { useNavigation } from "@react-navigation/native";
 import Spacer from "../../components/Spacer";
 import { connect } from "react-redux";
 import * as Animatable from "react-native-animatable";
-import { addProduct } from "../../redux/product/product.action";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 import SettingButton from "../../components/SettingButton";
 import ButtonSmall from "../../components/ButtonSmall";
+import { useAddProductMutation } from "../../store/api";
+
 import {
   SafeAreaView,
   SafeAreaProvider,
@@ -104,6 +106,8 @@ const AddProducts = ({ navigation, user, addProduct }) => {
   const [photo, setPhoto] = React.useState("");
   const descriptionRef = useRef(null);
   const [upload, setupload] = useState("");
+
+  const [AddProduct, { isLoading }] = useAddProductMutation();
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -191,7 +195,7 @@ const AddProducts = ({ navigation, user, addProduct }) => {
           >
             <TextInput
               ref={descriptionRef}
-              style={styles.dField}
+              // style={styles.dField}
               multiline={true}
               style={[styles.inputField]}
               name={"Description"}

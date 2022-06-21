@@ -8,7 +8,7 @@ import ForgetPassword from "../screens/ForgetPassword";
 import NewPassword from "../screens/NewPassword";
 import Dashboard from "../screens/Manufacturer/Dashboard";
 import DashboardB from "../screens/Buyer/Dashboard";
-import accountselector from "../screens/accountselector";
+import AccountSelector from "../screens/AccountSelector";
 import AddP from "../screens/Manufacturer/AddProducts";
 import AllP from "../screens/Manufacturer/AllProducts";
 import ProductD from "../screens/Manufacturer/ViewProduct";
@@ -20,11 +20,11 @@ import Address from "../screens/Manufacturer/Address";
 import AddPD from "../screens/Manufacturer/AddProductD";
 import Wallet from "../screens/Manufacturer/Wallet";
 import BidScreen from "../screens/Buyer/BidScreen";
-import Bid from '../screens/Manufacturer/Bid';
-import mainHome from '../screens/mainHome';
-import approval from '../screens/approval';
-import OrderDetails from "../screens/Buyer/OrderDetails"
-import OrderDetail from "../screens/Manufacturer/OrderDetails"
+import Bid from "../screens/Manufacturer/Bid";
+import mainHome from "../screens/mainHome";
+import Approval from "../screens/Approval";
+import OrderDetails from "../screens/Buyer/OrderDetails";
+import OrderDetail from "../screens/Manufacturer/OrderDetails";
 import Recipt from "../screens/Buyer/Recipt";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -48,7 +48,7 @@ const SplashNavigator = () => {
         name="Signup Manufacturer"
         component={SignupM}
       />
-       <Stack.Screen
+      <Stack.Screen
         options={{ headerShown: false }}
         name="Signup Buyer"
         component={SignupB}
@@ -76,7 +76,7 @@ const SplashNavigator = () => {
       <Stack.Screen
         options={{ headerShown: false }}
         name="accountselector"
-        component={accountselector}
+        component={AccountSelector}
       />
       <Stack.Screen
         options={{ headerShown: false }}
@@ -86,24 +86,55 @@ const SplashNavigator = () => {
       <Stack.Screen
         options={{ headerShown: false }}
         name="Approval Message"
-        component={approval}
-        
+        component={Approval}
       />
-      <Stack.Screen  options={{ headerShown: false }} name="Add Products" component={AddP} />
-      <Stack.Screen options={{ headerShown: false }} name="Add Product Details" component={AddPD} />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Add Products"
+        component={AddP}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Add Product Details"
+        component={AddPD}
+      />
       <Stack.Screen name="All Products" component={AllP} />
       <Stack.Screen name="Product Details" component={ProductD} />
-      <Stack.Screen options={{ headerShown: false }} name="List Leftovers" component={Leftovers} />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="List Leftovers"
+        component={Leftovers}
+      />
       <Stack.Screen name="Leftover Details" component={LeftoverD} />
       <Stack.Screen name="Payment Method" component={PaymentMethod} />
       <Stack.Screen name="Address" component={Address} />
       <Stack.Screen name="Listed Leftovers" component={ListedLeftovers} />
-      <Stack.Screen  options={{ headerShown: false }} name="Wallet" component={Wallet} />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Wallet"
+        component={Wallet}
+      />
       <Stack.Screen name="Bid Screen" component={BidScreen} />
-      <Stack.Screen options={{ headerShown: false }} name="Bid Manufacturer" component={Bid} />
-      <Stack.Screen options={{ headerShown: false }} name="OrderDetails" component={OrderDetails}/>
-      <Stack.Screen options={{ headerShown: false }} name="OrderDetail" component={OrderDetail}/>
-      <Stack.Screen options={{ headerShown: false }} name="Recipt" component={Recipt}/>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Bid Manufacturer"
+        component={Bid}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="OrderDetails"
+        component={OrderDetails}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="OrderDetail"
+        component={OrderDetail}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Recipt"
+        component={Recipt}
+      />
     </Stack.Navigator>
   );
 };

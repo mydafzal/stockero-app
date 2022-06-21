@@ -1,50 +1,59 @@
-import React, { useState, useContext, useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
   TextInput,
   ImageBackground,
   StyleSheet,
-  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+
 import TouchableButton from "../../components/TouchableButton";
 import Spacer from "../../components/Spacer";
 import { Ionicons } from "@expo/vector-icons";
 import bg from "../../assets/images/bg.png";
-import { connect } from "react-redux";
-import { SignUp } from "../../redux/buyer/buyer.action";
-import { Alert } from "react-native";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setAuthUser } from "../../store/slice/authSlice";
+import { useBuyerSignUpMutation } from "../../store/api";
+import Loader from "../../components/Loader";
+import { addToast } from "../../utils";
+import { pathOr } from "ramda";
 
-const Signup = ({ SignUp, user }) => {
-  const navigation = useNavigation();
+const Signup = ({ navigation }) => {
   const [firstName, setfirstName] = React.useState("");
   const [lastName, setlastName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  useEffect(() => {
-    // if (user.isLoading) {
-    //   alert(email);
-    // }
-  }, [user.isLoading]);
+  const [buyerSignUp, { isLoading }] = useBuyerSignUpMutation();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (user.error) {
-      alert(user.errorMessage);
-    }
-  }, [user.error, user.errorMessage]);
-
-  useEffect(() => {
-    if (Object.keys(user.user).length>0) {
+  const handleSignup = async () => {
+    try {
+      const { data, error } = await buyerSignUp({
+        firstname: firstName,
+        lastname: lastName,
+        email,
+        password,
+      });
+      if (error) {
+        console.log(error);
+        throw new Error(error);
+      }
+      const { token, user } = data;
+      dispatch(setAuthUser({ isLoggedIn: true, userMeta: user, token }));
+      addToast("Signup Successful", false);
       navigation.reset({
         index: 0,
         routes: [{ name: "Dashboard buyer" }],
       });
+    } catch (error) {
+      addToast(
+        pathOr("Error Occured While Loggin in", ["data", "message"], error),
+        true
+      );
     }
-  }, [user.user]);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -69,7 +78,6 @@ const Signup = ({ SignUp, user }) => {
                   placeholder="First Name"
                   placeholderTextColor="#9A9A9A"
                   name={"FirstName"}
-                  
                   value={firstName}
                   onChangeText={(e) => setfirstName(e)}
                 />
@@ -88,7 +96,6 @@ const Signup = ({ SignUp, user }) => {
                   placeholderTextColor="#9A9A9A"
                   name={"LastName"}
                   value={lastName}
-                  
                   onChangeText={(e) => setlastName(e)}
                 />
               </View>
@@ -106,7 +113,6 @@ const Signup = ({ SignUp, user }) => {
                   placeholderTextColor="#9A9A9A"
                   name={"email"}
                   value={email.toLocaleLowerCase()}
-                  
                   onChangeText={(e) => setEmail(e)}
                 />
               </View>
@@ -124,18 +130,16 @@ const Signup = ({ SignUp, user }) => {
                   placeholderTextColor="#9A9A9A"
                   name={"Password"}
                   value={password}
-                  
                   onChangeText={(e) => setPassword(e)}
                   secureTextEntry={true}
                 />
               </View>
               <Spacer height={30} />
-              {/* <View> */}
+
               <TouchableButton
                 title={"Confirm"}
                 textStyle={{ color: "white" }}
-                onPress={() => SignUp(lastName, firstName, email, password)}
-                // onPress={() => navigation.navigate("Dashboard Buyer")}
+                onPress={() => handleSignup()}
               />
               <Spacer height={10} />
               <Text
@@ -151,32 +155,19 @@ const Signup = ({ SignUp, user }) => {
                   style={{ color: "#454545", fontFamily: "Poppins_500Medium" }}
                   onPress={() => navigation.navigate("Login")}
                 >
-                  {" "}
                   SIGN IN
                 </Text>
               </Text>
-              {/* </View> */}
             </View>
           </View>
+          <Loader isLoading={isLoading} />
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.buyer,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    SignUp: (firstName, lastName, email, password) =>
-      dispatch(SignUp(firstName, lastName, email, password)),
-    //   setRole:(role)=>dispatch(setRole(role))
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default Signup;
 
 const styles = StyleSheet.create({
   container: {
@@ -192,7 +183,6 @@ const styles = StyleSheet.create({
     display: "flex",
     width: "100%",
     height: "100%",
-    // padding: "3%",
   },
   body: {
     padding: "5%",
@@ -205,11 +195,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    //flex: 0.5,
     width: "100%",
     justifyContent: "flex-start",
     alignItems: "center",
-    // top: '20%',
   },
   details: {
     borderTopLeftRadius: 20,
@@ -232,8 +220,6 @@ const styles = StyleSheet.create({
   inputFieldCard: {
     flexDirection: "row",
     alignSelf: "center",
-    // paddingStart: 18.5,
-    //paddingTop: 23,
     width: "80%",
     height: 60,
     borderRadius: 10,
@@ -257,16 +243,3 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(245, 245, 245, 255)",
   },
 });
-
-// const mapStateToProps = (state) => {
-//     return {
-//         user: state.buyer,token:state.buyer.token
-//     }
-// }
-// export mapDispatchToProps = (dispatch) => {
-//     return {
-//         signIn:(email,password)=>dispatch(signIn(email,password))
-//     }
-// }
-
-// export default connect(mapStateToProps,mapDispatchToProps)(Signup);

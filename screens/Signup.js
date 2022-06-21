@@ -1,73 +1,92 @@
-import React, { useState, useContext, useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
   TextInput,
   ImageBackground,
   StyleSheet,
-  SafeAreaView,
+  ScrollView,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+
 import TouchableButton from "../components/TouchableButton";
 import Spacer from "../components/Spacer";
 import { Ionicons } from "@expo/vector-icons";
 import bg from "../assets/images/bg.png";
-import { connect } from "react-redux";
-import { register } from "../redux/manufacturer/manufacturer.action";
-import { Alert } from "react-native";
-import { signOut } from "../redux/manufacturer/manufacturer.action";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useManufacturerSignUpMutation } from "../store/api";
+import { addToast } from "../utils";
+import { pathOr } from "ramda";
+import { setAuthUser } from "../store/slice/authSlice";
+import Loader from "../components/Loader";
 
-const Signup = ({ register, user}) => {
-  const navigation = useNavigation();
-  const [text, onChangeText] = React.useState();
-  const [number, onChangeNumber] = React.useState();
+const Signup = ({ navigation }) => {
   const [fullName, setfullName] = React.useState("");
   const [factoryName, setfactoryName] = React.useState("");
   const [cnic, setcnic] = React.useState("");
   const [ntn, setntn] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  useEffect(() => {
-    // if (user.isLoading) {
-    //   alert(email);
-    // }
-    //console.log(user.user);
-  }, []);
+  const [manufacturerSignUp, { isLoading }] = useManufacturerSignUpMutation();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (user.error) {
-      alert(user.errorMessage);
+  const handleSignUp = async () => {
+    if (
+      !fullName.length > 0 ||
+      !factoryName.length > 0 ||
+      !cnic.length > 0 ||
+      !ntn.length > 0 ||
+      !email.length > 0 ||
+      !password.length > 0
+    ) {
+      addToast("Please fill all the fields", true);
+      return;
     }
-  }, [user.error, user.errorMessage]);
-
-  useEffect(() => {
-   
-    if (Object.keys(user.user).length>0) {
+    try {
+      const { data, error } = await manufacturerSignUp({
+        name: fullName,
+        email: email,
+        password: password,
+        address: factoryName,
+        ntn: ntn,
+        CNIC: cnic,
+      });
+      const { token, user } = data;
+      dispatch(setAuthUser({ isLoggedIn: true, userMeta: user, token }));
+      addToast("Login Successful", false);
       navigation.reset({
         index: 0,
-        routes: [{ name: "Approval Message" }],
+        routes: [{ name: "Dashboard manufacturer" }],
       });
-      // console.log(user.user.isApproved);
-      // if(!user.user.isApproved){
-      //   alert("Your account is not approved yet. Please wait for approval.")
-      //   signOut();        
-      // } else{
-      //   navigation.reset({
-      //     index: 0,
-      //     routes: [{ name: "Dashboard manufacturer" }],
-      //   });
-      // }
+      if (error) {
+        console.log(error);
+        throw new Error(error);
+      }
+    } catch (error) {
+      addToast(
+        pathOr("Error Occured While Loggin in", ["data", "message"], error),
+        true
+      );
+    } finally {
+      await clearForm();
     }
-  }, [user.user]);
+  };
+  const clearForm = async () => {
+    setfullName("");
+    setfactoryName("");
+    setcnic("");
+    setntn("");
+    setEmail("");
+    setPassword("");
+  };
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ImageBackground source={bg} style={styles.container}>
+        {/* <ScrollView> */}
         <View style={styles.outerbody}>
           <View style={styles.body}>
             <View style={styles.title}>
@@ -103,7 +122,7 @@ const Signup = ({ register, user}) => {
                   placeholder="Enter your Email"
                   placeholderTextColor="#9A9A9A"
                   name={"email"}
-                  value={email.toLocaleLowerCase()}
+                  value={email}
                   onChangeText={(e) => setEmail(e)}
                 />
               </View>
@@ -121,7 +140,6 @@ const Signup = ({ register, user}) => {
                   placeholderTextColor="#9A9A9A"
                   name={"Password"}
                   value={password}
-                  
                   onChangeText={(e) => setPassword(e)}
                   secureTextEntry={true}
                 />
@@ -140,43 +158,40 @@ const Signup = ({ register, user}) => {
                   placeholderTextColor="#9A9A9A"
                   name={"FactoryName"}
                   value={factoryName}
-                  
                   onChangeText={(e) => setfactoryName(e)}
                 />
               </View>
               <Spacer height={10} />
               <View style={styles.inputFieldCard}>
-              <TextInput
+                <TextInput
                   style={styles.inputField}
                   placeholder="Provide your CNIC"
                   placeholderTextColor="#9A9A9A"
-                  keyboardType='number-pad'
+                  keyboardType="number-pad"
                   onChangeText={(e) => setcnic(e)}
                   value={cnic}
                   maxLength={13}
-                  name={'CNIC'}
-                  
-              />
-          </View>
-          <Spacer height={10} />
-          <View style={styles.inputFieldCard}>
-              <TextInput
+                  name={"CNIC"}
+                />
+              </View>
+              <Spacer height={10} />
+              <View style={styles.inputFieldCard}>
+                <TextInput
                   style={styles.inputField}
                   placeholder="Valid NTN Number"
                   placeholderTextColor="#9A9A9A"
-                  keyboardType='number-pad'
+                  keyboardType="number-pad"
                   value={ntn}
                   onChangeText={(e) => setntn(e)}
                   maxLength={7}
-                  name={'NTN'}
-                  
-              />
-          </View>
-          <Spacer height={30} />
+                  name={"NTN"}
+                />
+              </View>
+              <Spacer height={30} />
               <TouchableButton
                 title={"Confirm"}
                 textStyle={{ color: "white" }}
-                onPress={() => register(fullName,email, password, factoryName, cnic, ntn)}
+                onPress={handleSignUp}
               />
               <Spacer height={10} />
               <Text
@@ -189,34 +204,27 @@ const Signup = ({ register, user}) => {
               >
                 Already have an account?
                 <Text
-                  style={{ color: "#454545", fontFamily: "Poppins_500Medium" }}
+                  style={{
+                    color: "#454545",
+                    fontFamily: "Poppins_500Medium",
+                  }}
                   onPress={() => navigation.navigate("Login")}
                 >
-                  {" "}
                   SIGN IN
                 </Text>
               </Text>
               {/* </View> */}
             </View>
           </View>
+          <Loader isLoading={isLoading} />
         </View>
+        {/* </ScrollView> */}
       </ImageBackground>
     </KeyboardAvoidingView>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.manufacturer,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    register: (fullName,email, password, factoryName, cnic, ntn) =>
-      dispatch(register(fullName,email, password, factoryName, cnic, ntn)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default Signup;
 
 const styles = StyleSheet.create({
   container: {
@@ -287,7 +295,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontFamily: "Poppins_500Medium",
     fontSize: 12,
-    color: 'black'
+    color: "black",
   },
   inputFieldName: {
     width: "40%",
@@ -298,16 +306,3 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(245, 245, 245, 255)",
   },
 });
-
-// const mapStateToProps = (state) => {
-//     return {
-//         user: state.buyer,token:state.buyer.token
-//     }
-// }
-// export mapDispatchToProps = (dispatch) => {
-//     return {
-//         signIn:(email,password)=>dispatch(signIn(email,password))
-//     }
-// }
-
-// export default connect(mapStateToProps,mapDispatchToProps)(Signup);

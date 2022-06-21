@@ -28,25 +28,19 @@ const OrderDetails = ({ route, navigation }) => {
         <Text style={styles.heading}>Your Order Details</Text>
       </View>
       <View style={styles.box}>
-      <View style={{paddingLeft:20}}>
-      <Text style={styles.text}>{`Product Name: ${item.name}`}</Text>
-      <Text style={styles.text}>{`Quantity: ${item.quantity}`}</Text>
-      <Text style={styles.textP}>{`Price: ${item.offer_price}`}</Text>
-      <Text style={styles.textd}>{`Duration: ${item.duration}`}</Text>
-      </View>
+        <View style={{ paddingLeft: 20 }}>
+          <Text style={styles.text}>{`Product Name: ${item.name}`}</Text>
+          <Text style={styles.text}>{`Quantity: ${item.quantity}`}</Text>
+          <Text style={styles.textP}>{`Price: ${item.offer_price}`}</Text>
+          <Text style={styles.textd}>{`Duration: ${item.duration}`}</Text>
+        </View>
       </View>
       <View>
         <Text style={styles.heading}>Your Order Status</Text>
       </View>
       <View style={styles.boxStatus}>
-      <Text style={styles.textStatus}>{`Status: ${item.status}`}</Text>
+        <Text style={styles.textStatus}>{`Status: ${item.status}`}</Text>
       </View>
-      <ButtonN
-          buttonStyle={{ width: "100%", height: "90%", backgroundColor: Colors.primary }}
-          title={"Send Offer"}
-          textStyle={{ color: "white", fontSize: 16 }}
-          onPress={() => navigation.navigate("Recipt", { item })}
-        />
     </SafeAreaProvider>
   );
 };
@@ -77,25 +71,25 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingBottom: 15,
   },
-  text:{
+  text: {
     fontFamily: "Poppins_600SemiBold",
     color: Colors.black,
     fontSize: 13,
     padding: 7,
   },
-  textP:{
+  textP: {
     fontFamily: "Poppins_600SemiBold",
     color: Colors.green,
     fontSize: 13,
     padding: 7,
   },
-  textd:{
+  textd: {
     fontFamily: "Poppins_600SemiBold",
     color: Colors.primary,
     fontSize: 13,
     padding: 7,
   },
-  textStatus:{
+  textStatus: {
     fontFamily: "Poppins_500Medium",
     color: Colors.green2,
     fontSize: 18,
@@ -131,10 +125,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
   },
-  line:{
-      borderBottomColor: "#E7E7E9",
-      borderBottomWidth: 1,
-      width: "90%",
-      alignSelf: "center",
-  }
+  line: {
+    borderBottomColor: "#E7E7E9",
+    borderBottomWidth: 1,
+    width: "90%",
+    alignSelf: "center",
+  },
 });

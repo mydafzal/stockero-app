@@ -4,37 +4,37 @@ import {
   FlatList,
   StyleSheet,
   SafeAreaView,
-  StatusBar,
-  ActivityIndicator,
+  RefreshControl,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import Colors from "../../constants/Colors";
 import ButtonSmall from "../../components/ButtonSmall";
-import Spacer from "../../components/Spacer";
-import axios from "axios";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { GetProducts, deleteProduct } from "../../redux/product/product.action";
 import { useEffect } from "react";
+import { useGetProductsQuery } from "../../store/api";
+import { addToast } from "../../utils";
+import { pathOr } from "ramda";
+
 const AllProducts = () => {
-  const products = useSelector((state) => state.product);
-  const dispatch = useDispatch();
-  const[loading,setLoading]=useState(true);
+  const { data, isSuccess, isError, refetch, isLoading } =
+    useGetProductsQuery();
+
   useEffect(() => {
-    dispatch(GetProducts());
-  }, []);
-  useEffect(() => {
-    setTimeout(()=>{
-      setLoading(false);
-    },1000);
-  }, [products.isLoading]);
-  const DATA = products.product;
+    if (isError) {
+      addToast("Something went wrong", false);
+    }
+  }, [isError]);
+
   const renderItem = ({ item }) => (
     <View style={styles.Box}>
       <View style={styles.productNameCard}>
         <Text style={styles.title}>{item.name}</Text>
         <Text numberOfLines={3} style={styles.description}>
-                { item.description ? (item.description.length > 100 ? item.description.slice(0, 100) + "..." : item.description):true}
-            </Text>
+          {item?.description
+            ? item?.description.length > 100
+              ? item?.description.slice(0, 100) + "..."
+              : item?.description
+            : true}
+        </Text>
       </View>
       <View style={{ width: "100%", alignItems: "flex-start" }}>
         <ButtonSmall
@@ -45,20 +45,21 @@ const AllProducts = () => {
           }}
           textStyle={{ color: Colors.red }}
           title="Delete"
-          onPress={() => dispatch(deleteProduct(item.id))}
+          // onPress={() => dispatch(deleteProduct(item.id))}
         />
       </View>
     </View>
   );
   return (
     <SafeAreaView style={styles.container}>
-      {loading?(<ActivityIndicator size="large" color={Colors.red} />):(
-          <FlatList
-            data={DATA}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
-      )}
+      <FlatList
+        data={pathOr([], ["data"], data)}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+        }
+      />
     </SafeAreaView>
   );
 };

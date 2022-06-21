@@ -5,49 +5,93 @@ import {
   StyleSheet,
   StatusBar,
   TextInput,
-  Button,
   SafeAreaView,
   KeyboardAvoidingView,
 } from "react-native";
 import React, { useState } from "react";
-import SelectBox from "react-native-multi-selectbox";
-import Ionicons from "@expo/vector-icons/Ionicons";
+
 import Colors from "../../constants/Colors";
-import MultiSelect from "react-native-multiple-select";
-import { launchImageLibrary } from "react-native-image-picker";
 import ButtonN from "../../components/ButtonN";
-import { AddRequest } from "../../redux/request/request.action";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
 import Spacer from "../../components/Spacer";
 import * as Animatable from "react-native-animatable";
-import axios from "axios";
-import { connect, useDispatch } from "react-redux";
-const PostRequest = ({ navigation, user }) => {
-  const dispatch = useDispatch();
-  const [buyer_id, setbuyer_id] = useState("");
+import { useSelector } from "react-redux";
+import { usePostRequestMutation } from "../../store/api";
+import { authSliceSelector } from "../../store/slice/authSlice";
+import { addToast } from "../../utils";
+import { pathOr } from "ramda";
+import Loader from "../../components/Loader";
+
+const PostRequest = ({ navigation }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
   const [asking_days, setAsking_days] = useState("");
   const [asking_price, setAsking_price] = useState("");
-  const [photo, setPhoto] = React.useState(null);
+  const [postRequest, { isLoading }] = usePostRequestMutation();
+  const { userMeta } = useSelector(authSliceSelector);
+
+  const handlePostRequest = async () => {
+    if (
+      !name.length > 0 ||
+      !description.length > 0 ||
+      !quantity.length > 0 ||
+      !asking_days.length > 0 ||
+      !asking_price.length > 0
+    ) {
+      addToast("Please fill all the fields", true);
+      return;
+    }
+    try {
+      const { data, error } = await postRequest({
+        buyer_id: userMeta?.id,
+        name: name,
+        description: description,
+        quantity: quantity,
+        asking_days: asking_days,
+        asking_price: asking_price,
+      });
+      if (error) {
+        throw new Error(error);
+      }
+      console.log(data);
+      addToast(data?.message, false);
+    } catch (error) {
+      addToast(
+        pathOr(
+          "Error Occured While Posting Request",
+          ["data", "message"],
+          error
+        ),
+        true
+      );
+    } finally {
+      await resetForm();
+      navigation.goBack();
+    }
+  };
+  const resetForm = async () => {
+    setName("");
+    setDescription("");
+    setQuantity("");
+    setAsking_days("");
+    setAsking_price("");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <View style={styles.header}>
         <Text style={styles.header_label}>Post Request</Text>
       </View>
-      <KeyboardAvoidingView style={{flex:3}} behavior="padding" enabled>
+      {/* <KeyboardAvoidingView style={{ flex: 3 }} behavior="padding" enabled> */}
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
-      
         <ScrollView>
-          
           <Text style={styles.Ftitle}>Item</Text>
           <View style={styles.inputFieldCard}>
             <TextInput
               style={styles.inputField}
               name={"Item"}
+              value={name}
               onChangeText={(e) => setName(e)}
               placeholder={"Enter the name of Item"}
             />
@@ -57,6 +101,7 @@ const PostRequest = ({ navigation, user }) => {
             <TextInput
               style={styles.inputField}
               name={"Description"}
+              value={description}
               onChangeText={(e) => setDescription(e)}
               placeholder={
                 "Please Briefly Explain what kind of product you want"
@@ -68,6 +113,7 @@ const PostRequest = ({ navigation, user }) => {
             <TextInput
               style={styles.inputField}
               name={"Item"}
+              value={quantity}
               onChangeText={(e) => setQuantity(e)}
               keyboardType="number-pad"
               placeholder={"Must be greater than 10"}
@@ -78,6 +124,7 @@ const PostRequest = ({ navigation, user }) => {
             <TextInput
               style={styles.inputField}
               name={"Item"}
+              value={asking_days}
               onChangeText={(e) => setAsking_days(e)}
               keyboardType="number-pad"
               placeholder={"Days"}
@@ -88,6 +135,7 @@ const PostRequest = ({ navigation, user }) => {
             <TextInput
               style={styles.inputField}
               name={"budget"}
+              value={asking_price}
               onChangeText={(e) => setAsking_price(e)}
               keyboardType="number-pad"
               placeholder={"Enter Amount in PKR"}
@@ -95,63 +143,27 @@ const PostRequest = ({ navigation, user }) => {
           </View>
 
           <Spacer height={30} />
-          <ButtonN
-            buttonStyle={{
-              backgroundColor: Colors.primaryLite,
-            }}
-            title={"Request"}
-            textStyle={{ color: Colors.primary }}
-            onPress={() => {
-              console.log(name);
-              dispatch(
-                AddRequest(
-                  user.user.id,
-                  name,
-                  description,
-                  quantity,
-                  asking_days,
-                  asking_price
-                )
-              );
-            }}
-          />
-           <Spacer height={200} />
+          <View style={{ marginBottom: 70 }}>
+            <ButtonN
+              buttonStyle={{
+                backgroundColor: Colors.primaryLite,
+              }}
+              title={"Request"}
+              textStyle={{ color: Colors.primary }}
+              onPress={handlePostRequest}
+            />
+          </View>
+          <Spacer height={200} />
         </ScrollView>
-       
       </Animatable.View>
-      </KeyboardAvoidingView>
-      
+      {/* </KeyboardAvoidingView> */}
+      <Loader isLoading={isLoading} />
     </SafeAreaView>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    user: state.buyer,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    AddRequest: (
-      buyer_id,
-      name,
-      description,
-      quantity,
-      asking_days,
-      asking_price
-    ) =>
-      dispatch(
-        AddRequest(
-          buyer_id,
-          name,
-          description,
-          quantity,
-          asking_days,
-          asking_price
-        )
-      ),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(PostRequest);
+
+export default PostRequest;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -240,7 +252,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingHorizontal: 20,
     paddingVertical: 30,
-    
   },
   header_label: {
     fontSize: 25,

@@ -13,6 +13,9 @@ import ButtonN from "../../components/ButtonN";
 import Spacer from "../../components/Spacer";
 import { useDispatch, useSelector, connect } from "react-redux";
 import { updateOrder } from "../../redux/order/order.action";
+import { useUpdateOrderStatusMutation } from "../../store/api";
+import { addToast } from "../../utils";
+import Loader from "../../components/Loader";
 const status = [
   {
     item: "pending",
@@ -29,13 +32,31 @@ const status = [
     id: "DL",
   },
 ];
+
 const OrderDetails = ({ route, navigation }) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
   const { item } = route.params;
-  const { isSuccess, error, errorMessage, isLoading, order } = useSelector(
-    (state) => state.order
-  );
-  const dispatch = useDispatch();
+  const [updateOrderStatus, { isLoading }] = useUpdateOrderStatusMutation();
+
+  const handleUpdateOrder = async () => {
+    if (!selectedTypes?.item) {
+      addToast("Please select status", true);
+      return;
+    }
+    try {
+      const { data, error } = await updateOrderStatus({
+        id: item.id,
+        status: selectedTypes?.item,
+      });
+      if (error) {
+        throw new Error(error);
+      }
+      addToast("Order updated successfully", false);
+      navigation.goBack();
+    } catch (error) {
+      addToast("Something went wrong", true);
+    }
+  };
 
   return (
     <SafeAreaProvider style={styles.container}>
@@ -66,9 +87,9 @@ const OrderDetails = ({ route, navigation }) => {
         <Text style={styles.heading}>Current Status</Text>
       </View>
       <View style={styles.boxStatus}>
-      <View style={{paddingLeft:20}}>
-      <Text style={styles.text}>{`Status: ${item.status}`}</Text>
-      </View>
+        <View style={{ paddingLeft: 20 }}>
+          <Text style={styles.text}>{`Status: ${item.status}`}</Text>
+        </View>
       </View> */}
       <View>
         <Text style={styles.heading}>Update Status</Text>
@@ -90,15 +111,9 @@ const OrderDetails = ({ route, navigation }) => {
         buttonStyle={{ backgroundColor: Colors.primaryLite }}
         title={"Update Status"}
         textStyle={{ color: Colors.primary }}
-        onPress={() => {
-          if (selectedTypes?.item) {
-            dispatch(updateOrder(item.id, selectedTypes?.item));
-            navigation.goBack();
-          } else{
-            alert("Please select status")
-          }
-        }}
+        onPress={handleUpdateOrder}
       />
+      <Loader isLoading={isLoading} />
     </SafeAreaProvider>
   );
   function onChange() {

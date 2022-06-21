@@ -1,12 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import SplashNavigator from './Navigations/SplashNavigator';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
-import thunk from 'redux-thunk';
-import { RootSiblingParent } from "react-native-root-siblings";
+import { Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import SplashNavigator from "./Navigations/SplashNavigator";
+import { Provider } from "react-redux";
+import { store } from "./store";
+
+import Toast from "react-native-toast-message";
 
 import {
   useFonts,
@@ -31,7 +29,6 @@ import {
 } from "@expo-google-fonts/poppins";
 
 const App = () => {
-  
   let [fontsLoaded] = useFonts({
     Poppins_100Thin,
     Poppins_100Thin_Italic,
@@ -51,41 +48,26 @@ const App = () => {
     Poppins_800ExtraBold_Italic,
     Poppins_900Black,
     Poppins_900Black_Italic,
-  })
+  });
   if (!fontsLoaded) {
     return (
       <View>
         <Text>Loading</Text>
       </View>
-    )
+    );
   }
   return (
-    
     <Provider store={store}>
       <NavigationContainer>
-        <RootSiblingParent>
         {/* <SafeAreaView style={{
           flex: 1
         }}> */}
-          <SplashNavigator />
+        <SplashNavigator />
+        <Toast />
         {/* </SafeAreaView> */}
-        </RootSiblingParent>
       </NavigationContainer>
-
-      </Provider>
-
-  
-  
+    </Provider>
   );
-}
+};
 
 export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

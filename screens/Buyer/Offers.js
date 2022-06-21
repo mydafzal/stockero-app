@@ -4,61 +4,28 @@ import {
   FlatList,
   StyleSheet,
   SafeAreaView,
-  StatusBar,
-  Button,
+  RefreshControl,
 } from "react-native";
 import React, { useEffect } from "react";
 import Colors from "../../constants/Colors";
 import ButtonN from "../../components/ButtonSmall";
-import axios from "axios";
+import { useSelector } from "react-redux";
+import { useGetOffersQuery } from "../../store/api";
+import { authSliceSelector } from "../../store/slice/authSlice";
+import Loader from "../../components/Loader";
+import { addToast } from "../../utils";
 
-import { connect, useDispatch, useSelector } from "react-redux";
-import { Approve, GetOffers } from "../../redux/request/request.action";
+const Offers = () => {
+  const { userMeta } = useSelector(authSliceSelector);
+  const { data, isError, isSuccess, isLoading, refetch } = useGetOffersQuery(
+    userMeta?.id
+  );
 
-const Offers = ({ user }) => {
-  const userID = user.user.id;
-  const offers = useSelector((state) => state.request.offers);
-  const dispatch = useDispatch();
   useEffect(() => {
-    if (offers.isLoading) {
-      alert("loading");
+    if (isError) {
+      addToast("Error Occured While Fetching Offers", true);
     }
-  }, [offers.isLoading]);
-  useEffect(() => {
-    if (userID) {
-      dispatch(GetOffers(userID));
-    }
-  }, [userID]);
-
-  const approveOffer = (
-    manufacturer_id,
-    offered_price,
-    offered_duration,
-    asking_price,
-    name,
-    description,
-    quantity   
-  ) => {
-    const body = {
-      buyer_id: userID,
-      manufacturer_id,
-      offered_price,
-      offered_duration,
-      asking_price,
-      name,
-      details: description,
-      quantity,
-    };
-console.log(body);
-    dispatch(Approve(body));
-  };
-
-  useEffect(() => {
-    console.log(offers);
-  }, [offers]);
-
-  
-  const DATA = offers;
+  }, [isError]);
   const renderItem = ({ item }) => (
     <View style={styles.notiBox}>
       <Text style={styles.title}>{item.name}</Text>
@@ -75,19 +42,7 @@ console.log(body);
           buttonStyle={{ width: "50%", height: "70%" }}
           title={"Accept"}
           textStyle={{ color: Colors.primary }}
-          onPress={() => {
-            approveOffer(
-              item.manufacturer_id,
-              item.offered_price,
-              item.offered_duration,
-              item.asking_price,
-              item.name,
-              item.description,
-              item.quantity
-             
-              
-            );
-          }}
+          onPress={() => {}}
         />
         <ButtonN
           buttonStyle={{ width: "50%", height: "70%" }}
@@ -97,29 +52,27 @@ console.log(body);
       </View>
     </View>
   );
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.Headtitle}>Offers</Text>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
+      {isSuccess && (
+        <FlatList
+          data={data?.data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+          }
+        />
+      )}
+      <Loader isLoading={isLoading} />
     </SafeAreaView>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.buyer,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    Respond: () => dispatch(Respond()),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Offers);
+export default Offers;
 
 const styles = StyleSheet.create({
   container: {
