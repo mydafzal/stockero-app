@@ -5,57 +5,30 @@ import {
   StyleSheet,
   SafeAreaView,
   StatusBar,
+  RefreshControl,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import Colors from "../../constants/Colors";
 import ButtonSmall from "../../components/ButtonSmall";
 import Spacer from "../../components/Spacer";
+import { useGetLeftOversQuery } from "../../store/api";
+import { useSelector } from "react-redux";
+import { authSliceSelector } from "../../store/slice/authSlice";
+import { addToast } from "../../utils";
 
 const ListedLeftovers = () => {
-  const DATA = [
-    {
-      id: "1",
-      title: "T-Shirt",
-      quantity: "Quantity: 10 Pieces",
-      price: "Price: $10",
-      duration: "10 Days",
-    },
-    {
-      id: "2",
-      title: "Product 2",
-      quantity: "10",
-      price: "$10",
-      duration: "10 Days",
-    },
-    {
-      id: "3",
-      title: "Product 3",
-      quantity: "10",
-      price: "$10",
-      duration: "10 Days",
-    },
-    {
-      id: "4",
-      title: "Product 4",
-      quantity: "10",
-      price: "$10",
-      duration: "10 Days",
-    },
-    {
-      id: "5",
-      title: "Product 5",
-      quantity: "10",
-      price: "$10",
-      duration: "10 Days",
-    },
-    {
-      id: "6",
-      title: "Product 6",
-      quantity: "10",
-      price: "$10",
-      duration: "10 Days",
-    },
-  ];
+  const { userMeta } = useSelector(authSliceSelector);
+  const { data, isLoading, isError, refetch, error } = useGetLeftOversQuery(
+    userMeta?.id
+  );
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+      addToast("Error Occured while fetching leftovers", true);
+    }
+  }, [isError]);
+
   const renderItem = ({ item }) => (
     <View style={styles.Box}>
       <View style={styles.productNameCard}>
@@ -80,9 +53,12 @@ const ListedLeftovers = () => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={DATA}
+        data={data?.data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+        }
       />
     </SafeAreaView>
   );

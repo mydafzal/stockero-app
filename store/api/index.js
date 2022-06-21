@@ -6,7 +6,7 @@ export const stockeroApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
   }),
-  tagTypes: ["Orders", "Offers", "Products"],
+  tagTypes: ["Orders", "Offers", "Products", "LeftOvers"],
   endpoints: (builder) => ({
     signIn: builder.mutation({
       query: (params) => ({
@@ -41,6 +41,7 @@ export const stockeroApi = createApi({
     }),
     getOffers: builder.query({
       query: (id) => `${BASE_URL}/api/request/offers/${id}`,
+      providesTags: ["Offers"],
     }),
     getProducts: builder.query({
       query: () => `${BASE_URL}/api/product`,
@@ -76,6 +77,22 @@ export const stockeroApi = createApi({
       }),
       invalidatesTags: ["Products"],
     }),
+    approveOffer: builder.mutation({
+      query: (params) => ({
+        url: `${BASE_URL}/api/request/create/order`,
+        method: "POST",
+        body: params,
+      }),
+      invalidatesTags: ["Orders", "Offers"],
+    }),
+    rejectOffer: builder.mutation({
+      query: (id) => ({
+        url: `/api/request/offers/${id}`,
+        method: "DELETE",
+        body: id,
+      }),
+      invalidatesTags: ["Offers"],
+    }),
     updateOrderStatus: builder.mutation({
       query: (params) => ({
         url: `${BASE_URL}/api/order/status/${params?.id}`,
@@ -83,6 +100,18 @@ export const stockeroApi = createApi({
         body: params,
       }),
       invalidatesTags: ["Orders"],
+    }),
+    listLeftOver: builder.mutation({
+      query: (params) => ({
+        url: `${BASE_URL}/api/leftover/addLeftover`,
+        method: "POST",
+        body: params,
+      }),
+      invalidatesTags: ["LeftOvers"],
+    }),
+    getLeftOvers: builder.query({
+      query: (id) => `${BASE_URL}/api/leftover/${id}`,
+      providesTags: ["LeftOvers"],
     }),
   }),
 });
@@ -100,4 +129,8 @@ export const {
   useRespondToRequestMutation,
   useDeleteProductMutation,
   useUpdateOrderStatusMutation,
+  useApproveOfferMutation,
+  useRejectOfferMutation,
+  useGetLeftOversQuery,
+  useListLeftOverMutation,
 } = stockeroApi;

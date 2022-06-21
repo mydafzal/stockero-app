@@ -39,8 +39,8 @@ const Offers = ({ route, navigation }) => {
       const { data, error } = await respondToRequest({
         id: item.id,
         manufacturer_id: userMeta?.id,
-        offered_price: OfferedPrice,
-        duration: duration,
+        offered_price: +OfferedPrice,
+        duration: +duration,
       });
       if (error) {
         console.log(error);

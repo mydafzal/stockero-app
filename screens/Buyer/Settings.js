@@ -1,18 +1,17 @@
 import * as React from "react";
-import { View, Text, StyleSheet, StatusBar, ScrollView } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import SettingButton from "../../components/SettingButton";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { signOut } from "../../redux/buyer/buyer.action";
 import { SafeAreaView } from "react-native-safe-area-context";
-const Settings = () => {
-  const navigation = useNavigation();
+import { logout } from "../../store/slice/authSlice";
+const Settings = ({ navigation }) => {
   const dispatch = useDispatch();
   return (
     <SafeAreaView style={styles.container}>
-    <Text style={styles.Headtitle}>Settings</Text>
+      <Text style={styles.Headtitle}>Settings</Text>
       <Text style={styles.Stitle}>Account Settings</Text>
       <View style={styles.Box}>
         <SettingButton
@@ -27,7 +26,7 @@ const Settings = () => {
           title={"Profile"}
           textStyle={{ color: "#373737" }}
         />
-         <View
+        <View
           style={{
             borderBottomColor: "#E7E7E9",
             borderBottomWidth: 1,
@@ -36,7 +35,6 @@ const Settings = () => {
           }}
         />
         <SettingButton
-        
           icon={
             <Ionicons
               name="build"
@@ -48,7 +46,7 @@ const Settings = () => {
           title={"Change Password"}
           textStyle={{ color: "#373737" }}
         />
-         <View
+        <View
           style={{
             borderBottomColor: "#E7E7E9",
             borderBottomWidth: 1,
@@ -57,13 +55,13 @@ const Settings = () => {
           }}
         />
         <SettingButton
-        onPress={()=>{
-          dispatch(signOut())
-          navigation.reset({
-            index:0,
-            routes:[{name:"Login"}]
-        })
-        }}
+          onPress={() => {
+            dispatch(logout());
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "Login" }],
+            });
+          }}
           icon={
             <Ionicons
               name="log-out"
@@ -78,8 +76,8 @@ const Settings = () => {
         />
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 export default Settings;
 const styles = StyleSheet.create({
@@ -102,7 +100,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   Headtitle: {
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: "Poppins_600SemiBold",
     fontSize: 25,
     color: "black",
     padding: 22,

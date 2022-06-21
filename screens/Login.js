@@ -40,15 +40,17 @@ const Login = ({ navigation }) => {
       }
       const { token, user } = data;
       dispatch(setAuthUser({ isLoggedIn: true, userMeta: user, token }));
-      addToast("Login Successful", false);
+
       const route = `Dashboard ${authRole}`;
-      if (user.role === "manufacturer" && !user.isApproved) {
+      if (authRole === "manufacturer" && !user.isApproved) {
         alert("Your account is not approved yet");
+      } else {
+        addToast("Login Successful", false);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: route }],
+        });
       }
-      navigation.reset({
-        index: 0,
-        routes: [{ name: route }],
-      });
     } catch (err) {
       addToast(
         pathOr("Error Occured While Loggin in", ["data", "message"], err),

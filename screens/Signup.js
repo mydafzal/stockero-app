@@ -54,13 +54,16 @@ const Signup = ({ navigation }) => {
       });
       const { token, user } = data;
       dispatch(setAuthUser({ isLoggedIn: true, userMeta: user, token }));
-      addToast("Login Successful", false);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Dashboard manufacturer" }],
-      });
+      addToast("Signup Successful", false);
+      if (user?.isApproved) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Dashboard manufacturer" }],
+        });
+      } else {
+        alert("Your Status is not approved by the admin yet");
+      }
       if (error) {
-        console.log(error);
         throw new Error(error);
       }
     } catch (error) {

@@ -1,13 +1,12 @@
 import * as React from "react";
-import { View, Text, StyleSheet, StatusBar, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import SettingButton from "../../components/SettingButton";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
-import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { signOut } from "../../redux/manufacturer/manufacturer.action";
-const Profile = () => {
-  const navigation = useNavigation();
+import { logout } from "../../store/slice/authSlice";
+
+const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
   return (
     <SafeAreaView style={styles.container}>
@@ -148,7 +147,7 @@ const Profile = () => {
         /> */}
         <SettingButton
           onPress={() => {
-            dispatch(signOut());
+            dispatch(logout());
             navigation.reset({
               index: 0,
               routes: [{ name: "Login" }],

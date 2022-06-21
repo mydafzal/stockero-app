@@ -10,7 +10,11 @@ import React, { useEffect } from "react";
 import Colors from "../../constants/Colors";
 import ButtonN from "../../components/ButtonSmall";
 import { useSelector } from "react-redux";
-import { useGetOffersQuery } from "../../store/api";
+import {
+  useGetOffersQuery,
+  useApproveOfferMutation,
+  useRejectOfferMutation,
+} from "../../store/api";
 import { authSliceSelector } from "../../store/slice/authSlice";
 import Loader from "../../components/Loader";
 import { addToast } from "../../utils";
@@ -20,38 +24,100 @@ const Offers = () => {
   const { data, isError, isSuccess, isLoading, refetch } = useGetOffersQuery(
     userMeta?.id
   );
+  const [approveOffer, { isLoading: approveLoader }] =
+    useApproveOfferMutation();
+  const [rejectOffer, { isLoading: rejectLoader }] = useRejectOfferMutation();
 
   useEffect(() => {
     if (isError) {
       addToast("Error Occured While Fetching Offers", true);
     }
   }, [isError]);
-  const renderItem = ({ item }) => (
-    <View style={styles.notiBox}>
-      <Text style={styles.title}>{item.name}</Text>
-      <Text style={styles.notiftext}>{item.quantity}</Text>
-      <Text style={styles.notiftext}>{item.description}</Text>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-          paddingTop: 30,
-        }}
-      >
-        <ButtonN
-          buttonStyle={{ width: "50%", height: "70%" }}
-          title={"Accept"}
-          textStyle={{ color: Colors.primary }}
-          onPress={() => {}}
-        />
-        <ButtonN
-          buttonStyle={{ width: "50%", height: "70%" }}
-          title={"Reject"}
-          textStyle={{ color: Colors.red }}
-        />
+
+  const handleApprove = async (
+    buyer_id,
+    manufacturer_id,
+    name,
+    details,
+    quantity,
+    offered_price,
+    offered_duration,
+    asking_price,
+    id
+  ) => {
+    try {
+      const { data, error } = await approveOffer({
+        buyer_id,
+        manufacturer_id,
+        name,
+        details,
+        quantity,
+        offered_price,
+        offered_duration,
+        asking_price,
+        id,
+      });
+      if (error) {
+        throw new Error(error);
+      }
+      addToast("Offer Approved", false);
+    } catch (error) {
+      addToast("Error Occured While Approving Offer", true);
+    }
+  };
+  const handleReject = async (id) => {
+    try {
+      const { data, error } = await rejectOffer(id);
+      if (error) {
+        throw new Error(error);
+      }
+      addToast("Offer Rejected", false);
+    } catch (error) {
+      addToast("Error occured while reject offer", true);
+    }
+  };
+
+  const renderItem = ({ item }) => {
+    return (
+      <View style={styles.notiBox}>
+        <Text style={styles.title}>{item.name}</Text>
+        <Text style={styles.notiftext}>{item.quantity}</Text>
+        <Text style={styles.notiftext}>{item.description}</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            paddingTop: 30,
+          }}
+        >
+          <ButtonN
+            buttonStyle={{ width: "50%", height: "70%" }}
+            title={"Accept"}
+            textStyle={{ color: Colors.primary }}
+            onPress={() => {
+              handleApprove(
+                item?.buyer_id,
+                item?.manufacturer_id,
+                item?.name,
+                item?.description,
+                item?.quantity,
+                item?.offered_price,
+                item?.offered_duration,
+                item?.asking_price,
+                item?.id
+              );
+            }}
+          />
+          <ButtonN
+            buttonStyle={{ width: "50%", height: "70%" }}
+            title={"Reject"}
+            onPress={() => handleReject(item?.id)}
+            textStyle={{ color: Colors.red }}
+          />
+        </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -67,7 +133,7 @@ const Offers = () => {
           }
         />
       )}
-      <Loader isLoading={isLoading} />
+      <Loader isLoading={isLoading || rejectLoader || approveLoader} />
     </SafeAreaView>
   );
 };

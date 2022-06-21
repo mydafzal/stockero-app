@@ -21,7 +21,6 @@ const Orders = ({ navigation }) => {
     if (isError) {
       addToast("Error Occured While Fetching Products", true);
     }
-    console.log(data);
   }, [isError]);
 
   const renderItem = ({ item }) => (

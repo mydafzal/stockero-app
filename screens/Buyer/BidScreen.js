@@ -13,8 +13,10 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import Colors from "../../constants/Colors";
 import TouchableButton from "../../components/TouchableButton";
 import Spacer from "../../components/Spacer";
+import DefaultImage from "../../assets/images/mob-logo.png";
+
 const BidScreen = ({ navigation, route }) => {
-  const product = route.params;
+  const product = route.params.item;
 
   return (
     <View
@@ -25,8 +27,13 @@ const BidScreen = ({ navigation, route }) => {
     >
       <View style={style.imageContainer}>
         <Image
-          source={product.img}
-          style={{ resizeMode: "contain", flex: 1 }}
+          source={product?.image ? { uri: product?.image } : DefaultImage}
+          style={{
+            flex: 1,
+            resizeMode: "contain",
+            width: "100%",
+            height: "100%",
+          }}
         />
       </View>
       <ScrollView style={style.detailsContainer}>
@@ -40,7 +47,7 @@ const BidScreen = ({ navigation, route }) => {
           }}
         >
           <Text style={{ fontSize: 22, fontWeight: "bold" }}>
-            {product.name}
+            {product?.name}
           </Text>
           <View style={style.priceTag}>
             <Text
@@ -51,7 +58,7 @@ const BidScreen = ({ navigation, route }) => {
                 fontSize: 13,
               }}
             >
-              Rs. {product.price}
+              Rs. {`100`}
             </Text>
           </View>
         </View>
@@ -65,7 +72,7 @@ const BidScreen = ({ navigation, route }) => {
               marginTop: 10,
             }}
           >
-            {product.about}
+            {product?.description}
           </Text>
           <View>
             <Text style={style.Ftitle}>Minimum Quantity:</Text>
@@ -132,7 +139,7 @@ const BidScreen = ({ navigation, route }) => {
           }}
           title={"Send Bid Offer"}
           textStyle={{ fontSize: 15, color: Colors.white }}
-          onPress={() => (Alert: "Request sent Successfully")}
+          onPress={() => alert("request send successfully")}
         />
       </ScrollView>
     </View>

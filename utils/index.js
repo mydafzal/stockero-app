@@ -1,4 +1,5 @@
 import Toast from "react-native-toast-message";
+import * as ImagePicker from "expo-image-picker";
 export const addToast = (message, isError) => {
   Toast.show({
     type: isError ? "error" : "success",
@@ -7,4 +8,19 @@ export const addToast = (message, isError) => {
     text2: message,
     visibilityTime: 3000,
   });
+};
+
+export const pickImage = async () => {
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    allowsEditing: false,
+    aspect: [4, 3],
+    quality: 0.5,
+    base64: true,
+    maxHeight: 50,
+    maxWidth: 50,
+  });
+  if (!result.cancelled) {
+    return result;
+  }
 };
