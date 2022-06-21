@@ -6,6 +6,7 @@ export const stockeroApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
   }),
+  tagTypes: ["Orders", "Offers", "Products"],
   endpoints: (builder) => ({
     signIn: builder.mutation({
       query: (params) => ({
@@ -43,6 +44,7 @@ export const stockeroApi = createApi({
     }),
     getProducts: builder.query({
       query: () => `${BASE_URL}/api/product`,
+      providesTags: ["Products"],
     }),
     addProduct: builder.mutation({
       query: (params) => ({
@@ -50,9 +52,11 @@ export const stockeroApi = createApi({
         method: "POST",
         body: params,
       }),
+      invalidatesTags: ["Products"],
     }),
     getOrders: builder.query({
       query: () => `${BASE_URL}/api/order`,
+      providesTags: ["Orders"],
     }),
     getRequest: builder.query({
       query: () => `${BASE_URL}/api/request`,
@@ -65,11 +69,12 @@ export const stockeroApi = createApi({
       }),
     }),
     deleteProduct: builder.mutation({
-      query: (params) => ({
-        url: `${BASE_URL}/api/product/delete-product/${params?.id}`,
+      query: (id) => ({
+        url: `${BASE_URL}/api/product/delete-product/${id}`,
         method: "DELETE",
-        body: params,
+        body: id,
       }),
+      invalidatesTags: ["Products"],
     }),
     updateOrderStatus: builder.mutation({
       query: (params) => ({
@@ -77,6 +82,7 @@ export const stockeroApi = createApi({
         method: "PUT",
         body: params,
       }),
+      invalidatesTags: ["Orders"],
     }),
   }),
 });

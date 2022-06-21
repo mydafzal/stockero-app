@@ -10,19 +10,33 @@ import React from "react";
 import Colors from "../../constants/Colors";
 import ButtonSmall from "../../components/ButtonSmall";
 import { useEffect } from "react";
-import { useGetProductsQuery } from "../../store/api";
+import { useGetProductsQuery, useDeleteProductMutation } from "../../store/api";
 import { addToast } from "../../utils";
 import { pathOr } from "ramda";
+import Loader from "../../components/Loader";
 
 const AllProducts = () => {
   const { data, isSuccess, isError, refetch, isLoading } =
     useGetProductsQuery();
+  const [deleteProduct, { isLoading: deleteLoader }] =
+    useDeleteProductMutation();
 
   useEffect(() => {
     if (isError) {
       addToast("Something went wrong", false);
     }
   }, [isError]);
+  const handleDeleteProduct = async (id) => {
+    try {
+      const { error } = await deleteProduct(id);
+      if (error) {
+        throw new Error(error);
+      }
+      addToast("Product deleted successfully", false);
+    } catch (error) {
+      addToast("Something went wrong while delete product", true);
+    }
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.Box}>
@@ -45,7 +59,7 @@ const AllProducts = () => {
           }}
           textStyle={{ color: Colors.red }}
           title="Delete"
-          // onPress={() => dispatch(deleteProduct(item.id))}
+          onPress={() => handleDeleteProduct(item.id)}
         />
       </View>
     </View>
@@ -60,6 +74,7 @@ const AllProducts = () => {
           <RefreshControl refreshing={isLoading} onRefresh={refetch} />
         }
       />
+      <Loader isLoading={deleteLoader} />
     </SafeAreaView>
   );
 };
